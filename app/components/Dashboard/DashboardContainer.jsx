@@ -8,6 +8,7 @@ import Dashboard from "./Dashboard";
 
 class DashboardContainer extends React.Component {
     render() {
+        console.log("DashboardContainer")
         return (
             <AltContainer
                 stores={[AccountStore, SettingsStore, MarketsStore]}

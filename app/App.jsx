@@ -46,6 +46,8 @@ class App extends React.Component {
         this._onSettingsChange = this._onSettingsChange.bind(this);
         this._chainStoreSub = this._chainStoreSub.bind(this);
         this._syncStatus = this._syncStatus.bind(this);
+
+        console.log("App")
     }
 
     componentWillUnmount() {

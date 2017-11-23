@@ -1,13 +1,13 @@
 {
   "languages": {
     "en": "English",
-    "cn": "简体中文",
+    "cn": "简体中文" /*,
     "fr": "Français",
     "ko": "한국어",
     "de": "Deutsch",
     "es": "Español",
     "it": "Italiano",
-    "tr": "Turkish"
+    "tr": "Turkish"  */
   },
   "sync_fail": {
     "title": "无法与API服务器同步连接",
@@ -62,10 +62,10 @@
       "memo_tip": "You may include any message in the memo field. Memos are optional but generally required for transfers to exchanges."
   },
   "account": {
-    "intro_text_title": "欢迎来到比特股去中心化交易所！",
-    "intro_text_1": "<b>比特股2.0</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有比特股首创的bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
+    "intro_text_title": "欢迎来到金融链去中心化金融平台！",
+    "intro_text_1": "<b>金融链</b>是一个基于区块链构建的去中心化金融平台",
     "intro_text_2": "发行用户定义资产（UIA）,也可以买卖通用的数字资产如BTC, ETH等。",
-    "intro_text_3": "来比特股尽情享受交易的乐趣吧！",
+    "intro_text_3": "来金融链尽情享受交易的乐趣吧！",
     "intro_text_4": "<br/>官网：&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' rel='noopener noreferrer' href='https://bitshares.org'>https://bitshares.org</a><br/>论坛：&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' rel='noopener noreferrer' href='https://bitsharestalk.org'>https://bitsharestalk.org</a><br/>QQ群：&nbsp;&nbsp;423951676<br/>Github：<a target='_blank' rel='noopener noreferrer' href='https://github.com/bitshares/bitshares-core'>https://github.com/bitshares/bitshares-core</a>",
     "in_open": "这是你委单中 %(asset)s 资产的数量。",
     "in_open_value": "这是你委单中 %(asset)s 资产的大致价值。",
@@ -1098,7 +1098,7 @@
     "generated": "已创建密码",
     "understand_1": "我理解如果我忘记或丢失了密码，将没有任何人能够帮助我恢复",
     "understand_2": "我已经写下了或者用其它方式保存了我的密码",
-    "bts_rules": "比特股法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。"
+    "bts_rules": "金融链法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。"
   },
   "borrow": {
     "title": "%(asset_symbol)s 保证金头寸",

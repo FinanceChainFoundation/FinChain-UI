@@ -50,15 +50,8 @@ class SettingsStore {
 
         let defaults = {
             locale: [
-                "en",
                 "cn",
-                "fr",
-                "ko",
-                "de",
-                "es",
-                "it",
-                "tr",
-                "ru"
+                "en"
             ],
             apiServer: [],
             unit: [

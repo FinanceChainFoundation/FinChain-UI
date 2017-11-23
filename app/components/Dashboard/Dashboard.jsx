@@ -17,48 +17,7 @@ class Dashboard extends React.Component {
         super();
         let marketsByChain = {
             "4018d784":[
-                ["USD", "BTS"],
-                ["USD", "OPEN.BTC"],
-                ["USD", "OPEN.USDT"],
-                ["USD", "OPEN.ETH"],
-                ["USD", "OPEN.DASH"],
-                ["USD", "GOLD"],
-                ["USD", "HERO"],
-                ["CNY", "BTS"],
-                ["CNY", "OPEN.BTC"],
-                ["CNY", "USD"],
-                ["CNY", "OPEN.ETH"],
-                ["CNY", "YOYOW"],
-                ["CNY", "OCT"],
-                ["OPEN.BTC", "BTS"],
-                ["OPEN.BTC", "OPEN.ETH"],
-                ["OPEN.BTC", "OPEN.DASH"],
-                ["OPEN.BTC", "BLOCKPAY"],
-                ["OPEN.BTC", "OPEN.DGD"],
-                ["OPEN.BTC", "OPEN.STEEM"],
-                ["BTS", "OPEN.ETH"],
-                ["BTS", "OPEN.EOS"],
-                ["BTS", "PPY"],
-                ["BTS", "OPEN.STEEM"],
-                ["BTS", "OBITS"],
-                ["BTS", "RUBLE"],
-                ["BTS", "HERO"],
-                ["BTS", "OCT"],
-                ["BTS", "SILVER"],
-                ["BTS", "GOLD"],
-                ["BTS", "BLOCKPAY"],
-                ["BTS", "BTWTY"],
-                ["BTS", "SMOKE"],
-                ["KAPITAL", "OPEN.BTC"],
-                ["USD", "OPEN.STEEM"],
-                ["USD", "OPEN.MAID"],
-                ["OPEN.USDT", "OPEN.BTC"],
-                ["OPEN.BTC", "OPEN.MAID"],
-                ["BTS", "OPEN.MAID"],
-                ["BTS", "OPEN.HEAT"],
-                ["BTS", "OPEN.INCENT"],
-                ["HEMPSWEET", "OPEN.BTC"],
-                ["KAPITAL", "BTS"]
+                ["CNY", "FCC"]
             ],
             "39f5e2ed": [
                 ["TEST", "PEG.FAKEUSD"],
@@ -177,7 +136,7 @@ class Dashboard extends React.Component {
         }).filter(a => !!a);
 
         if (!accountCount) {
-            return <LoginSelector />;
+            this.props.router.push("/create-account/wallet");
         }
 
         const entries = ["accounts", "recent"];
