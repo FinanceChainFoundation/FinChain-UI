@@ -11,7 +11,7 @@ import utils from "common/utils";
 import classNames from "classnames";
 import AmountSelector from "../Utility/AmountSelector";
 import BalanceComponent from "../Utility/BalanceComponent";
-import WalletApi from "api/WalletApi";
+import  WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
 import FormattedPrice from "../Utility/FormattedPrice";
 import counterpart from "counterpart";

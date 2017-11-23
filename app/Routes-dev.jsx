@@ -47,6 +47,7 @@ import Help from "./components/Help";
 import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
+import LockAsset from "./components/LockBalance/LockAsset";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -122,6 +123,9 @@ const routes = (
         <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
         <Route path="create-worker" component={CreateWorker} />
         <Route path="/init-error" component={InitError} />
+        
+        <Route path="lock" component={LockAsset}/>
+
         <Route path="/help" component={Help} >
             <Route path=":path1" component={Help} >
                 <Route path=":path2" component={Help} >

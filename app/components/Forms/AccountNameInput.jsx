@@ -131,14 +131,14 @@ class AccountNameInput extends React.Component {
             <div className={class_name}>
                 {/* {noLabel ? null : <label><Translate content="account.name" /></label>} */}
                 <section>
-                    <label className="left-label">{this.props.placeholder}</label>
+                    {/*<label className="left-label">{this.props.placeholder}</label>*/}
                     <input
                         name="username"
                         id="username"
                         type="text"
                         ref="input"
                         autoComplete="off"
-                        placeholder={null}
+                        placeholder={this.props.placeholder}
                         onChange={this.handleChange}
                         onKeyDown={this.onKeyDown}
                         value={this.state.account_name || this.props.initial_value}

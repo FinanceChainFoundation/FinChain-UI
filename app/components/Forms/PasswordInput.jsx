@@ -3,6 +3,8 @@ import {PropTypes, Component} from "react";
 import cname from "classnames";
 import Translate from "react-translate-component";
 import pw from "zxcvbn";
+import counterpart from "counterpart";
+import { FormGroup, FormControl } from "react-bootstrap";
 
 class PasswordInput extends Component {
 
@@ -101,7 +103,6 @@ class PasswordInput extends Component {
                 <div className={password_class_name}>
                     {/* {noLabel ? null : <Translate component="label" content="wallet.password" />} */}
                     <section>
-                        <label className="left-label"><Translate content="wallet.enter_password" /></label>
                         <input
                             style={{marginBottom: this.props.checkStrength ? 0 : null}}
                             name="password"
@@ -110,6 +111,7 @@ class PasswordInput extends Component {
                             autoComplete="off"
                             onChange={this.handleChange}
                             onKeyDown={this.onKeyDown}
+                            placeholder={counterpart.translate("wallet.enter_password")}
                         />
                         {this.props.checkStrength ? (
                                 <progress style={{height: 10}} className={score === 5 ? "high" : score === 4 ? "medium" : "low"} value={score} max="5" min="0"></progress>
@@ -121,7 +123,6 @@ class PasswordInput extends Component {
                 { this.props.confirmation ?
                 <div className={password_confirmation_class_name}>
                     {/* {noLabel ? null : <Translate component="label" content="wallet.confirm" />} */}
-                    <label className="left-label"><Translate content="wallet.confirm_password" /></label>
                     <section style={{position: "relative", maxWidth: "30rem"}}>
                         <input
                             name="confirm_password"
@@ -129,6 +130,7 @@ class PasswordInput extends Component {
                             ref="confirm_password"
                             autoComplete="off"
                             onChange={this.handleChange}
+                            placeholder={counterpart.translate("wallet.confirm_password")}
                         />
                         {confirmMatch ? <div className={"ok-indicator success"}>OK</div> : null}
                     </section>

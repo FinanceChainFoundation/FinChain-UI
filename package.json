@@ -5,7 +5,7 @@
   "homepage": "https://github.com/FinanceChainFoundation/FinChain-UI",
   "author": "FinChain GUI Develop Team",
   "contributors": [
-    "Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com>"
+    "pure-gui"
   ],
   "license": "MIT",
   "engines": {
@@ -124,7 +124,7 @@
     "alt-container": "^1.0.0",
     "alt-react": "0.0.1",
     "bignumber.js": "^4.0.0",
-    "bitsharesjs":"git+https://github.com/FinanceChainFoundation/bitsharesjs.git#b9887ff1170ffb748f4927392fb4949e6dd5b453 ",
+    "bitsharesjs": "git+https://github.com/FinanceChainFoundation/bitsharesjs.git#b9887ff1170ffb748f4927392fb4949e6dd5b453 ",
     "browser-locale": "^1.0.3",
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",
