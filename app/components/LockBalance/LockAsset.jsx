@@ -2,6 +2,7 @@ import React from "react";
 import Translate from "react-translate-component";
 import AccountSelector from "../Account/AccountSelector";
 import AmountSelector from "../Utility/AmountSelector";
+import FloatingDropdown from "../Utility/FloatingDropdown";
 import counterpart from "counterpart";
 import { RecentTransactions } from "../Account/RecentTransactions";
 import {ChainStore} from "bitsharesjs/es";
@@ -16,6 +17,89 @@ import Immutable from "immutable";
 import classnames from "classnames";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
+
+class PeriodInput extends React.Component {
+
+    static propTypes = {
+        label: React.PropTypes.string, // a translation key for the label
+        period: React.PropTypes.any,
+        placeholder: React.PropTypes.string,
+        onChange: React.PropTypes.func.isRequired,
+        tabIndex: React.PropTypes.number,
+
+    };
+
+    static defaultProps = {
+        disabled: false
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            uint:1,
+            days:""
+
+        };
+    }
+
+    _onChange(event) {
+        let days = event.target.value;
+        this.setState({days:days})
+        let period=parseInt(days,10)*parseInt(this.state.uint,10)
+        this.props.onChange(period);
+    }
+
+    onUintChange(uint) {
+        this.setState({uint:uint})
+        let period=parseInt(this.state.days,10)*parseInt(uint,10)
+        this.props.onChange(period);
+    }
+
+    render() {
+        let dayStr=counterpart.translate("lock.day")
+        let monthStr=counterpart.translate("lock.month")
+        let yearStr=counterpart.translate("lock.year")
+
+        let periodUints={}
+        periodUints[dayStr]=1
+        periodUints[monthStr]=30
+        periodUints[yearStr]=360
+        let periodUintsStr=Object.keys(periodUints)
+
+        let _periodUints={}
+        periodUintsStr.forEach(function(key){
+            let value=periodUints[key]
+            _periodUints[value]=key
+        })
+
+        let value = this.state.days;
+        return (
+            <div className="amount-selector" style={this.props.style}>
+                <label className="right-label">{this.props.display_balance}</label>
+                <Translate className="left-label" component="label" content={this.props.label}/>
+                <div className="inline-label input-wrapper">
+                    <input
+                        disabled={this.props.disabled}
+                        type="text"
+                        value={value}
+                        placeholder={this.props.placeholder}
+                        onChange={this._onChange.bind(this) }
+                        tabIndex={this.props.tabIndex}
+                    />
+                    <div className="form-label select floating-dropdown">
+                        <FloatingDropdown
+                            entries={periodUintsStr}
+                            values={periodUints}
+                            value={_periodUints[this.state.uint]}
+                            onChange={this.onUintChange.bind(this)}
+                        />;
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
 
 class LockAsset extends React.Component {
 
@@ -69,9 +153,10 @@ class LockAsset extends React.Component {
         this.setState({amount, asset, asset_id: asset.get("id"), error: null}, this._checkBalance);
     }
 
-    onPeriodChanged(e) {
+    onPeriodChanged(days) {
 
-        this.setState({period:e.target.value});
+        this.setState({period:days});
+        console.log("period",days)
     }
 
     onSubmit(e) {
@@ -81,7 +166,7 @@ class LockAsset extends React.Component {
         let asset_obj=ChainStore.getAsset(this.state.asset_id)
         let precision = utils.get_asset_precision(asset_obj.get("precision"))
         let amount=parseInt(this.state.amount,10)*precision
-        let period=parseInt(this.state.period,10)
+        let period=parseInt(this.state.period,10)*3600*24
         tr.add_type_operation("lock_balance", {
             fee: {
                 amount: 0,
@@ -147,10 +232,10 @@ class LockAsset extends React.Component {
                             />
                             {this.state.balanceError ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content="transfer.errors.insufficient" /></p>:null}
                         </div>
-                        <div className="inline-label input-wrapper">
-                            <input
+                        <div className="content-block transfer-input">
+                            <PeriodInput
+                                label="lock.period"
                                 type="text"
-                                value={this.state.period}
                                 placeholder={lock_period_str}
                                 onChange={this.onPeriodChanged.bind(this) }
                                 tabIndex={tabIndex++}

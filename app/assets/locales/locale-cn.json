@@ -396,7 +396,10 @@
     "amount":"数量",
     "period":"期限",
     "interest":"利息",
-    "lock":"存入"
+    "lock":"存入",
+    "day":"天",
+    "month":"月",
+    "year":"年"
   },
   "operation": {
     "pending": " %(blocks)s 个区块待定",
