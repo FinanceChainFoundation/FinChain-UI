@@ -18,8 +18,9 @@ export const rudexAPIs = {
 export const settingsAPIs = {
     DEFAULT_WS_NODE: "wss://fake.automatic-selection.com",
     WS_NODE_LIST: [
-        {url: "ws://139.196.111.65:9090", location: "test"},
-        {url: "ws://127.0.0.1:9090", location: "Locally hosted"}
+        {url: "ws://127.0.0.1:9090", location: "Locally hosted"},
+        {url: "ws://139.196.111.65:9090", location: "test"}
+
     ],
     DEFAULT_FAUCET: "http://139.196.111.65",
     TESTNET_FAUCET: "https://faucet.testnet.bitshares.eu",

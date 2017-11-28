@@ -71,7 +71,7 @@
     "assets": "资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
-    "recent": "近期活动",
+    "recent": "历史记录",
     "name": "账户名",
     "member": {
       "stats": "资料",
@@ -355,7 +355,8 @@
       "unlock":"取币",
       "set_asset_lock_data":"设置资产锁定参数",
       "donate_to_interest_pool": "向利息池捐献",
-      "interest":"利息"
+      "interest":"利息",
+      "interest_rate":"利率"
     }
   },
   "transfer": {
@@ -397,9 +398,21 @@
     "period":"期限",
     "interest":"利息",
     "lock":"存入",
+    "unlock":"解锁",
+    "ahead_unlock":"提前解锁",
     "day":"天",
     "month":"月",
-    "year":"年"
+    "year":"年",
+    "lock_details":"锁定详情",
+    "details":"详情",
+    "start":"开始时间",
+    "end":"解锁时间",
+    "deposit_amount":"存入数量",
+    "profit":"收益",
+    "profit_rate":"收益率",
+    "operation":"操作",
+    "profit_prompt_period":"获得到期收益:",
+    "profit_prompt_unperiod":"锁定未到期，提前解锁将不能获得任何收益"
   },
   "operation": {
     "pending": " %(blocks)s 个区块待定",
@@ -439,7 +452,10 @@
     "witness_receive": "Received witness from witness",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
-    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} "
+    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
+    "lock_balance": "{issuer} 锁定 {amount} {period} 天",
+    "unlock_balance": "{issuer} 解锁到期存币",
+    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
   },
   "transaction": {
     "sent": "发送",
@@ -553,6 +569,8 @@
       "transfer_from_blind": "从隐私账户转出",
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
+      "lock_balance":"锁定",
+      "unlock_balance":  "解锁" ,
       "all": "Show all"
     },
     "confirm": "请确认交易",
@@ -795,6 +813,7 @@
     "walletLockTimeout": "钱包自动锁定时间（秒）",
     "themes": "主题",
     "darkTheme": "黑色主题",
+    "FinChainTheme":"金融链主色",
     "lightTheme": "白色主题",
     "olDarkTheme": "Openledger黑",
     "reset": "恢复默认值",

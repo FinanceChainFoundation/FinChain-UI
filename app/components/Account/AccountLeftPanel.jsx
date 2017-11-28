@@ -120,6 +120,7 @@ class AccountLeftPanel extends React.Component {
                                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
                                 <li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting"/></Link></li>
 
+                                <li><Link to={`/account/${account_name}/permissions/`} activeClassName="active"><Translate content="account.permissions"/></Link></li>
                                 {/* <li className="menu-subheader" >
                                 <span className="button outline small">
                                 <Translate content="account.user_issued_assets.advanced" />
@@ -152,7 +153,7 @@ class AccountLeftPanel extends React.Component {
                     <section className="block-list">
                         {this.state.showAdvanced ? (<ul className="account-left-menu">
                             {/*<li><Link to={`/account/${account_name}/assets/`} activeClassName="active"><Translate content="account.user_issued_assets.issued_assets"/></Link></li>*/}
-                            <li><Link to={`/account/${account_name}/permissions/`} activeClassName="active"><Translate content="account.permissions"/></Link></li>
+
                             {/*<li><Link to={`/account/${account_name}/whitelist/`} activeClassName="active"><Translate content="account.whitelist.title"/></Link></li>
                             {isMyAccount ? <li><Link to={`/account/${account_name}/vesting/`} activeClassName="active"><Translate content="account.vesting.title"/></Link></li> : null}
                             */}

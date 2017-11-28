@@ -853,7 +853,37 @@ class Operation extends React.Component {
                     />
                 );
                 break;
+            
+            case "lock_balance":
+                //color = "cancel";
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string="operation.lock_balance"
+                            keys={[
+                                {type: "account", value: op[1].issuer, arg: "issuer"},
+                                {type: "amount", value: op[1].amount, arg: "amount"},
+                                {type: "period", value: parseInt(op[1].period/(3600*24),10), arg: "period"}
+                            ]}
+                        />
+                    </span>
+                );
+                break;
 
+            case "unlock_balance":
+                //color = "cancel";
+                let str=op[1].locked.expired? "operation.unlock_balance":"operation.unlock_balance_unexpired"
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string={str}
+                            keys={[
+                                {type: "account", value: op[1].issuer, arg: "issuer"}
+                            ]}
+                        />
+                    </span>
+                );
+                break;
             default:
                 console.log("unimplemented op:", op);
                 column = (

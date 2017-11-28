@@ -40,7 +40,7 @@ class SettingsStore {
             showSettles: false,
             showAssetPercent: false,
             walletLockTimeout: 60 * 10,
-            themes: "darkTheme",
+            themes: "FinChainTheme",
             passwordLogin: true
         });
 
@@ -71,9 +71,7 @@ class SettingsStore {
                 {translate: "no"}
             ],
             themes: [
-                "darkTheme",
-                "lightTheme",
-                "olDarkTheme"
+                "FinChainTheme"
             ],
             passwordLogin: [
                 {translate: "cloud_login"},

@@ -17,6 +17,8 @@ import Immutable from "immutable";
 import classnames from "classnames";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
+import ChainTypes from "../Utility/ChainTypes";
+import {Apis} from "bitsharesjs-ws";
 
 class PeriodInput extends React.Component {
 
@@ -26,6 +28,7 @@ class PeriodInput extends React.Component {
         placeholder: React.PropTypes.string,
         onChange: React.PropTypes.func.isRequired,
         tabIndex: React.PropTypes.number,
+        asset:ChainTypes.ChainAsset.isRequired
 
     };
 
@@ -37,7 +40,8 @@ class PeriodInput extends React.Component {
         super(props);
         this.state = {
             uint:1,
-            days:""
+            days:"",
+            interest:0
 
         };
     }
@@ -47,12 +51,26 @@ class PeriodInput extends React.Component {
         this.setState({days:days})
         let period=parseInt(days,10)*parseInt(this.state.uint,10)
         this.props.onChange(period);
+        let period_s=parseInt(period,10)*3600*24
+        this._onPeriodChange(period_s)
     }
 
     onUintChange(uint) {
         this.setState({uint:uint})
         let period=parseInt(this.state.days,10)*parseInt(uint,10)
         this.props.onChange(period);
+        let period_s=parseInt(period,10)*3600*24
+        this._onPeriodChange(period_s)
+    }
+    
+    _onPeriodChange(period){
+        let self=this
+        Apis.instance().db_api().exec("get_asset_lock_data", [this.props.asset,period]).then( results => {
+
+            let interest=results.current_interest.active_interest*100-100
+            self.setState({interest:interest})
+            console.log(interest)
+        })
     }
 
     render() {
@@ -72,7 +90,15 @@ class PeriodInput extends React.Component {
             _periodUints[value]=key
         })
 
+        //console.log(this.props.asset)
+
+        let interest=this.state.interest+"%"
         let value = this.state.days;
+
+        let interest_render=this.state.interest?
+            <div className="inline-label input-wrapper">
+                <label className="right-label"> 利率: </label><span className="right-label">{interest}</span>
+            </div>:null
         return (
             <div className="amount-selector" style={this.props.style}>
                 <label className="right-label">{this.props.display_balance}</label>
@@ -94,12 +120,15 @@ class PeriodInput extends React.Component {
                             onChange={this.onUintChange.bind(this)}
                         />;
                     </div>
+                    {/*<Translate component="span" content="lock_balance.lock" />*/}
                 </div>
+                {interest_render}
+
             </div>
         )
     }
 }
-
+BindToChainState(PeriodInput, {keep_updating: true});
 
 class LockAsset extends React.Component {
 
@@ -201,6 +230,8 @@ class LockAsset extends React.Component {
         let lock_period_str=counterpart.translate("lock.period")
         let accountsList = Immutable.Set();
         accountsList = accountsList.add(issuer);
+
+        //console.log(this.state.asset_id)
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
@@ -238,6 +269,7 @@ class LockAsset extends React.Component {
                                 type="text"
                                 placeholder={lock_period_str}
                                 onChange={this.onPeriodChanged.bind(this) }
+                                asset={this.state.asset_id}
                                 tabIndex={tabIndex++}
                             />
                         </div>

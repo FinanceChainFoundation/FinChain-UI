@@ -48,6 +48,7 @@ import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import LockAsset from "./components/LockBalance/LockAsset";
+//import LockDetails from "./components/LockBalance/LockDetails";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 

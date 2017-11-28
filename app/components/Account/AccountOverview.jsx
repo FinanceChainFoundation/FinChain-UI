@@ -4,6 +4,7 @@ import Translate from "react-translate-component";
 import BalanceComponent from "../Utility/BalanceComponent";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
 import SettleModal from "../Modal/SettleModal";
+import UnlockModule from "../Modal/UnlockModal";
 import {BalanceValueComponent, EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
 import AssetName from "../Utility/AssetName";
 import CollateralPosition from "../Blockchain/CollateralPosition";
@@ -27,6 +28,7 @@ import { Apis } from "bitsharesjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 
+require("datejs")
 class AccountOverview extends React.Component {
 
     static propTypes = {
@@ -42,16 +44,14 @@ class AccountOverview extends React.Component {
             withdrawAsset: null,
             bridgeAsset: null,
             alwaysShowAssets: [
-                "BTS",
-                "USD",
-                "CNY",
-                "OPEN.BTC",
-                "OPEN.USDT",
-                "OPEN.ETH",
-                "OPEN.MAID",
-                "OPEN.STEEM",
-                "OPEN.DASH"
-            ]
+                "FCC"
+            ],
+            lockDetails:{
+                asset_id:"1.3.0",
+                show:false
+            },
+            toUnlock_id:"2.17.0",
+            toUnlockObj:{}
         };
     }
 
@@ -90,6 +90,27 @@ class AccountOverview extends React.Component {
         });
     }
 
+    onLockedDetail(asset,e){
+        e.preventDefault()
+        let show =this.state.lockDetails.show
+        let asset_id=this.state.lockDetails.asset_id
+
+        if(asset_id==asset)
+        {
+            show=!show
+        } else {
+            show=true
+        }
+        let lockDetails={
+            asset_id:asset,
+            show:show
+        }
+        this.setState({
+
+            lockDetails:lockDetails
+        })
+    }
+
     _getSeparator(render) {
         return render ? <span>&nbsp;|&nbsp;</span> : null;
     }
@@ -97,6 +118,126 @@ class AccountOverview extends React.Component {
     _onNavigate(route, e) {
         e.preventDefault();
         this.props.router.push(route);
+    }
+    _onUnlockOperation(locked_id,e){
+
+        e.preventDefault();
+        let toUnlockObj=ChainStore.getObject(locked_id).toObject()
+        this.setState({
+            toUnlockObj: toUnlockObj
+        });
+
+        this.refs.unlock_modal.show();
+    }
+
+
+    _renderLockDetails(){
+        let account=this.props.account
+        let asset_type=this.state.lockDetails.asset_id
+        let account_balances = account.get("balances");
+        let balanceObject = ChainStore.getObject(account_balances.get(asset_type));
+        let lockeds=balanceObject.get("lockeds").toObject()
+        let keys=Object.keys(lockeds);
+
+        let LockDetails=[]
+        let self=this
+        LockDetails=keys.map(function(key){
+            let locked_id=lockeds[key]
+            let fix_balance_obj=ChainStore.getObject(locked_id).toObject()
+            let start=fix_balance_obj.lock_time
+            let startStr=new Date(start*1000).toString("yyyy/MM/dd HH:mm")
+            let period=fix_balance_obj.lock_period
+            let periodStr=period/(3600*24)+"天"
+            let endStr=new Date((start+period)*1000).toString("yyyy/MM/dd HH:mm")
+            let deposit_balance=fix_balance_obj.initial_lock_balance
+            let locked_balance=fix_balance_obj.locked_balance
+
+            let interest=(locked_balance/deposit_balance*100-100).toString()
+            let interestStr=interest.substring(0,interest.indexOf(".")+4)+"%"
+            let profit=locked_balance-deposit_balance;
+
+            let rowKey=fix_balance_obj.id
+
+            let operationStr=(start+period)<= Date.now() / 1000?"lock.unlock":"lock.ahead_unlock"
+
+            let OperationLink = <a href onClick={self._onUnlockOperation.bind(self, rowKey)}><Translate content={operationStr} /></a>
+            return(<tr key={rowKey} style={{maxWidth: "100rem"}}>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    <FormattedAsset
+                        amount={deposit_balance}
+                        asset={asset_type}
+                        hide_asset
+                    />
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    <FormattedAsset
+                        amount={profit}
+                        asset={asset_type}
+                        hide_asset
+                    />
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    {startStr}
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    {periodStr}
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    {endStr}
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    {interestStr}
+                </td>
+
+                <td style={{textAlign: "right", paddingLeft: 10}}>
+                    {OperationLink}
+                </td>
+            </tr>)
+        })
+
+        return   this.state.lockDetails.show?
+            <div className="generic-bordered-box">
+                <div className="block-content-header" style={{position: "relative"}}>
+                    <Translate content="lock.lock_details" />
+                </div>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.deposit_amount" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.profit" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.start" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate component="span" content="lock.period" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.end" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.profit_rate" />
+                            </th>
+                            <th style={{textAlign: "right"}}>
+                                <Translate content="lock.operation" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {LockDetails}
+                    </tbody>
+                </table>
+            </div>:null
+
     }
 
     _renderBalances(balanceList, optionalAssets, visible) {
@@ -126,6 +267,19 @@ class AccountOverview extends React.Component {
             let asset_type = balanceObject.get("asset_type");
             let asset = ChainStore.getObject(asset_type);
 
+            let fix_balances_amount=0;
+            let total_balances_amount=0
+            let fix_balances_obj=[]
+            let lockeds=balanceObject.get("lockeds").toObject()
+            let keys=Object.keys(lockeds);
+            for(var i=0;i<keys.length;i++){
+                let fix_balance_obj=ChainStore.getObject(lockeds[keys[i]])
+                fix_balances_amount+=parseInt(fix_balance_obj.get("locked_balance"),10)
+                fix_balances_obj.push(fix_balance_obj)
+            }
+
+            total_balances_amount=parseInt(balanceObject.get("balance"),10)+parseInt(fix_balances_amount,10);
+            //console.log(balanceObject.toObject(),fix_balances_obj,fix_balances_amount)
 
             let assetInfoLinks;
             let marketLink, directMarketLink, settleLink, transferLink;
@@ -202,8 +356,14 @@ class AccountOverview extends React.Component {
                     </tr>
                 );
             }
+            //let fix_balances=balance
+            let asset_key=asset.get("id")
+            let locked_detail_button =
+                <a href onClick={this.onLockedDetail.bind(this,asset_key)}>
+                    <Translate content="lock.details"/>
+                </a>;
             balances.push(
-                <tr key={asset.get("symbol")} style={{maxWidth: "100rem"}}>
+                <tr key={asset_key} style={{maxWidth: "100rem"}}>
                     <td style={{textAlign: "left", paddingLeft: 10}}>
                         <LinkToAssetById asset={asset.get("id")} />
                     </td>
@@ -211,10 +371,21 @@ class AccountOverview extends React.Component {
                         {hasBalance || hasOnOrder ? <BalanceComponent balance={balance} assetInfo={assetInfoLinks} hide_asset/> : null}
                     </td>
                     <td style={{textAlign: "right"}}>
-                        {hasBalance || hasOnOrder ? <BalanceComponent balance={balance} assetInfo={assetInfoLinks} hide_asset/> : null}
+                        {hasBalance || hasOnOrder ?
+                            <FormattedAsset
+                                amount={fix_balances_amount}
+                                asset={asset_type}
+                                hide_asset
+                            />: null}
                     </td>
+                    <td style={{textAlign: "center"}}>{locked_detail_button}</td>
                     <td style={{textAlign: "right"}}>
-                        {hasBalance || hasOnOrder ? <BalanceComponent balance={balance} assetInfo={assetInfoLinks} hide_asset/> : null}
+                        {hasBalance || hasOnOrder ?
+                            <FormattedAsset
+                                amount={total_balances_amount}
+                                asset={asset_type}
+                                hide_asset
+                            />: null}
                     </td>
                     {/*
                         <td style={{textAlign: "right"}} className="column-hide-small">
@@ -236,11 +407,13 @@ class AccountOverview extends React.Component {
                         {isBitAsset ? <div className="inline-block" data-place="bottom" data-tip={counterpart.translate("tooltip.borrow", {asset: symbol})}>{this._getSeparator(true)}{borrowLink}{borrowModal}</div> : null}
                         {isBitAsset ? <div className="inline-block" data-place="bottom" data-tip={counterpart.translate("tooltip.settle", {asset: symbol})}>{this._getSeparator(true)}{settleLink}</div> : null}
                     </td>
+                    {/*
                     <td style={{textAlign: "center"}} className="column-hide-small" data-place="bottom" data-tip={counterpart.translate("tooltip." + (includeAsset ? "hide_asset" : "show_asset"))}>
                         <a style={{marginRight: 0}} className={includeAsset ? "order-cancel" : "action-plus"} onClick={this._hideAsset.bind(this, asset_type, includeAsset)}>
                             <Icon name={includeAsset ? "cross-circle" : "plus-circle"} className="icon-14px" />
                         </a>
                     </td>
+                   */}
                 </tr>
             );
         });
@@ -349,6 +522,8 @@ class AccountOverview extends React.Component {
         if (account.toJS && account.has("call_orders")) call_orders = account.get("call_orders").toJS();
         let includedBalances, hiddenBalances, includedOrders, hiddenOrders, hasOpenOrders = false;
         let account_balances = account.get("balances");
+        let fix_balances=account.get("fix_balances");
+        //console.log("fix_balances:",fix_balances.toObject())
 
         let includedBalancesList = Immutable.List(), hiddenBalancesList = Immutable.List();
         call_orders.forEach( (callID) => {
@@ -395,6 +570,9 @@ class AccountOverview extends React.Component {
             hasOpenOrders = hiddenOrders.length || includedOrders.length;
         }
 
+        if (fix_balances) {
+
+        }
         if (hiddenBalances) {
             hiddenBalances.unshift(<tr style={{backgroundColor: "transparent"}} key="hidden"><td style={{height: 20}} colSpan="4"></td></tr>);
         }
@@ -411,6 +589,8 @@ class AccountOverview extends React.Component {
 
         let showAssetPercent = settings.get("showAssetPercent", false);
 
+        let LockDetails=this._renderLockDetails()
+
         // Find the current Openledger coins
         const currentDepositAsset = this.props.backedCoins.get("OPEN", []).find(c => {
                 return c.symbol === this.state.depositAsset;
@@ -419,6 +599,9 @@ class AccountOverview extends React.Component {
                 return c.symbol === this.state.withdrawAsset;
             }) || {};
         const currentBridges = this.props.bridgeCoins.get(this.state.bridgeAsset) || null;
+        
+        let toUnlockObj=this.state.toUnlockObj
+        let toUnlockExpired= toUnlockExpired = (toUnlockObj.start + toUnlockObj.period) <= Date.now() / 1000
 
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
@@ -449,6 +632,9 @@ class AccountOverview extends React.Component {
                                 <th style={{textAlign: "center"}}>
                                     <Translate content="account.fix_balance" />
                                 </th>
+                                <th style={{textAlign: "center"}}>
+                                    <Translate content="lock.lock_details" />
+                                </th>
                                 <th style={{textAlign: "right"}}><Translate component="span" content="account.total_balance" /></th>
                                 <th style={{textAlign: "center"}}>
                                     <Translate content="account.transfer_actions" />
@@ -456,7 +642,6 @@ class AccountOverview extends React.Component {
                                 <th style={{textAlign: "center"}}>
                                     <Translate content="account.lock_balance.lock" />
                                 </th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -482,8 +667,10 @@ class AccountOverview extends React.Component {
                             {hiddenOrders}
                             </tbody>
                         </table>
-                        <SettleModal ref="settlement_modal" asset={this.state.settleAsset} account={account.get("name")}/>
+                        {/*<SettleModal ref="settlement_modal" asset={this.state.settleAsset} account={account.get("name")}/>*/}
+                        <UnlockModule ref="unlock_modal" locked_obj={toUnlockObj} expired={toUnlockExpired} account_id={account.get("id")}/>
                     </div>
+                    {LockDetails}
                 </div>
 
                 {call_orders.length > 0 ? (

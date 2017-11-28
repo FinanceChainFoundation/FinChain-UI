@@ -402,7 +402,14 @@
       "unlock":"unlock",
       "set_asset_lock_data":"set asset lock data",
       "donate_to_interest_pool": "donate to interest pool",
-      "interest":"interest"
+      "interest":"interest",
+      "interest_rate":"interest rate",
+      "lock_details":"lock details",
+      "start":"开始时间",
+      "end":"解锁时间",
+      "deposit_amount":"存入数量",
+      "profit":"收益",
+      "profit_rate":"收益率(%)"
     }
   },
   "pagination": {
@@ -440,6 +447,29 @@
     "close": "Close",
     "memo_unlock": "Unlock your wallet/account in order to see this memo",
     "optional": "Optional"
+  },
+  "lock":{
+    "header":"存币",
+    "issuer":"锁定账户",
+    "amount":"数量",
+    "period":"期限",
+    "interest":"利息",
+    "lock":"存入",
+    "unlock":"解锁",
+    "ahead_unlock":"提前解锁",
+    "day":"天",
+    "month":"月",
+    "year":"年",
+    "lock_details":"锁定详情",
+    "details":"详情",
+    "start":"开始时间",
+    "end":"解锁时间",
+    "deposit_amount":"存入数量",
+    "profit":"收益",
+    "profit_rate":"收益率",
+    "operation":"操作",
+    "profit_prompt_period":"获得到期收益:",
+    "profit_prompt_unperiod":"锁定未到期，提前解锁将不能获得任何收益"
   },
   "operation": {
     "pending": "pending %(blocks)s blocks",
@@ -480,7 +510,10 @@
     "witness_receive": "Received witness from witness",
     "committee_member_update_global_parameters": "{account} updated the global committee parameters",
     "worker_create": "{account} created a worker proposal with daily pay of {pay}",
-    "override_transfer": "{issuer} transferred {amount} from {from} to {to}"
+    "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
+    "lock_balance": "{issuer} 锁定 {amount} {period} 天",
+    "unlock_balance": "{issuer} 解锁到期存币",
+    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -622,7 +655,9 @@
       "transfer_to_blind": "Transfer to blinded account",
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
-      "asset_claim_fees": "Claim asset fees"
+      "asset_claim_fees": "Claim asset fees",
+      "lock_balance":"锁定",
+      "unlock_balance":  "解锁"
     },
     "feeGroups": {
       "general": "General",
@@ -846,6 +881,7 @@
     "walletLockTimeout": "Wallet auto-lock time (seconds, 0 to disable)",
     "themes": "Theme",
     "darkTheme": "Dark theme",
+    "FinChainTheme":"金融链主色",
     "lightTheme": "Light theme",
     "olDarkTheme": "Openledger dark",
     "reset": "Reset settings",

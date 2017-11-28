@@ -253,7 +253,9 @@ class Asset extends React.Component {
                     issuer= {issuerName}
                 />
                 {short_name ? <p>{short_name}</p> : null}
+                {/*
                 <a style={{textTransform: "uppercase"}} href={`${__HASH_HISTORY__ ? "#" : ""}/market/${asset.symbol}_${preferredMarket}`}><Translate content="exchange.market"/></a>
+                */}
             </div>
         );
     }
@@ -390,6 +392,9 @@ class Asset extends React.Component {
         );
     }
 
+    renderLockData(asset) {
+ 
+    }
 
     // TODO: Blacklist Authorities: <Account list like Voting>
     // TODO: Blacklist Market: Base/Market, Base/Market
@@ -668,9 +673,11 @@ class Asset extends React.Component {
                 <div className="grid-block main-content vertical" style={{overflow:"visible"}}>
                     <div className="grid-container">
                         <div className="grid-content">
+
                             <div className="grid-block no-margin small-12 shrink" style={{ overflow:"visible"}}>
                                 {this.renderAboutBox(asset)}
                             </div>
+
                             <div className="grid-block no-margin small-12 shrink vertical medium-horizontal" style={{ overflow:"visible"}}>
                                 <div className="small-12 medium-6" style={{overflow:"visible"}}>
                                     {this.renderSummary(asset)}

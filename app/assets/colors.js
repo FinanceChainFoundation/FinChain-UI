@@ -23,7 +23,7 @@ module.exports = {
         indicatorLineColor: "#FFFFFF"
 
     },
-    darkTheme: {
+    FinChainTheme: {
         bidColor: "#6BA583",
         bidFillColor: "rgba(80, 210, 194, 0.5)",
         askColor: "#E3745B",
