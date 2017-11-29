@@ -564,13 +564,13 @@ class AccountVoting extends React.Component {
                             actionButtons={actionButtons}
                         >
 
-                                <Tab
+                            {/*<Tab
                                     disabled
                                     title={proxyInput}
                                     className="total-value"
                                 >
                                 </Tab>
-
+                            */}
                                 <Tab title="explorer.witnesses.title">
                                     <div className={cnames("content-block")}>
                                         <div className="hide-selector">

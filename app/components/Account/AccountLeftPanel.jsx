@@ -103,7 +103,7 @@ class AccountLeftPanel extends React.Component {
                                 account={account.get("id")}
                                 image_size={imageSize}
                                 my_account={isMyAccount}
-                                showQR={this.state.showQR}
+                                showQR={false}
                                 toggleQR={this._toggleQR.bind(this)}
                                 titleClass={this.state.titleClass}
                             />
