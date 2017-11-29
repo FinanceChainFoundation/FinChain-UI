@@ -135,8 +135,8 @@ class AccountOverview extends React.Component {
         let account=this.props.account
         let asset_type=this.state.lockDetails.asset_id
         let account_balances = account.get("balances");
-        let balanceObject = ChainStore.getObject(account_balances.get(asset_type));
-        let lockeds=balanceObject.get("lockeds").toObject()
+        let balanceObject =account_balances.size? ChainStore.getObject(account_balances.get(asset_type)):null;
+        let lockeds=balanceObject?balanceObject.get("lockeds").toObject():[]
         let keys=Object.keys(lockeds);
 
         let LockDetails=[]
@@ -522,7 +522,7 @@ class AccountOverview extends React.Component {
         if (account.toJS && account.has("call_orders")) call_orders = account.get("call_orders").toJS();
         let includedBalances, hiddenBalances, includedOrders, hiddenOrders, hasOpenOrders = false;
         let account_balances = account.get("balances");
-        let fix_balances=account.get("fix_balances");
+        let fix_balances=account_balances?account.get("fix_balances"):[];
         //console.log("fix_balances:",fix_balances.toObject())
 
         let includedBalancesList = Immutable.List(), hiddenBalancesList = Immutable.List();

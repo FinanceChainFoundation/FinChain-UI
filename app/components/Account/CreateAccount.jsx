@@ -233,6 +233,7 @@ class CreateAccount extends React.Component {
                 {this.state.loading ?  <LoadingIndicator type="three-bounce"/> : <button style={{width: "100%"}} className={buttonClass}><Translate content="account.create_account" /></button>}
 
                 {/* Backup restore option */}
+                {/*
                 <div style={{paddingTop: 40}}>
                     <label>
                         <Link to="/existing-account">
@@ -246,7 +247,7 @@ class CreateAccount extends React.Component {
                         </Link>
                     </label>
                 </div>
-
+                */}
                 {/* Skip to step 3 */}
                 {(!hasWallet || firstAccount ) ? null :<div style={{paddingTop: 20}}>
                     <label>
@@ -318,11 +319,10 @@ class CreateAccount extends React.Component {
                     <tbody>
 
                         <tr>
-                            <td><Translate content="wallet.tips_dashboard" />:</td>
                             <td><Link to="/dashboard"><Translate content="header.dashboard" /></Link></td>
                         </tr>
 
-                        <tr>
+                        {/*<tr>
                             <td><Translate content="wallet.tips_account" />:</td>
                             <td><Link to={`/account/${this.state.accountName}/overview`} ><Translate content="wallet.link_account" /></Link></td>
                         </tr>
@@ -343,6 +343,7 @@ class CreateAccount extends React.Component {
                             <td><Translate content="wallet.tips_settings" />:</td>
                             <td><Link to="/settings"><Translate content="header.settings" /></Link></td>
                         </tr>
+                        */}
                     </tbody>
 
                 </table>
@@ -381,11 +382,12 @@ class CreateAccount extends React.Component {
                         }
                     </div>
 
-                    <div style={{maxWidth: "95vw", paddingTop: "2rem"}} className="grid-content small-12">
+                {/*<div style={{maxWidth: "95vw", paddingTop: "2rem"}} className="grid-content small-12">
                         {step === 1 ? this._renderAccountCreateText() : step === 2 ? this._renderBackupText() :
                             this._renderGetStartedText()
                         }
                     </div>
+                    */}
             </div>
         );
     }

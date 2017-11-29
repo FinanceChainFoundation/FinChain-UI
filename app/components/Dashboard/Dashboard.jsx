@@ -18,10 +18,6 @@ class Dashboard extends React.Component {
         let marketsByChain = {
             "4018d784":[
                 ["CNY", "FCC"]
-            ],
-            "39f5e2ed": [
-                ["TEST", "PEG.FAKEUSD"],
-                ["TEST", "BTWTY"]
             ]
         };
         let chainID = Apis.instance().chain_id;
