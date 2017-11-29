@@ -216,18 +216,6 @@ class RecentTransactions extends React.Component {
                 <td className="column-hide-tiny">
                 </td>
                 <td style={alignRight}>
-                    {historyCount > 0 ?
-                    <span>
-                        <a
-                            className="inline-block"
-                            onClick={this._downloadCSV.bind(this)}
-                            data-tip={counterpart.translate("transaction.csv_tip")}
-                            data-place="bottom"
-                        >
-                            <Icon name="excel" className="icon-14px" />
-                        </a>
-
-                    </span> : null}
                 </td>
                 <td style={{textAlign: "center"}}>
                     &nbsp;{this.props.showMore && historyCount > this.props.limit || 20 && limit < historyCount ? (
@@ -275,31 +263,6 @@ class RecentTransactions extends React.Component {
                             </TransitionWrapper>
                         </table>
                     </div>
-                {
-                    historyCount > 0 && this.state.csvExport &&
-                    <div id="csv_export_container" style={{display: "none"}}>
-                        <div>
-                            <div>DATE</div>
-                            <div>OPERATION</div>
-                            <div>MEMO</div>
-                            <div>AMOUNT</div>
-                        </div>
-                        {
-                            history.map(o => {
-                                return (
-                                    <Operation
-                                        key={o.id}
-                                        op={o.op}
-                                        result={o.result}
-                                        block={o.block_num}
-                                        inverted={false}
-                                        csvExportMode
-                                    />
-                                );
-                            })
-                        }
-                    </div>
-                }
                 </div>
 
             </div>

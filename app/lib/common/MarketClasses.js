@@ -36,7 +36,7 @@ function didOrdersChange(newOrders, oldOrders) {
 }
 
 class Asset {
-    constructor({asset_id = "1.3.0", amount = 0, precision = 5, real = null} = {}) {
+    constructor({asset_id = "1.3.0", amount = 0, precision = 8, real = null} = {}) {
         this.satoshi = precisionToRatio(precision);
         this.asset_id = asset_id;
         this.setAmount({sats: amount, real});
