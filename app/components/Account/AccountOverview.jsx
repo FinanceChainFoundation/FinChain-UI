@@ -51,6 +51,7 @@ class AccountOverview extends React.Component {
                 show:false
             },
             toUnlock_id:"2.17.0",
+            toUnlock_asset_id:"1.3.0",
             toUnlockObj:{}
         };
     }
@@ -601,7 +602,7 @@ class AccountOverview extends React.Component {
         const currentBridges = this.props.bridgeCoins.get(this.state.bridgeAsset) || null;
         
         let toUnlockObj=this.state.toUnlockObj
-        let toUnlockExpired= toUnlockExpired = (toUnlockObj.start + toUnlockObj.period) <= Date.now() / 1000
+        let toUnlockExpired= (toUnlockObj.lock_time + toUnlockObj.lock_period) <= Date.now() / 1000
 
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
@@ -668,7 +669,7 @@ class AccountOverview extends React.Component {
                             </tbody>
                         </table>
                         {/*<SettleModal ref="settlement_modal" asset={this.state.settleAsset} account={account.get("name")}/>*/}
-                        <UnlockModule ref="unlock_modal" locked_obj={toUnlockObj} expired={toUnlockExpired} account_id={account.get("id")}/>
+                        <UnlockModule ref="unlock_modal" locked_obj={toUnlockObj} expired={toUnlockExpired} account_id={account.get("id") } asset_id={this.state.toUnlock_asset_id}/>
                     </div>
                     {LockDetails}
                 </div>

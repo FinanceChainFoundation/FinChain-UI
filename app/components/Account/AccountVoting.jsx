@@ -582,6 +582,7 @@ class AccountVoting extends React.Component {
                                         <VotingAccountsList
                                             type="witness"
                                             label="account.votes.add_witness_label"
+                                            voteTitle="account.votes.witness"
                                             items={this.state.all_witnesses}
                                             validateAccount={this.validateAccount.bind(this, "witnesses")}
                                             onAddItem={this.onAddItem.bind(this, "witnesses")}
@@ -606,6 +607,7 @@ class AccountVoting extends React.Component {
                                         <VotingAccountsList
                                             type="committee"
                                             label="account.votes.add_committee_label"
+                                            voteTitle="account.votes.committee"
                                             items={this.state.all_committee}
                                             validateAccount={this.validateAccount.bind(this, "committee")}
                                             onAddItem={this.onAddItem.bind(this, "committee")}
@@ -619,75 +621,6 @@ class AccountVoting extends React.Component {
                                     </div>
                                 </Tab>
 
-                                <Tab title="account.votes.workers_short">
-
-                                    <div className="hide-selector">
-                                        {/* <Link to="/help/voting/worker"><Icon name="question-circle" /></Link> */}
-                                        <div style={{paddingLeft: 10}} className={cnames("inline-block", {inactive: workerTableIndex !== 0})} onClick={this._setWorkerTableIndex.bind(this, 0)}>
-                                            {counterpart.translate("account.votes.new", {count: newWorkers.length})}
-                                        </div>
-                                        <div className={cnames("inline-block", {inactive: workerTableIndex !== 1})} onClick={this._setWorkerTableIndex.bind(this, 1)}>
-                                            <Translate content="account.votes.active" />
-                                        </div>
-
-                                        {expiredWorkers.length ? <div className={cnames("inline-block", {inactive: !showExpired})} onClick={!showExpired ? this._setWorkerTableIndex.bind(this, 2) : () => {}}>
-                                            <Translate content="account.votes.expired" />
-                                        </div> : null}
-
-                                        <div className="new-worker-button">
-                                            {saveText}
-                                            <Link to="/create-worker">
-                                                <div className="button no-margin"><Translate content="account.votes.create_worker" /></div>
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* {showExpired ? null : (
-                                    <div style={{paddingTop: 10, paddingBottom: 20}}>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <Translate content="account.votes.total_budget" />:</td>
-                                                    <td style={{paddingLeft: 20, textAlign: "right"}}>
-                                                        &nbsp;{globalObject ? <FormattedAsset amount={totalBudget} asset="1.3.0" decimalOffset={5}/> : null}
-                                                        <span>&nbsp;({globalObject ? <EquivalentValueComponent fromAsset="1.3.0" toAsset={preferredUnit} amount={totalBudget}/> : null})</span>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td><Translate content="account.votes.unused_budget" />:</td>
-                                                    <td style={{paddingLeft: 20, textAlign: "right"}}> {globalObject ? <FormattedAsset amount={unusedBudget} asset="1.3.0" decimalOffset={5}/> : null}</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>)} */}
-
-                                    <table className="table dashboard-table">
-                                        <thead>
-                                            <tr>
-                                                <th style={{textAlign: "right"}}><Translate content="account.votes.line" /></th>
-                                                <th style={{textAlign: "left"}}><Translate content="account.user_issued_assets.description" /></th>
-                                                <th style={{textAlign: "left"}} className="hide-column-small"><Translate content="account.votes.creator" /></th>
-                                                <th style={{textAlign: "right"}} className="hide-column-small">
-                                                    <Translate content="account.votes.total_votes" />
-                                                </th>
-                                                <th style={{textAlign: "right"}} className="hide-column-small"><Translate content="account.votes.funding" /></th>
-                                                <th><Translate content="explorer.workers.period" /></th>
-                                                <th style={{textAlign: "right"}} className="hide-column-small">
-                                                    <Translate content="account.votes.daily_pay" />
-                                                    <div style={{paddingTop: 5, fontSize: "0.8rem"}}>
-                                                        (<AssetName name={preferredUnit} />)
-                                                    </div>
-                                                </th>
-
-                                                <th><Translate content="account.votes.toggle" /></th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {workerTableIndex === 0 ? newWorkers : workerTableIndex === 1 ? workers : expiredWorkers}
-                                        </tbody>
-
-                                    </table>
-                                </Tab>
                         </Tabs>
                     </div>
                 </div>

@@ -185,6 +185,7 @@ class VotingAccountsList extends React.Component {
 
         let cw = ["10%", "20%", "40%", "20%", "10%"];
 
+        let voteTitle=this.props.voteTitle
         return (
             <div>
                 {this.props.withSelector ?
@@ -207,7 +208,7 @@ class VotingAccountsList extends React.Component {
                     <thead>
                         <tr>
                             <th style={{textAlign: "right"}}>#</th>
-                            <th style={{textAlign: "left", maxWidth: cw[1]}}><Translate content="account.votes.name" /></th>
+                            <th style={{textAlign: "left", maxWidth: cw[1]}}><Translate content={voteTitle}/></th>
                             <th style={{maxWidth: cw[2]}}><Translate content="account.votes.about"/></th>
                             <th style={{maxWidth: cw[3]}}><Translate content="account.votes.votes" /></th>
                             <th style={{maxWidth: cw[4]}}><Translate content="account.votes.status.title" /></th>

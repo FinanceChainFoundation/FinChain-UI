@@ -67,7 +67,7 @@ class ModalContent extends React.Component {
         let profitRender=expired?
             <FormattedAsset
                 amount={profit}
-                asset={locked_obj.asset_id}
+                asset={this.props.asset_id}
             />:null
         let promptRender=
             <div className="grid-container " style={{paddingTop: "2rem"}}>

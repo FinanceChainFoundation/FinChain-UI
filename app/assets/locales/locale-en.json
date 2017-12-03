@@ -340,7 +340,9 @@
       "about": "About",
       "create_worker": "Create a new worker",
       "line": "Line",
-      "save_finish": "Click save to finish"
+      "save_finish": "Click save to finish",
+      "witness":"witness",
+      "committee":"committee"
     },
     "options": {
       "num_witnesses": "Desired Witnesses",

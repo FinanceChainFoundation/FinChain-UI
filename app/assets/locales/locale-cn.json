@@ -210,6 +210,7 @@
       "remove_text": "移除"
     },
     "votes": {
+      "about":"关于",
       "proxy_current": "你当前选择的投票代理人是",
       "proxy_short": "代理投票",
       "workers_short": "预算项目",
@@ -266,7 +267,13 @@
       "toggle": "Toggle vote",
       "supported": "Supported",
       "active_short": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "witness":"见证人",
+      "committee":"董事会",
+      "supported":"支持",
+      "toggle":"切换"
+
+
     },
     "options": {
       "num_witnesses": "信任见证人",
