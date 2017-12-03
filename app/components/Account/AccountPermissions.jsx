@@ -237,6 +237,7 @@ class AccountPermissions extends React.Component {
         return (
             <div className="grid-content">
                 <div className="generic-bordered-box">
+
                     <Tabs setting="permissionsTabs" tabsClass="no-padding bordered-header" contentClass="grid-content no-overflow no-padding">
 
                     <Tab title="account.perm.active">
@@ -327,25 +328,6 @@ class AccountPermissions extends React.Component {
 
 
                     </Tab>
-
-                    <Tab title="account.perm.password_model">
-                        <AccountPermissionsMigrate
-                            active={this.state.password_active}
-                            owner={this.state.password_owner}
-                            memo={this.state.password_memo}
-                            onSetPasswordKeys={this.onSetPasswordKeys.bind(this)}
-                            account={this.props.account}
-                            activeKeys={this.state.active_keys}
-                            ownerKeys={this.state.owner_keys}
-                            memoKey={this.state.memo_key}
-                            onAddActive={this.onAddItem.bind(this, "active")}
-                            onRemoveActive={this.onRemoveItem.bind(this, "active")}
-                            onAddOwner={this.onAddItem.bind(this, "owner")}
-                            onRemoveOwner={this.onRemoveItem.bind(this, "owner")}
-                            onSetMemo={this.onMemoKeyChanged.bind(this)}
-                        />
-
-                    </Tab>
                 </Tabs>
 
                 <div className="divider" />
@@ -358,15 +340,6 @@ class AccountPermissions extends React.Component {
                         </button>
                     </div>
                 </div>
-
-                <RecentTransactions
-                    accountsList={accountsList}
-                    limit={25}
-                    compactView={false}
-                    filter="account_update"
-                    style={{paddingTop: "2rem", paddingBottom: "2rem"}}
-                />
-
             </div>
         );
     }

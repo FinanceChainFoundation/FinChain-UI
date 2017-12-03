@@ -205,21 +205,9 @@ const routes = (
         <Route path="/init-error" getComponent={(location, cb) => {
             System.import("components/InitError").then(loadRoute(cb)).catch(errorLoading);
         }}/>
-        <Route path="/help" getComponent={(location, cb) => {
-            System.import("components/Help").then(loadRoute(cb)).catch(errorLoading);
-        }}>
-            <Route path=":path1" getComponent={(location, cb) => {
-                System.import("components/Help").then(loadRoute(cb)).catch(errorLoading);
-            }}>
-                <Route path=":path2" getComponent={(location, cb) => {
-                    System.import("components/Help").then(loadRoute(cb)).catch(errorLoading);
-                }}>
-                    <Route path=":path3" getComponent={(location, cb) => {
-                        System.import("components/Help").then(loadRoute(cb)).catch(errorLoading);
-                    }} />
-                </Route>
-            </Route>
-        </Route>
+        <Route path="lock" getComponent={(location, cb) => {
+            System.import("components/LockBalance/LockAsset").then(loadRoute(cb)).catch(errorLoading);
+        }}/>
     </Route>
 );
 
