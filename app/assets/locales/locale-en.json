@@ -47,7 +47,9 @@
     "locked_tip": "<br/>Click to login.<br/><br/>Closing the browser window will also log you out.",
     "unlocked_tip": "<br/>Click to log out.<br/><br/>Closing the browser window will also log you out.",
     "account_notify": "The active account is now %(account)s",
-    "account_value": "Account value"
+    "account_value": "Account value",
+    "deposit":"deposit"
+
   },
   "tooltip": {
     "call_limit": "This is the call price of the least collateralized margin position in the market.",
@@ -909,7 +911,7 @@
     "backup_brainkey": "Restore using a local wallet brainkey",
     "backupcreate_backup": "Create local wallet backup",
     "backupcreate_brainkey": "Create brainkey backup",
-    "lookup_text": "Click the button below to check for unclaimed balances from BTS 1.0",
+    "lookup_text": "Click the button below to check for unclaimed balances from genesis",
     "delete_select": "Select local wallet to delete",
     "restore_brainkey_text": "In order to restore from a brainkey, you will need to create a new local wallet. Please provide a password and name for your new local wallet below, then enter your brainkey.",
     "restore_key_count": "# of keys",
