@@ -41,7 +41,8 @@ class PeriodInput extends React.Component {
         this.state = {
             uint:1,
             days:"",
-            interest:0
+            interest:1,
+            period_days:0
 
         };
     }
@@ -52,6 +53,7 @@ class PeriodInput extends React.Component {
         let period=parseInt(days,10)*parseInt(this.state.uint,10)
         this.props.onChange(period);
         let period_s=parseInt(period,10)*3600*24
+        this.setState({period_days:period})
         this._onPeriodChange(period_s)
     }
 
@@ -60,6 +62,7 @@ class PeriodInput extends React.Component {
         let period=parseInt(this.state.days,10)*parseInt(uint,10)
         this.props.onChange(period);
         let period_s=parseInt(period,10)*3600*24
+        this.setState({period_days:period})
         this._onPeriodChange(period_s)
     }
     
@@ -67,7 +70,7 @@ class PeriodInput extends React.Component {
         let self=this
         Apis.instance().db_api().exec("get_asset_lock_data", [this.props.asset,period]).then( results => {
 
-            let interest=results.current_interest.active_interest*100-100
+            let interest=results.current_interest.active_interest
             self.setState({interest:interest})
             console.log(interest)
         })
@@ -92,12 +95,15 @@ class PeriodInput extends React.Component {
 
         //console.log(this.props.asset)
 
-        let interest=this.state.interest+"%"
+        let interest_per_day=Math.pow(this.state.interest,1/this.state.period_days)
+        let interest_per_year=Math.pow(interest_per_day,360)
+
+        let interest=interest_per_year*100-100+"%"
         let value = this.state.days;
 
-        let interest_render=this.state.interest?
+        let interest_render=this.state.interest-1?
             <div className="inline-label input-wrapper">
-                <label className="right-label"> 利率: </label><span className="right-label">{interest}</span>
+                <label className="right-label"> 年华收益: </label><span className="right-label">{interest}</span>
             </div>:null
         return (
             <div className="amount-selector" style={this.props.style}>

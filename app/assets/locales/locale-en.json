@@ -473,7 +473,9 @@
     "profit_rate":"收益率",
     "operation":"操作",
     "profit_prompt_period":"获得到期收益:",
-    "profit_prompt_unperiod":"锁定未到期，提前解锁将不能获得任何收益"
+    "profit_prompt_unperiod":"锁定未到期，提前解锁将不能获得任何收益",
+    "interest_year":"年化收益",
+    "maturity_profit":"到期收益"
   },
   "operation": {
     "pending": "pending %(blocks)s blocks",

@@ -241,7 +241,7 @@ class AccountPermissions extends React.Component {
                     <Tabs setting="permissionsTabs" tabsClass="no-padding bordered-header" contentClass="grid-content no-overflow no-padding">
 
                     <Tab title="account.perm.active">
-                            <HelpContent style={{maxWidth: "800px"}} path="components/AccountPermActive" />
+                        {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountPermActive" />*/}
                             <form className="threshold">
                                 <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
@@ -287,7 +287,7 @@ class AccountPermissions extends React.Component {
                     </Tab>
 
                     <Tab title="account.perm.owner">
-                            <HelpContent style={{maxWidth: "800px"}} path="components/AccountPermOwner" />
+                        {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountPermOwner" />*/}
                             <form className="threshold">
                                 <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
