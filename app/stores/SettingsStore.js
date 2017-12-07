@@ -7,7 +7,7 @@ import ls from "common/localStorage";
 import { Apis } from "bitsharesjs-ws";
 import { settingsAPIs } from "api/apiConfig";
 
-const CORE_ASSET = "FCC"; // Setting this to FCC to prevent loading issues when used with FCC chain which is the most usual case currently
+const CORE_ASSET = "JRC"; // Setting this to JRC to prevent loading issues when used with JRC chain which is the most usual case currently
 
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
@@ -137,7 +137,7 @@ class SettingsStore {
             this.marketsKey = this._getChainKey("userMarkets");
             // Default markets setup
             let topMarkets = {
-                markets_4018d784: [ // FCC MAIN NET
+                markets_4018d784: [ // JRC MAIN NET
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "PEG.FAKEUSD", "BTWTY"
@@ -152,7 +152,7 @@ class SettingsStore {
                 ]
             };
 
-            let coreAssets = {markets_4018d784: "FCC", markets_39f5e2ed: "TEST"};
+            let coreAssets = {markets_4018d784: "JRC", markets_39f5e2ed: "TEST"};
             let coreAsset = coreAssets[this.starredKey] || "BTS";
             this.defaults.unit[0] = coreAsset;
 

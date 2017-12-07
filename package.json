@@ -124,7 +124,7 @@
     "alt-container": "^1.0.0",
     "alt-react": "0.0.1",
     "bignumber.js": "^4.0.0",
-    "bitsharesjs": "git+ssh://git@118.31.186.83:bitsharesjs.git#fc8ab3b ",
+    "bitsharesjs": "git+ssh://git@118.31.186.83:bitsharesjs.git#8ee63db ",
     "browser-locale": "^1.0.3",
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",
