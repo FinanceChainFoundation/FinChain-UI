@@ -103,15 +103,15 @@ const MarketUtils = {
 
         if (order.debt) {
             if (invert) {
-                // Price in USD/FCC, amount should be in FCC, value should be in USD, debt is in USD
-                // buy is in USD, sell is in FCC
-                // quote is USD, base is FCC
+                // Price in USD/JRC, amount should be in JRC, value should be in USD, debt is in USD
+                // buy is in USD, sell is in JRC
+                // quote is USD, base is JRC
                 value = order.debt / quotePrecision;
                 amount = this.limitByPrecision(value / price.full, base);
             } else {
-                // Price in FCC/USD, amount should be in USD, value should be in FCC, debt is in USD
-                // buy is in USD, sell is in FCC
-                // quote is USD, base is FCC
+                // Price in JRC/USD, amount should be in USD, value should be in JRC, debt is in USD
+                // buy is in USD, sell is in JRC
+                // quote is USD, base is JRC
 
                 amount = this.limitByPrecision(order.debt / quotePrecision, quote);
                 value = price.full * amount;

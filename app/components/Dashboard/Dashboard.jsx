@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
         super();
         let marketsByChain = {
             "4018d784":[
-                ["CNY", "FCC"]
+                ["CNY", "JRC"]
             ]
         };
         let chainID = Apis.instance().chain_id;

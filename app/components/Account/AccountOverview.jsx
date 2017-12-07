@@ -44,7 +44,7 @@ class AccountOverview extends React.Component {
             withdrawAsset: null,
             bridgeAsset: null,
             alwaysShowAssets: [
-                "FCC"
+                "JRC"
             ],
             lockDetails:{
                 asset_id:"1.3.0",

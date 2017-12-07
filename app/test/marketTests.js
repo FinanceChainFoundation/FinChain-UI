@@ -157,15 +157,15 @@ describe("Asset", function() {
 
         let result1 = asset.times(price1);
         assert.equal(result1.asset_id, "1.3.121", "Asset id should be 1.3.121");
-        // 100 FCC * 200 FCC/USD = 100 FCC * (1/200) USD/FCC = 0.5 USD
+        // 100 JRC * 200 JRC/USD = 100 JRC * (1/200) USD/JRC = 0.5 USD
         assert.equal(result1.getAmount({real: true}), 0.5, "Asset amount should be 0.5");
 
         let result2 = asset.times(price2);
         assert.equal(result2.asset_id, "1.3.121", "Asset id should be 1.3.121");
-        // 100 FCC * 0.001 USD / FCC = 0.1 USD
+        // 100 JRC * 0.001 USD / JRC = 0.1 USD
         assert.equal(result2.getAmount({real: true}), 0.1, "Asset amount should be 0.1");
 
-        // 55 USD * 250 FCC / USD = 13750 FCC
+        // 55 USD * 250 JRC / USD = 13750 JRC
         assert.equal(asset2.times(price3).getAmount({real: true}), 13750, "Asset amount should equal 13750");
     });
 
@@ -495,14 +495,14 @@ describe("LimitOrderCreate", function() {
         real: 5.232
     });
 
-    let FCC = new Asset({
+    let JRC = new Asset({
         real: 1045.5
     });
 
     it("Instantiates", function() {
         let order =  new LimitOrderCreate({
             to_receive: USD,
-            for_sale: FCC
+            for_sale: JRC
         });
 
         assert(order !== null);
@@ -511,7 +511,7 @@ describe("LimitOrderCreate", function() {
     it("Can be converted to object", function() {
         let order =  new LimitOrderCreate({
             to_receive: USD,
-            for_sale: FCC
+            for_sale: JRC
         });
         let obj = order.toObject();
         assert.equal(Object.keys(obj).length, 6, "Object should have 6 keys");
@@ -526,7 +526,7 @@ describe("LimitOrderCreate", function() {
         assert.throws(function() {
             new LimitOrderCreate({
                 to_receive: null,
-                for_sale: FCC
+                for_sale: JRC
             });
         });
 
@@ -548,8 +548,8 @@ describe("LimitOrderCreate", function() {
     it("Throws if assets are the same", function() {
         assert.throws(function() {
             new LimitOrderCreate({
-                to_receive: FCC,
-                for_sale: FCC
+                to_receive: JRC,
+                for_sale: JRC
             });
         });
     });
