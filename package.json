@@ -129,7 +129,7 @@
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",
     "counterpart": "^0.17.1",
-    "datajs": "^1.0.3",
+    "datejs": "^1.0.0-rc3",
     "event-emitter": "^0.3.4",
     "file-saver": "^1.3.3",
     "foundation-apps": "git+https://github.com/zurb/foundation-apps.git",

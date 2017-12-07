@@ -28,7 +28,7 @@ import { Apis } from "bitsharesjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 
-require("datejs")
+require("datejs");
 class AccountOverview extends React.Component {
 
     static propTypes = {
