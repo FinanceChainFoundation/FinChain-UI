@@ -319,31 +319,10 @@ class CreateAccount extends React.Component {
                     <tbody>
 
                         <tr>
-                            <td><Link to="/dashboard"><Translate content="header.dashboard" /></Link></td>
+                            <td style={{textAlign: "center", paddingLeft: 10}}>
+                                <Link to="/dashboard"><Translate content="wallet.start" /></Link>
+                            </td>
                         </tr>
-
-                        {/*<tr>
-                            <td><Translate content="wallet.tips_account" />:</td>
-                            <td><Link to={`/account/${this.state.accountName}/overview`} ><Translate content="wallet.link_account" /></Link></td>
-                        </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_deposit" />:</td>
-                            <td><Link to="/deposit-withdraw"><Translate content="wallet.link_deposit" /></Link></td>
-                        </tr>
-
-
-
-                        <tr>
-                            <td><Translate content="wallet.tips_transfer" />:</td>
-                            <td><Link to="/transfer"><Translate content="wallet.link_transfer" /></Link></td>
-                        </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_settings" />:</td>
-                            <td><Link to="/settings"><Translate content="header.settings" /></Link></td>
-                        </tr>
-                        */}
                     </tbody>
 
                 </table>

@@ -2,7 +2,7 @@ import alt from "alt-instance";
 
 var locales = {};
 if (__ELECTRON__) {
-    ["cn", "de", "es", "fr", "ko", "tr", "ru", "it"].forEach(locale => {
+    ["cn", "en"].forEach(locale => {
         locales[locale] = require("json-loader!assets/locales/locale-" + locale + ".json");
     });
 }

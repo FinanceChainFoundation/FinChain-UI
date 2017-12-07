@@ -1183,6 +1183,7 @@
     "step_1": "Create a wallet",
     "step_2": "Create a backup",
     "step_3": "Getting Started",
+    "start":"开始",
     "congrat": "Congratulations, you're ready!",
     "tips_explore": "Now that you've successfully created an account and downloaded the backup, it's time to get started. Click on one of the links below to start exploring.",
     "tips_header": "You can also find these same links in the top menu, and in the drop-down menu next to your account name.",

@@ -21,3 +21,4 @@ app/stats-dev.json
 app/stats-prod.json
 app/test/MarketClasses.js
 updateUI.sh
+app.asar
