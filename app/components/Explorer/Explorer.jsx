@@ -84,6 +84,7 @@ class Explorer extends React.Component {
                                 </div>
                             </Link>
                         </ExplorerCard>
+                    {/*
                         <ExplorerCard>
                             <Link to="explorer/fees">
                                 <div>
@@ -94,6 +95,7 @@ class Explorer extends React.Component {
                                 </div>
                             </Link>
                         </ExplorerCard>
+                    */}
                         {/*<ExplorerCard>
                             <Link to="blocks">
                                 <div>

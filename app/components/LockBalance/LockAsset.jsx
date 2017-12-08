@@ -103,7 +103,7 @@ class PeriodInput extends React.Component {
 
         let interest_render=this.state.interest-1?
             <div className="inline-label input-wrapper">
-                <label className="right-label"> 年华收益: </label><span className="right-label">{interest}</span>
+                <label className="right-label"> 年化收益: </label><span className="right-label">{interest}</span>
             </div>:null
         return (
             <div className="amount-selector" style={this.props.style}>
