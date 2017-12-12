@@ -1,1 +1,1 @@
-scp -r ./build/dist/* root@139.196.111.65:/www/current/public/
+scp -r ./build/dist/* ssh test:/www/current/public/
