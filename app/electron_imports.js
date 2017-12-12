@@ -40,3 +40,4 @@ import Brainkey from "./components/Wallet/Brainkey";
 import Help from "./components/Help";
 import InitError from "./components/InitError";
 import CreateWorker from "./components/Account/CreateWorker";
+import LockAsset from "./components/LockBalance/LockAsset";
