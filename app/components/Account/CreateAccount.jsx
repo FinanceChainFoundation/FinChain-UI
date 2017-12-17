@@ -233,7 +233,7 @@ class CreateAccount extends React.Component {
                 {this.state.loading ?  <LoadingIndicator type="three-bounce"/> : <button style={{width: "100%"}} className={buttonClass}><Translate content="account.create_account" /></button>}
 
                 {/* Backup restore option */}
-                {/*
+
                 <div style={{paddingTop: 40}}>
                     <label>
                         <Link to="/existing-account">
@@ -241,13 +241,14 @@ class CreateAccount extends React.Component {
                         </Link>
                     </label>
 
-                    <label>
+                    {/* <label>
                         <Link to="/create-wallet-brainkey">
                             <Translate content="settings.backup_brainkey" />
                         </Link>
                     </label>
+                     */}
                 </div>
-                */}
+
                 {/* Skip to step 3 */}
                 {(!hasWallet || firstAccount ) ? null :<div style={{paddingTop: 20}}>
                     <label>

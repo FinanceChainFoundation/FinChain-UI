@@ -1135,7 +1135,7 @@
     "password_model_3": "<li>单一账户</li><li>简易登录</li><li>安全性：中</li>",
     "use_wallet": "使用钱包模式",
     "use_password": "使用账户模式",
-    "pass_length": "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
+    "pass_length": "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母;记牢密码,如果密码忘记也会失去资产。",
     "switch_model_wallet": "切换到钱包模式",
     "switch_model_password": "切换到账户模式",
     "account_public": "账户名称（公开可见）",
