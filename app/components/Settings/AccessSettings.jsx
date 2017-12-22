@@ -7,7 +7,7 @@ import willTransitionTo from "../../routerTransition";
 import { withRouter } from "react-router/es";
 import { connect } from "alt-react";
 
-const autoSelectAPI = "wss://fake.automatic-selection.com";
+const autoSelectAPI = "ws://47.95.22.107:9090";
 const testnetAPI = settingsAPIs.WS_NODE_LIST.find(a => a.url.indexOf("node.testnet.bitshares.eu") !== -1);
 
 class ApiNode extends React.Component {

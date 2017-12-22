@@ -861,7 +861,15 @@
     "wallet_required": "要求钱包模式",
     "wallet_required_text": "你需要切换到钱包模式才能恢复旧的备份钱包文件，点击下方按钮继续。",
     "enable_wallet": "启用钱包模式",
-    "connection_error": "Unable to connect to API node %(url)s, falling back to known working nodes"
+    "active_node": "Active Node",
+    "node_up": "可连接",
+    "node_down": "未知",
+    "available_nodes": "可用的节点",
+    "activate": "使用",
+    "connection_error": "不能连接到Api节点 %(url)s",
+    "low_latency": "低延时",
+    "medium_latency": "中延时",
+    "high_latency": "高延时"
   },
   "pagination": {
     "newer": "更近",
