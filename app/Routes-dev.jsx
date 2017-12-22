@@ -48,7 +48,7 @@ import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import LockAsset from "./components/LockBalance/LockAsset";
-//import LockDetails from "./components/LockBalance/LockDetails";
+import MassTransfer from "./components/advance/MassTransfer";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -126,7 +126,7 @@ const routes = (
         <Route path="/init-error" component={InitError} />
         
         <Route path="lock" component={LockAsset}/>
-
+        <Route path="mass-transfer" component={MassTransfer}/>
         <Route path="/help" component={Help} >
             <Route path=":path1" component={Help} >
                 <Route path=":path2" component={Help} >
