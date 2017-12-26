@@ -23,3 +23,5 @@ app/test/MarketClasses.js
 updateUI.sh
 app.asar
 updateUI.sh
+/node/win
+/node/mac
