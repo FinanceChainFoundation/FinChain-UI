@@ -126,7 +126,7 @@ const routes = (
         <Route path="/init-error" component={InitError} />
         
         <Route path="lock" component={LockAsset}/>
-        <Route path="mass-transfer" component={MassTransfer}/>
+        <Route path="advance/mass-transfer" component={MassTransfer}/>
         <Route path="/help" component={Help} >
             <Route path=":path1" component={Help} >
                 <Route path=":path2" component={Help} >

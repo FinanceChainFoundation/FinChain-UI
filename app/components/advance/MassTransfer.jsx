@@ -17,8 +17,7 @@ import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import { debounce, isNaN } from "lodash";
 import classnames from "classnames";
 import { Asset } from "common/MarketClasses";
-
-var xlsx=require('node-xlsx')
+import {Apis} from "bitsharesjs-ws";
 
 class FileInputs extends React.Component{
 
@@ -94,27 +93,81 @@ class MassTransfer extends React.Component {
         };
 
     };
-    onGetKeyStore(result){
+    onGetKeyStore(result) {
 
-        var tos_values=[]
-        var datas=result.split("\n")
-        for(var i=0;i<datas.length;i++){
-            var data=datas[i].split("\t")
-            tos_values.push({
-                to:data[0],
-                value:parseInt(data[1],10)
+        var toAndValues = []
+        var datas = result.split("\n")
+        var totalSends=0
+        for (var i = 0; i < datas.length; i++) {
+            var data = datas[i].split("\t")
+            toAndValues.push({
+                to: data[0],
+                value: parseInt(data[1], 10)
             })
+            totalSends+=parseInt(data[1], 10)
         }
-        console.log(tos_values)
-
+        this.setState({
+            toAndValues: toAndValues,
+            totalSends:totalSends
+        })
     }
+
+    onSubmit(e) {
+        e.preventDefault();
+        this.setState({error: null});
+        const {toAndValues} = this.state;
+
+        let tos=[]
+        let name_ids={}
+        for(let i=0;i<toAndValues.length;i++){
+            tos.push(toAndValues[i].to)
+        }
+        Apis.instance().db_api().exec("get_account_ids", tos).then(result=> {
+            console.log(result);
+            name_ids=result
+        })
+
+        /*toAndValues.forEach(function(toAndValue){})
+        const sendAmount = new Asset({real: amount, asset_id: asset.get("id"), precision: asset.get("precision")});
+
+        AccountActions.transfer(
+            this.state.from_account.get("id"),
+            this.state.to_account.get("id"),
+            sendAmount.getAmount(),
+            asset.get("id"),
+            this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
+            this.state.propose ? this.state.propose_account : null,
+            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
+        ).then( () => {
+            this.resetForm.call(this);
+            TransactionConfirmStore.unlisten(this.onTrxIncluded);
+            TransactionConfirmStore.listen(this.onTrxIncluded);
+        }).catch( e => {
+            let msg = e.message ? e.message.split( '\n' )[1] : null;
+            console.log( "error: ", e, msg);
+            this.setState({error: msg});
+        } );
+        */
+    }
+
 
     render() {
 
+        let isSendNotValid=false
+        let tabIndex=0
         return (
-            <div >
-                <FileInputs onGetKeyStore={this.onGetKeyStore.bind(this)}/>
-            </div>)
+            <div className="grid-block vertical">
+                <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
+                    <form style={{paddingBottom: 20, overflow: "visible"}} className="grid-content small-12 medium-6 large-5 large-offset-1 full-width-content" onSubmit={this.onSubmit.bind(this)} noValidate>
+                        <FileInputs onGetKeyStore={this.onGetKeyStore.bind(this)}/>
+                        <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
+                            <Translate component="span" content="transfer.send" />
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+                )
     }
 }
 
