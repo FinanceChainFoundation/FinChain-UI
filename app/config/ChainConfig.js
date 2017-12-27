@@ -6,7 +6,7 @@ var _this = void 0;
 _this = {
     core_asset: "JRC",
     address_prefix: "JRC",
-    expire_in_secs: 15,
+    expire_in_secs: 300,
     expire_in_secs_proposal: 24 * 60 * 60,
     review_in_secs_committee: 24 * 60 * 60,
     networks: {

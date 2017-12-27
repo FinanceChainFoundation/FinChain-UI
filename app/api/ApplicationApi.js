@@ -82,7 +82,8 @@ const ApplicationApi = {
         encrypt_memo = true,
         optional_nonce = null,
         propose_account = null,
-        fee_asset_id = "1.3.0"
+        fee_asset_id = "1.3.0",
+        need_comfirm=true
     }) {
         let memo_sender = propose_account || from_account;
 
@@ -184,7 +185,8 @@ const ApplicationApi = {
                 return WalletDb.process_transaction(
                     tr,
                     null, //signer_private_keys,
-                    broadcast
+                    broadcast,[],
+                    need_comfirm
                 );
             });
         });

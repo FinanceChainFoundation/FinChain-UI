@@ -88,67 +88,76 @@ class MassTransfer extends React.Component {
     static getInitialState() {
         return {
             fileName: "",
-            toAndValues: [],
+            toAndValues: {},
             totalSends: 0
         };
 
     };
     onGetKeyStore(result) {
 
-        var toAndValues = []
-        var datas = result.split("\n")
-        var totalSends=0
+        let toAndValues = {}
+        let datas = result.split("\r")
+        let totalSends=0
         for (var i = 0; i < datas.length; i++) {
             var data = datas[i].split("\t")
-            toAndValues.push({
-                to: data[0],
-                value: parseInt(data[1], 10)
-            })
-            totalSends+=parseInt(data[1], 10)
+            if(data[0]!="") {
+                toAndValues[data[0]]={
+                    id: "",
+                    value: parseInt(data[1], 10)
+                }
+                totalSends += parseInt(data[1], 10)
+            }
         }
-        this.setState({
-            toAndValues: toAndValues,
-            totalSends:totalSends
+
+        Apis.instance().db_api().exec("get_account_ids", [Object.keys(toAndValues)]).then(results=> {
+
+            for(let i=0;i<results.length;i++){
+                let account_name=results[i][0]
+                toAndValues[account_name]["id"]=results[i][1]
+            }
+
+            console.log(toAndValues)
+            this.setState({
+                toAndValues: toAndValues,
+                totalSends:totalSends
+            })
         })
     }
 
     onSubmit(e) {
         e.preventDefault();
-        this.setState({error: null});
         const {toAndValues} = this.state;
 
-        let tos=[]
-        let name_ids={}
-        for(let i=0;i<toAndValues.length;i++){
-            tos.push(toAndValues[i].to)
-        }
-        Apis.instance().db_api().exec("get_account_ids", tos).then(result=> {
-            console.log(result);
-            name_ids=result
+        Object.keys(toAndValues).forEach(name=>{
+            let to=toAndValues[name].id;
+            let value=toAndValues[name].value*100000000
+            if(to!=""){
+                console.log("send token " ,to,value)
+                AccountActions.transfer(
+                    "1.2.542",
+                    to,
+                    value,
+                    "1.3.0",
+                    "Initial send",
+                    null,
+                    "1.3.0",
+                    false
+                ).then( () => {
+                    this.resetForm.call(this);
+                    TransactionConfirmStore.unlisten(this.onTrxIncluded);
+                    TransactionConfirmStore.listen(this.onTrxIncluded);
+                }).catch( e => {
+                    let msg = e.message ? e.message.split( '\n' )[1] : null;
+                    console.log( "error: ", e, msg);
+                    this.setState({error: msg});
+                } );
+
+            }
+
         })
 
-        /*toAndValues.forEach(function(toAndValue){})
-        const sendAmount = new Asset({real: amount, asset_id: asset.get("id"), precision: asset.get("precision")});
-
-        AccountActions.transfer(
-            this.state.from_account.get("id"),
-            this.state.to_account.get("id"),
-            sendAmount.getAmount(),
-            asset.get("id"),
-            this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
-            this.state.propose ? this.state.propose_account : null,
-            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
-        ).then( () => {
-            this.resetForm.call(this);
-            TransactionConfirmStore.unlisten(this.onTrxIncluded);
-            TransactionConfirmStore.listen(this.onTrxIncluded);
-        }).catch( e => {
-            let msg = e.message ? e.message.split( '\n' )[1] : null;
-            console.log( "error: ", e, msg);
-            this.setState({error: msg});
-        } );
-        */
     }
+
 
 
     render() {

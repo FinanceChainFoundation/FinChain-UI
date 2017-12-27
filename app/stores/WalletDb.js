@@ -96,7 +96,9 @@ class WalletDb extends BaseStore {
         return this.decryptTcomb_PrivateKey(private_key_tcomb)
     }
 
-    process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
+    process_transaction(tr, signer_pubkeys, broadcast, extra_keys = [],need_comfirm=true) {
+        
+        this.confirm_transactions=need_comfirm
         const passwordLogin = SettingsStore.getState().settings.get("passwordLogin");
 
         if(!passwordLogin && Apis.instance().chain_id !== this.state.wallet.chain_id)
