@@ -331,6 +331,7 @@ class AccountOverview extends React.Component {
             const includeAsset = !hiddenAssets.includes(asset_type);
             const hasBalance = !!balanceObject.get("balance");
             const hasOnOrder = !!orders[asset_type];
+            const hasFixBalance = !!lockeds;
             const canDepositWithdraw = !!this.props.backedCoins.get("OPEN", []).find(a => a.symbol === asset.get("symbol"));
             const canWithdraw = canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
             const canBuy = !!this.props.bridgeCoins.get(symbol);
@@ -369,10 +370,10 @@ class AccountOverview extends React.Component {
                         <LinkToAssetById asset={asset.get("id")} />
                     </td>
                     <td style={{textAlign: "right"}}>
-                        {hasBalance || hasOnOrder ? <BalanceComponent balance={balance} assetInfo={assetInfoLinks} hide_asset/> : null}
+                        {hasBalance || hasOnOrder||hasFixBalance ? <BalanceComponent balance={balance} assetInfo={assetInfoLinks} hide_asset/> : null}
                     </td>
                     <td style={{textAlign: "right"}}>
-                        {hasBalance || hasOnOrder ?
+                        {hasBalance || hasOnOrder ||hasFixBalance?
                             <FormattedAsset
                                 amount={fix_balances_amount}
                                 asset={asset_type}
@@ -381,7 +382,7 @@ class AccountOverview extends React.Component {
                     </td>
                     <td style={{textAlign: "center"}}>{locked_detail_button}</td>
                     <td style={{textAlign: "right"}}>
-                        {hasBalance || hasOnOrder ?
+                        {hasBalance || hasOnOrder||hasFixBalance ?
                             <FormattedAsset
                                 amount={total_balances_amount}
                                 asset={asset_type}
@@ -545,7 +546,7 @@ class AccountOverview extends React.Component {
             // Filter out balance objects that have 0 balance or are not included in open orders
             account_balances = account_balances.filter((a, index) => {
                 let balanceObject = ChainStore.getObject(a);
-                if (balanceObject && (!balanceObject.get("balance") && !orders[index])) {
+                if (balanceObject && (!balanceObject.get("balance") && !orders[index]&&!balanceObject.get("lockeds"))) {
                     return false;
                 } else {
                     return true;
