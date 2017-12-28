@@ -120,9 +120,11 @@ class AccountOverview extends React.Component {
         e.preventDefault();
         this.props.router.push(route);
     }
-    _onUnlockOperation(locked_id,e){
+    _onUnlockOperation(locked_id,if_period,e){
 
         e.preventDefault();
+        if(!if_period)
+            return
         let toUnlockObj=ChainStore.getObject(locked_id).toObject()
         this.setState({
             toUnlockObj: toUnlockObj
@@ -159,9 +161,10 @@ class AccountOverview extends React.Component {
 
             let rowKey=fix_balance_obj.id
 
-            let operationStr=(start+period)<= Date.now() / 1000?"lock.unlock":"lock.ahead_unlock"
+            let if_period=(start+period)<= Date.now() / 1000
+            let operationStr=if_period?"lock.unlock":"lock.ahead_unlock"
 
-            let OperationLink = <a href onClick={self._onUnlockOperation.bind(self, rowKey)}><Translate content={operationStr} /></a>
+            let OperationLink =if_period? <a href  onClick={self._onUnlockOperation.bind(self, rowKey,if_period)} disabled={!if_period}><Translate content={operationStr} /></a>:null
             return(<tr key={rowKey} style={{maxWidth: "100rem"}}>
 
                 <td style={{textAlign: "right", paddingLeft: 10}}>

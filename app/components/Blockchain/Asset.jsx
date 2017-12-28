@@ -300,6 +300,13 @@ class Asset extends React.Component {
             </tr>
         ) : null;
 
+        var lockedBalance = (dynamic) ? (
+            <tr>
+                <td> <Translate content="explorer.asset.summary.locked_balance"/> </td>
+                <td> <FormattedAsset amount={dynamic.locked_balance} asset={asset.id}/> </td>
+            </tr>
+        ) : null;
+
         return (
             <div className="asset-card">
                 <div className="card-divider"><AssetName name={asset.symbol} /></div>
@@ -319,6 +326,7 @@ class Asset extends React.Component {
                         </tr>
                         {currentSupply}
                         {stealthSupply}
+                        {lockedBalance}
                         {marketFee}
                         {maxMarketFee}
                     </tbody>
