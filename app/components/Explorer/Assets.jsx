@@ -12,6 +12,7 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import AssetName from "../Utility/AssetName";
 import {Tabs, Tab} from "../Utility/Tabs";
 import {ChainStore} from "bitsharesjs/es";
+import AccountStore from "../../stores/AccountStore";
 
 class Assets extends React.Component {
 
@@ -81,7 +82,7 @@ class Assets extends React.Component {
         });
     }
 
-    render() {
+    render() {console.log(ChainStore.getAccount("1.2.13"))
         let {assets} = this.props;
 
         let placeholder = counterpart.translate("markets.filter").toUpperCase();
@@ -93,13 +94,22 @@ class Assets extends React.Component {
             let description = assetUtils.parseDescription(asset.options.description);
 
             let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "BTS");
-
+            console.log(AccountStore.getState().currentAccount, asset.issuer);
             return (
                 <tr key={asset.symbol}>
                     <td><Link to={`/asset/${asset.symbol}`}><AssetName name={asset.symbol} /></Link></td>
                     <td>{this.linkToAccount(asset.issuer)}</td>
                     <td><FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} hide_asset={true}/></td>
-                    <td><Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link></td>
+                    <td>
+                        <Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link>
+                        <Link className="button outline" to={`/presale/history/${asset.symbol}`}><Translate content="presale.history"/></Link>
+                        {
+                            ChainStore.getAccount(AccountStore.getState().currentAccount).get("id") == asset.issuer ?
+                                <Link className="button outline" to={`/presale/create/${asset.symbol}`}><Translate content="presale.create"/></Link>
+                                :
+                                null
+                        }
+                    </td>
                 </tr>
             );
         }).sort((a, b) => {

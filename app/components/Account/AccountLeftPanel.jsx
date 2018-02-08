@@ -127,6 +127,7 @@ class AccountLeftPanel extends React.Component {
 
                             </span>
                         </li> */}
+                                <li><Link to={`/account/${account_name}/presales/bought`} activeClassName="active"><Translate content="presale.bought"/></Link></li>
                     </ul>
                 </section>
 

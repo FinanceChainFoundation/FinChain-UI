@@ -179,6 +179,11 @@ class AccountAssets extends React.Component {
         this.setState({issue: issue});
     }
 
+    _presaleButtonClick(symbol, account_name, e) {
+        e.preventDefault();
+        this.props.router.push(`/account/${account_name}/assets/${symbol}/presales/create`);
+    }
+
     render() {
         let {account, account_name, searchAccounts, assets, assetsList} = this.props;
         let {issue, errors, isValid, create} = this.state;
@@ -238,6 +243,12 @@ class AccountAssets extends React.Component {
                                 <Translate content="transaction.trxTypes.asset_update" />
                             </button>
                         </td>
+
+                        <td>
+                            <button onClick={this._presaleButtonClick.bind(this, asset.symbol, account_name)} className="button outline">
+                                <Translate content="presale.create"/>
+                            </button>
+                        </td>
                     </tr>
                 );
         }).toArray();
@@ -257,7 +268,7 @@ class AccountAssets extends React.Component {
                                     <th style={{maxWidth: "200px"}}><Translate content="account.user_issued_assets.description" /></th>
                                     <Translate component="th" content="markets.supply" />
                                     <th><Translate content="account.user_issued_assets.max_supply" /></th>
-                                    <th style={{textAlign: "center"}} colSpan="3"><Translate content="account.perm.action" /></th>
+                                    <th style={{textAlign: "center"}} colSpan="4"><Translate content="account.perm.action" /></th>
                                 </tr>
                                 </thead>
                                 <tbody>

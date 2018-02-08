@@ -49,6 +49,10 @@ import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import LockAsset from "./components/LockBalance/LockAsset";
 import MassTransfer from "./components/advance/MassTransfer";
+import PresaleCreate from "./components/Presale/PresaleCreate";
+import PresaleHistory from "./components/Presale/PresaleHistory";
+import AccountPresaleCreate from "./components/Account/AccountPresaleCreate";
+import AccountPresaleBought from "./components/Account/AccountPresaleBought";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -119,6 +123,8 @@ const routes = (
             <Route path="orders" component={AccountOrders} />
             <Route path="whitelist" component={AccountWhitelist} />
             <Redirect from="overview" to="dashboard" />
+            <Route path="assets/:asset/presales/create" component={AccountPresaleCreate}/>
+            <Route path="presales/bought" component={AccountPresaleBought}/>
         </Route>
 
         <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
@@ -133,6 +139,10 @@ const routes = (
                     <Route path=":path3" component={Help} />
                 </Route>
             </Route>
+        </Route>
+        <Route path="presale">
+            <Route path="create/:asset" component={PresaleCreate}/>
+            <Route path="history/:asset" component={PresaleHistory}/>
         </Route>
     </Route>
 );

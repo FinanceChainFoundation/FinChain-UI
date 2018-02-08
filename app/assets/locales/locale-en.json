@@ -1390,5 +1390,8 @@
   },
     "trx_error": {
         "expire": "Your transaction has expired without being confirmed, please try again later."
-    }
+    },
+  "presale": {
+    "bought": "My bought presales"
+  }
 }
