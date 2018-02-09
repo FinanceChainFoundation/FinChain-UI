@@ -37,7 +37,7 @@ class ModalContent extends React.Component {
         this.setState({amount, asset, asset_id: asset.get("id")});
     }
 
-    onSubmit() {
+    onSubmit() {//console.log(ChainStore.getAccount(AccountStore.getState().currentAccount));return;
         let args = {
 
             issuer: ChainStore.getAccount(AccountStore.getState().currentAccount).get("id"),

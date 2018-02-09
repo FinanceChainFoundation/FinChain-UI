@@ -103,12 +103,12 @@ class Assets extends React.Component {
                     <td>
                         <Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link>
                         <Link className="button outline" to={`/presale/history/${asset.symbol}`}><Translate content="presale.history"/></Link>
-                        {
-                            ChainStore.getAccount(AccountStore.getState().currentAccount).get("id") == asset.issuer ?
-                                <Link className="button outline" to={`/presale/create/${asset.symbol}`}><Translate content="presale.create"/></Link>
-                                :
-                                null
-                        }
+                        {/*{*/}
+                            {/*ChainStore.getAccount(AccountStore.getState().currentAccount).get("id") == asset.issuer ?*/}
+                                {/*<Link className="button outline" to={`/presale/create/${asset.symbol}`}><Translate content="presale.create"/></Link>*/}
+                                {/*:*/}
+                                {/*null*/}
+                        {/*}*/}
                     </td>
                 </tr>
             );
