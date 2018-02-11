@@ -1323,6 +1323,7 @@
     "buy": "参与众筹",
     "bought": "我参与的众筹",
     "create": "发起众筹",
+    "delete": "删除",
     "amount": "众筹数量",
     "history": "众筹列表",
     "mode": {
@@ -1331,11 +1332,13 @@
       "total": "总价模式"
     },
     "perprice": "单币价格",
-    "mintotal": "最低总价",
-    "maxtotal": "最高总价",
-    "lockmode": "锁定期限",
+    "mintotal": "最低购买数量",
+    "maxtotal": "最高购买数量",
+    "lockmode": "解冻方式",
     "lockmode_none": "0锁定",
     "lockmode_liner": "线性解冻",
-    "lockmode_deadline": "到期解冻"
+    "lockmode_deadline": "到期解冻",
+    "early_bird": "早鸟计划",
+    "lock_period": "锁定期限"
   }
 }

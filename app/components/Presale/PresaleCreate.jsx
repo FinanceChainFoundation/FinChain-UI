@@ -267,10 +267,10 @@ class PresaleCreate extends React.Component {
                     <label>
                         <AmountSelector
                             label="presale.amount"
-                            amount={amount}
+                            //amount={amount}
                             onChange={this.onAmountChanged.bind(this)}
                             asset={this.props.asset.get("id")}
-                            assets={[this.props.asset.get("id")]}
+                            assets={[this.props.asset.get("id"), "1.3.2"]}
                             placeholder="0.00"
                         />
                     </label>
