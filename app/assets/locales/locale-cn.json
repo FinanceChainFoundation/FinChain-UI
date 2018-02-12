@@ -1320,11 +1320,15 @@
       "expire": "Your transaction has expired without being confirmed, please try again later."
     },
   "presale": {
+    "add_accept": "添加接受资产类型",
+    "amount": "数量",
     "buy": "参与众筹",
+    "buy_history": "参与记录",
+    "buy_time": "参与时间",
     "bought": "我参与的众筹",
+    "claimed": "已认领数量",
     "create": "发起众筹",
     "delete": "删除",
-    "amount": "众筹数量",
     "history": "众筹列表",
     "mode": {
       "title": "众筹模式",
@@ -1332,13 +1336,15 @@
       "total": "总价模式"
     },
     "perprice": "单币价格",
-    "mintotal": "最低购买数量",
-    "maxtotal": "最高购买数量",
+    "minbuy": "最低购买数量",
+    "maxbuy": "最高购买数量",
     "lockmode": "解冻方式",
     "lockmode_none": "0锁定",
     "lockmode_liner": "线性解冻",
     "lockmode_deadline": "到期解冻",
     "early_bird": "早鸟计划",
-    "lock_period": "锁定期限"
+    "lock_period": "锁定期限",
+    "odd": "比率",
+    "total": "总量"
   }
 }

@@ -49,7 +49,6 @@ import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import LockAsset from "./components/LockBalance/LockAsset";
 import MassTransfer from "./components/advance/MassTransfer";
-import PresaleCreate from "./components/Presale/PresaleCreate";
 import PresaleHistory from "./components/Presale/PresaleHistory";
 import AccountPresaleCreate from "./components/Account/AccountPresaleCreate";
 import AccountPresaleBought from "./components/Account/AccountPresaleBought";
@@ -141,7 +140,6 @@ const routes = (
             </Route>
         </Route>
         <Route path="presale">
-            <Route path="create/:asset" component={PresaleCreate}/>
             <Route path="history/:asset" component={PresaleHistory}/>
         </Route>
     </Route>

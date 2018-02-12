@@ -1,8 +1,6 @@
 import React from "react";
-import AssetName from "../Utility/AssetName";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
-import BalanceComponent from "../Utility/BalanceComponent";
 import Translate from "react-translate-component";
 import {ChainStore} from "bitsharesjs/es";
 import PresaleBoughtRow from "./PresaleBoughtRow";
@@ -19,7 +17,7 @@ class AccountPresaleBought extends React.Component {
         var presales_sec = this.props.account.get("presales").map(p => {console.log(1, ChainStore.getAsset(p.presale_id))
 
             return (
-                <PresaleBoughtRow key={p.presale_id} asset={p.records[0].asset_id}/>
+                <PresaleBoughtRow key={p.presale_id} presale_id={p.presale_id} records={p.records} account={p.owner} presale={p}/>
             )
         })
         return (
@@ -33,8 +31,10 @@ class AccountPresaleBought extends React.Component {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th>众筹资产</th>
-                                <th>数量</th>
+                                <th><Translate content="explorer.assets.title"/></th>
+                                <th><Translate content="presale.total"/></th>
+                                <th><Translate content="presale.claimed"/></th>
+                                <th><Translate content="presale.buy_history"/></th>
                             </tr>
                             </thead>
                             <tbody>

@@ -299,7 +299,7 @@ class AccountPresaleCreate extends React.Component {
                             </div>
                         </div>
                     </td>
-                    <td><button className="button outline" onClick={this.removeAccept.bind(this, accept.id)}>删除</button></td>
+                    <td><button className="button outline" onClick={this.removeAccept.bind(this, accept.id)}><Translate content="presale.delete"/></button></td>
                 </tr>
             );
         });
@@ -318,16 +318,16 @@ class AccountPresaleCreate extends React.Component {
                     <select style={{width: "30%", display: "inline-block", marginRight: "30px", height: "40px"}} value={this.state.accept_id} onChange={this.supportChange.bind(this)}>
                         {supports}
                     </select>
-                    <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}>添加接受资产类型</button>
+                    <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}><Translate content="presale.add_accept"/></button>
                     {this.state.accepts.length ?
                         <table className="table">
                             <thead>
                             <tr>
-                                <th>资产名称</th>
-                                <th>总量</th>
-                                <th>单价</th>
-                                <th>最低购买数量</th>
-                                <th>最高购买数量</th>
+                                <th><Translate content="explorer.assets.title"/></th>
+                                <th><Translate content="presale.total"/></th>
+                                <th><Translate content="presale.perprice"/></th>
+                                <th><Translate content="presale.minbuy"/></th>
+                                <th><Translate content="presale.maxbuy"/></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -378,8 +378,8 @@ class AccountPresaleCreate extends React.Component {
 
 
         let unlock_type_options = [
-            <option key={0} value="0">线性解冻</option>,
-            <option key={1} value="1">到期解冻</option>
+            <option key={0} value="0"><Translate content="presale.lockmode_liner"/></option>,
+            <option key={1} value="1"><Translate content="lockmode_deadline"/></option>
         ];
 
         let early_bird_percents_sec = [];
@@ -458,8 +458,8 @@ class AccountPresaleCreate extends React.Component {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th>时间</th>
-                                <th>比率</th>
+                                <th><Translate content="explorer.block.time"/></th>
+                                <th><Translate content="presale.odd"/></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -481,7 +481,7 @@ class AccountPresaleCreate extends React.Component {
                         </select>
                     </label>
                     <div className="button-group">
-                        <div className="button" type="submit" onClick={this.onSubmit.bind(this)}>发起众筹</div>
+                        <div className="button" type="submit" onClick={this.onSubmit.bind(this)}><Translate content="presale.create"/></div>
                     </div>
                 </div>
             </div>

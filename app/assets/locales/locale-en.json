@@ -1392,6 +1392,31 @@
         "expire": "Your transaction has expired without being confirmed, please try again later."
     },
   "presale": {
-    "bought": "My bought presales"
+    "add_accept": "Add accept asset",
+    "amount": "Amount",
+    "buy": "Buy",
+    "buy_history": "History",
+    "buy_time": "Time",
+    "bought": "My bought presales",
+    "claimed": "Claimed balance",
+    "create": "Create presale",
+    "delete": "delete",
+    "history": "Presales",
+    "mode": {
+      "title": "Presale mode",
+      "per": "Per asset mode",
+      "total": "Total mode"
+    },
+    "perprice": "Price",
+    "minbuy": "Min bought",
+    "maxbuy": "Max bought",
+    "lockmode": "Unfreeze mode",
+    "lockmode_none": "0 locked",
+    "lockmode_liner": "Liner mode",
+    "lockmode_deadline": "Deadline mode",
+    "early_bird": "Early bird plan",
+    "lock_period": "Lock period",
+    "odd": "Odd",
+    "total": "Total amount"
   }
 }
