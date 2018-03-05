@@ -71,13 +71,13 @@ class AccountPermissionRow extends React.Component {
                 : null}
                 </td>
                 <td className={has_private ? "my-key" : ""}>{name_or_key}</td>
-                {/*
+
                 <td>{this.props.weights[item_id]}</td>
                 <td>
                     <button className="button outline" onClick={this.props.onRemoveItem.bind(this, item_id, suffix)}>
                         <Translate content="account.votes.remove_witness"/></button>
                 </td>
-                */}
+                
             </tr>
         );
     }
@@ -179,7 +179,7 @@ class AccountPermissionsList extends React.Component {
 
         return (
             <div>
-                {/*<AccountSelector
+                <AccountSelector
                     label={this.props.label}
                     error={error}
                     placeholder={this.props.placeholder}
@@ -204,17 +204,17 @@ class AccountPermissionsList extends React.Component {
                         tabIndex={this.props.tabIndex + 1}
                     />
                 </AccountSelector>
-                 */}
+
                 <div style={{paddingTop: "2rem"}}>
                     <table className="table">
                         <thead>
                         <tr>
                             <th style={{width: cw[0]}}></th>
                             <th style={{width: cw[1]}}><Translate content="account.perm.acct_or_key" /></th>
-                            {/*
+
                             <th style={{width: cw[2]}}><Translate content="account.perm.weight" /></th>
                             <th style={{width: cw[3]}}><Translate content="account.perm.action" /></th>
-                            */}
+
                         </tr>
                         </thead>
                         <tbody>
