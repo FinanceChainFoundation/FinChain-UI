@@ -768,7 +768,8 @@
         "current_supply": "Current supply",
         "stealth_supply": "Stealth supply",
         "market_fee": "Market fee",
-        "max_market_fee": "Max market fee"
+        "max_market_fee": "Max market fee",
+        "locked_balance":"锁定余额"
       },
       "price_feed": {
         "title": "Price Feed",

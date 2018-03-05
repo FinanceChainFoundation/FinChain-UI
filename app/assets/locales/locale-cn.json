@@ -718,7 +718,8 @@
         "current_supply": "当前供给",
         "stealth_supply": "隐私供给",
         "market_fee": "交易市场费率",
-        "max_market_fee": "交易市场手续费上限"
+        "max_market_fee": "交易市场手续费上限",
+        "locked_balance":"锁定余额"
       },
       "price_feed": {
         "settlement_price": "喂价",
