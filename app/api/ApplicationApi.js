@@ -83,7 +83,8 @@ const ApplicationApi = {
         optional_nonce = null,
         propose_account = null,
         fee_asset_id = "1.3.0",
-        need_comfirm=true
+        need_comfirm=true,
+        expire_seconds=0
     }) {
         let memo_sender = propose_account || from_account;
 
@@ -181,7 +182,8 @@ const ApplicationApi = {
                 } else {
                     tr.add_operation( transfer_op );
                 }
-
+                if(expire_seconds!=0)
+                    tr.set_expire_seconds(expire_seconds)
                 return WalletDb.process_transaction(
                     tr,
                     null, //signer_private_keys,

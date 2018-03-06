@@ -101,7 +101,9 @@ class MassTransfer extends React.Component {
         for (var i = 0; i < datas.length; i++) {
             var data = datas[i].split("\t")
             if(data[0]!="") {
-                toAndValues[data[0]]={
+                let accountName=(data[0].replace(/(^\s*)|(\s*$)/g, "")).toLowerCase()
+
+                toAndValues[accountName]={
                     id: "",
                     value: parseInt(data[1], 10)
                 }
@@ -141,7 +143,8 @@ class MassTransfer extends React.Component {
                     "Initial send",
                     null,
                     "1.3.0",
-                    false
+                    false,
+                    600
                 ).then( () => {
                     this.resetForm.call(this);
                     TransactionConfirmStore.unlisten(this.onTrxIncluded);
