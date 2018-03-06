@@ -195,17 +195,17 @@ class TransactionConfirm extends React.Component {
                     <div className="grid-block shrink" style={{paddingTop: "1rem"}}>
                         {button_group}
 
-                        {/* P R O P O S E   T O G G L E
-                            { !this.props.transaction.has_proposed_operation() && !(broadcast || broadcasting) ?
-                                <div className="align-right grid-block">
-                                    <label style={{paddingTop: "0.5rem", paddingRight: "0.5rem"}}><Translate content="propose" />:</label>
-                                    <div className="switch" onClick={this.onProposeClick.bind(this)}>
-                                        <input type="checkbox" checked={this.props.propose} />
-                                        <label />
-                                    </div>
+                    {/* P R O P O S E   T O G G L E */}
+                        { !this.props.transaction.has_proposed_operation() && !(broadcast || broadcasting) ?
+                            <div className="align-right grid-block">
+                                <label style={{paddingTop: "0.5rem", paddingRight: "0.5rem"}}><Translate content="propose" />:</label>
+                                <div className="switch" onClick={this.onProposeClick.bind(this)}>
+                                    <input type="checkbox" checked={this.props.propose} />
+                                    <label />
                                 </div>
-                            :null}
-                         */}
+                            </div>
+                        :null}
+
                     </div>
                     </div>
 
