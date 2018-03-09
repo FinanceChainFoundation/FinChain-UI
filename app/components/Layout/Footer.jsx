@@ -81,7 +81,7 @@ class Footer extends React.Component {
         let version = version_match ? `.${version_match[1]}` : ` ${APP_VERSION}`;
         let updateStyles = {display: "inline-block", verticalAlign: "top"};
         let logoProps = {};
-        version="_0.1.4"
+        version="高级用户版_0.1.4"
 
         return (
             <div className="show-for-medium grid-block shrink footer">
