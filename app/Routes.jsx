@@ -195,6 +195,12 @@ const routes = (
                 System.import("components/Account/AccountWhitelist").then(loadRoute(cb)).catch(errorLoading);
             }}/>
             <Redirect from="overview" to="dashboard" />
+            <Route path="assets/:asset/presales/create" getComponent={(location, cb) => {
+                System.import("components/Account/AccountPresaleCreate").then(loadRoute(cb)).catch(errorLoading);
+            }}/>
+            <Route path="presales/bought" getComponent={(location, cb) => {
+                System.import("components/Account/AccountPresaleBought").then(loadRoute(cb)).catch(errorLoading);
+            }}/>
         </Route>
         <Route path="deposit-withdraw" getComponent={(location, cb) => {
             System.import("components/Account/AccountDepositWithdraw").then(loadRoute(cb)).catch(errorLoading);
@@ -207,6 +213,9 @@ const routes = (
         }}/>
         <Route path="lock" getComponent={(location, cb) => {
             System.import("components/LockBalance/LockAsset").then(loadRoute(cb)).catch(errorLoading);
+        }}/>
+        <Route path="/presale/history/:asset" getComponent={(location, cb) => {
+            System.import("components/Presale/PresaleHistory").then(loadRoute(cb)).catch(errorLoading);
         }}/>
     </Route>
 );
