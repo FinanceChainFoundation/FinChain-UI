@@ -11,6 +11,7 @@ import AccountStore from "../../stores/AccountStore";
 import {PropTypes} from "react";
 import counterpart from "counterpart";
 import PresaleActions from "../../actions/PresaleActions";
+import { Asset } from "common/MarketClasses";
 
 
 class ModalContent extends React.Component {
@@ -38,13 +39,16 @@ class ModalContent extends React.Component {
     }
 
     onSubmit() {//console.log(ChainStore.getAccount(AccountStore.getState().currentAccount));return;
+
+        let {amount,asset_id,asset}=this.state
+        const joinAsset = new Asset({real: amount, asset_id: asset_id, precision: asset.get("precision")});
         let args = {
 
             issuer: ChainStore.getAccount(AccountStore.getState().currentAccount).get("id"),
             presale: this.props.presale.id,
             amount: {
-                amount: this.state.amount,
-                asset_id: this.state.asset_id
+                amount: joinAsset.getAmount(),
+                asset_id: asset_id
             },
             extensions: 0
         };
