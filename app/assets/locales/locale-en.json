@@ -519,7 +519,11 @@
     "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
     "lock_balance": "{issuer} 锁定 {amount} {period} 天",
     "unlock_balance": "{issuer} 解锁到期存币",
-    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
+    "unlock_balance_unexpired": "{issuer} 解锁未到期存币",
+    "donation_balance":"捐赠{amount}{asset}到资金池",
+    "asset_presale_create":"发起资产{asset}众筹",
+    "asset_presale_buy":"参与{amount}",
+    "asset_presale_claim":"领取众筹{amount}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -663,7 +667,12 @@
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
       "lock_balance":"锁定",
-      "unlock_balance":  "解锁"
+      "unlock_balance":  "解锁",
+      "donation_balance":"捐赠",
+      "asset_presale_create":"发起众筹",
+      "asset_presale_buy":"参与众筹",
+      "asset_presale_claim":"领取众筹",
+      "all": "Show all"
     },
     "feeGroups": {
       "general": "General",

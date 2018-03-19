@@ -884,6 +884,50 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
+
+            case  "donation_balance":
+                break;
+            case "asset_presale_create":
+                //color = "cancel";
+                //console.log("asset_presale_create: ",op[1])
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string="operation.asset_presale_create"
+                            keys={[
+                                {type: "asset", value: op[1].asset_id, arg: "asset"}
+                            ]}
+                        />
+                    </span>
+                );
+                break;
+            case  "asset_presale_buy":
+                //console.log("asset_presale_buy: ",op[1])
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string="operation.asset_presale_buy"
+                            keys={[
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 8 : null},
+                            ]}
+                        />
+                    </span>
+                );
+                break;
+            case "asset_presale_claim":
+                console.log("asset_presale_claim: ",op[1])
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string="operation.asset_presale_claim"
+                            keys={[
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 8 : null},
+                            ]}
+                        />
+                    </span>
+                );
+                break;
+
             default:
                 console.log("unimplemented op:", op);
                 column = (
