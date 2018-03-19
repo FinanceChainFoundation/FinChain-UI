@@ -153,8 +153,8 @@ class AccountLeftPanel extends React.Component {
                 </div>
                      */}
                     <section className="block-list">
-                        {this.state.showAdvanced ? (<ul className="account-left-menu">
-                            {/*<li><Link to={`/account/${account_name}/assets/`} activeClassName="active"><Translate content="account.user_issued_assets.issued_assets"/></Link></li>*/}
+                        {true ? (<ul className="account-left-menu">
+                            <li><Link to={`/account/${account_name}/assets/`} activeClassName="active"><Translate content="account.user_issued_assets.issued_assets"/></Link></li>
 
                             {/*<li><Link to={`/account/${account_name}/whitelist/`} activeClassName="active"><Translate content="account.whitelist.title"/></Link></li>
                             {isMyAccount ? <li><Link to={`/account/${account_name}/vesting/`} activeClassName="active"><Translate content="account.vesting.title"/></Link></li> : null}
