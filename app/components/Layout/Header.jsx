@@ -264,11 +264,12 @@ class Header extends React.Component {
                             <span><Translate content="header.explorer" /></span>
                         </a>
                     </li>
-                    <li>
+                    {/*<li>
                         <a href onClick={this._onNavigate.bind(this, "/help/introduction/bitshares")}>
                             <span><Translate content="header.help" /></span>
                         </a>
                     </li>
+                    */}
                 </ul>
             </ActionSheet.Content>
         </ActionSheet>;
@@ -352,9 +353,9 @@ class Header extends React.Component {
                             {flagDropdown}
                         </div>}
 
-                        {!myAccountCount ? null : <div className="grp-menu-item overflow-visible" >
+                        <div className="grp-menu-item overflow-visible" >
                             {settingsDropdown}
-                        </div>}
+                        </div>
 
                         {lock_unlock}
                     </div>
