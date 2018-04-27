@@ -379,7 +379,7 @@ class AccountPresaleCreate extends React.Component {
 
         let unlock_type_options = [
             <option key={0} value="0"><Translate content="presale.lockmode_liner"/></option>,
-            <option key={1} value="1"><Translate content="lockmode_deadline"/></option>
+            <option key={1} value="1"><Translate content="presale.lockmode_deadline"/></option>
         ];
 
         let early_bird_percents_sec = [];
