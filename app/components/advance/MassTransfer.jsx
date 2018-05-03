@@ -19,13 +19,15 @@ import classnames from "classnames";
 import { Asset } from "common/MarketClasses";
 import {Apis} from "bitsharesjs-ws";
 
+var Sleep=require("sleep.js")
 class FileInputs extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            keyStore:""
-        };
+            keyStore:"",
+            asset:""
+        }
     }
 
 
@@ -125,43 +127,48 @@ class MassTransfer extends React.Component {
             })
         })
     }
+    onAssetChange(e) {
+        this.setState({ asset: e.target.value});
+    }
 
     onSubmit(e) {
         e.preventDefault();
         const {toAndValues} = this.state;
 
-        Object.keys(toAndValues).forEach(name=>{
-            let to=toAndValues[name].id;
-            let value=toAndValues[name].value*100000000
-            if(to!=""){
-                console.log("send token " ,to,value)
+        let keys=Object.keys(toAndValues)
+        let i=0;
+        let sleep=new Sleep()
+
+        sleep.loop(1000,function(){
+            let name=keys[i++]
+            let to = toAndValues[name].id;
+            let value = toAndValues[name].value * 100000000
+            if (to != "") {
+                console.log("send token ", to, value)
                 AccountActions.transfer(
                     "1.2.542",
                     to,
                     value,
-                    "1.3.0",
+                    this.state.asset,
                     "Initial send",
                     null,
                     "1.3.0",
                     false,
-                    600
-                ).then( () => {
+                    6000
+                ).then(() => {
                     this.resetForm.call(this);
                     TransactionConfirmStore.unlisten(this.onTrxIncluded);
                     TransactionConfirmStore.listen(this.onTrxIncluded);
-                }).catch( e => {
-                    let msg = e.message ? e.message.split( '\n' )[1] : null;
-                    console.log( "error: ", e, msg);
+                }).catch(e => {
+                    let msg = e.message ? e.message.split('\n')[1] : null;
+                    console.log("error: ", e, msg);
                     this.setState({error: msg});
-                } );
+                });
 
             }
-
         })
 
     }
-
-
 
     render() {
 
@@ -171,6 +178,16 @@ class MassTransfer extends React.Component {
             <div className="grid-block vertical">
                 <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
                     <form style={{paddingBottom: 20, overflow: "visible"}} className="grid-content small-12 medium-6 large-5 large-offset-1 full-width-content" onSubmit={this.onSubmit.bind(this)} noValidate>
+                        <label className="right-label">资产名称</label>
+                        <div className="inline-label input-wrapper">
+                            <input
+                                type="text"
+                                value={this.state.asset}
+                                placeholder="JRC"
+                                onChange={this.onAssetChange.bind(this) }
+                            />
+                        </div>
+
                         <FileInputs onGetKeyStore={this.onGetKeyStore.bind(this)}/>
                         <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
                             <Translate component="span" content="transfer.send" />
