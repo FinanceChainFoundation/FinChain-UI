@@ -84,13 +84,23 @@ const ApplicationApi = {
         propose_account = null,
         fee_asset_id = "1.3.0",
         need_comfirm=true,
-        expire_seconds=0
+        expire_seconds=0,
+        broadcast_method="broadcast_transaction_with_callback",
+        simple_mode=false
     }) {
         let memo_sender = propose_account || from_account;
 
         let unlock_promise = WalletUnlockActions.unlock();
 
-        return Promise.all([
+        let Promiss_all=simple_mode?
+            [
+                FetchChain("getAccount", from_account),
+                FetchChain("getAccount", memo_sender),
+                FetchChain("getAccount", propose_account),
+                FetchChain("getAsset", asset),
+                FetchChain("getAsset", fee_asset_id),
+                unlock_promise
+            ] :[
             FetchChain("getAccount", from_account),
             FetchChain("getAccount", to_account),
             FetchChain("getAccount", memo_sender),
@@ -98,14 +108,25 @@ const ApplicationApi = {
             FetchChain("getAsset", asset),
             FetchChain("getAsset", fee_asset_id),
             unlock_promise
-        ]).then((res)=> {
+        ]
+        return Promise.all(Promiss_all).then((res)=> {
 
-            let [
-                chain_from, chain_to, chain_memo_sender, chain_propose_account,
+            let chain_from, chain_to, chain_memo_sender, chain_propose_account,
                 chain_asset, chain_fee_asset
-            ] = res;
 
-            let memo_from_public, memo_to_public;
+                if(simple_mode){
+                    [chain_from, chain_memo_sender, chain_propose_account,
+                        chain_asset, chain_fee_asset] = res;
+                    chain_to=to_account;
+                }
+                else
+                {[
+                    chain_from, chain_to, chain_memo_sender, chain_propose_account,
+                    chain_asset, chain_fee_asset
+                    ]=res
+                }
+
+                let memo_from_public, memo_to_public;
             if( memo && encrypt_memo  ) {
 
                 memo_from_public = chain_memo_sender.getIn(["options","memo_key"]);
@@ -162,13 +183,15 @@ const ApplicationApi = {
             }
 
             let tr = new TransactionBuilder();
+            tr.set_broadcast_method(broadcast_method)
+            let to=simple_mode?chain_to:chain_to.get("id")
             let transfer_op = tr.get_type_operation("transfer", {
                 fee: {
                     amount: 0,
                     asset_id: fee_asset_id
                 },
                 from: chain_from.get("id"),
-                to: chain_to.get("id"),
+                to: to,
                 amount: { amount, asset_id: chain_asset.get("id") },
                 memo: memo_object
             });
@@ -196,6 +219,9 @@ const ApplicationApi = {
     /**
      @param propose_account (or null) pays the fee to create the proposal, also used as memo from
      */
+    /**
+     @param propose_account (or null) pays the fee to create the proposal, also used as memo from
+     */
    mass_transfer({ // OBJECT: { ... }
         from_account,
         to_accounts,
@@ -213,6 +239,7 @@ const ApplicationApi = {
 
         let unlock_promise = WalletUnlockActions.unlock();
 
+        let memo_from_public, memo_to_public;
         return Promise.all([
                 FetchChain("getAccount", from_account),
                 FetchChain("getAccount", memo_sender),
@@ -227,7 +254,6 @@ const ApplicationApi = {
                     chain_asset, chain_fee_asset
                 ] = res;
 
-        let memo_from_public, memo_to_public;
         if( memo && encrypt_memo  ) {
 
             memo_from_public = chain_memo_sender.getIn(["options","memo_key"]);

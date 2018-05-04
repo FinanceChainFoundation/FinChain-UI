@@ -164,26 +164,28 @@ class MassTransfer extends React.Component {
         let self=this
         let precision = utils.get_asset_precision(ChainStore.getAsset(asset).get("precision"));
 
-        sleep.loop(5000,function(){
+        sleep.loop(1000,function(){
             let name=keys[i++]
             let to = toAndValues[name].id;
             let value = toAndValues[name].value * precision
             if (to != "") {
                 console.log("send token ", to, value)
                 AccountActions.transfer(
-                    "1.2.10006",
+                    "1.2.542",
                     to,
                     value,
                     asset,
-                    "活动奖励",
+                    null,
                     null,
                     "1.3.0",
                     false,
-                    10000
+                    1000,
+                    "broadcast_transaction",
+                    true
                 ).then(() => {
-                    self.resetForm.call(this);
-                    TransactionConfirmStore.unlisten(this.onTrxIncluded);
-                    TransactionConfirmStore.listen(this.onTrxIncluded);
+                    //self.resetForm.call(this);
+                    //TransactionConfirmStore.unlisten(this.onTrxIncluded);
+                    //TransactionConfirmStore.listen(this.onTrxIncluded);
                 }).catch(e => {
                     let msg = e.message ? e.message.split('\n')[1] : null;
                     console.log("error: ", e, msg);
@@ -225,7 +227,7 @@ class MassTransfer extends React.Component {
 
             }
             AccountActions.mass_transfer(
-                "1.2.10006",
+                "1.2.542",
                 tos,
                 amounts,
                 asset,
