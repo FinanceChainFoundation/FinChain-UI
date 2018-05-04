@@ -79,6 +79,28 @@ class AccountActions {
             });
         }
     }
+    mass_transfer(from_account, to_accounts, amounts, asset, memo, propose_account = null, fee_asset_id = "1.3.0",need_comfirm=true,expire_seconds=0) {
+
+        // Set the fee asset to use
+        fee_asset_id = accountUtils.getFinalFeeAsset(propose_account || from_account, "transfer", fee_asset_id);
+
+        try {
+            return (dispatch) => {
+                return ApplicationApi.mass_transfer({
+                        from_account, to_accounts, amounts, asset, memo, propose_account, fee_asset_id,need_comfirm,expire_seconds
+                    }).then(result => {
+                        // console.log( "transfer result: ", result )
+
+                        dispatch(result);
+            });
+            };
+        } catch (error) {
+            console.log("[AccountActions.js:90] ----- transfer error ----->", error);
+            return new Promise((resolve, reject) => {
+                    reject(error);
+        });
+        }
+    }
 
     /**
      *  This method exists ont he AccountActions because after creating the account via the wallet, the account needs

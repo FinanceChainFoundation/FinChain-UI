@@ -25,8 +25,7 @@ class FileInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            keyStore:"",
-            asset:""
+            keyStore:""
         }
     }
 
@@ -91,7 +90,9 @@ class MassTransfer extends React.Component {
         return {
             fileName: "",
             toAndValues: {},
-            totalSends: 0
+            totalSends: 0,
+            asset:"JRC",
+            unknownAccount:[]
         };
 
     };
@@ -120,11 +121,20 @@ class MassTransfer extends React.Component {
                 toAndValues[account_name]["id"]=results[i][1]
             }
 
-            console.log(toAndValues)
+            //console.log(toAndValues)
             this.setState({
                 toAndValues: toAndValues,
                 totalSends:totalSends
             })
+
+            let keys=Object.keys(toAndValues)
+            let noAccounts=[]
+            for(let i=0;i<keys.length;i++){
+                let name =keys[i]
+                if (toAndValues[name]["id"]== "") {noAccounts.push(name)}
+            }
+            console.log(noAccounts)
+
         })
     }
     onAssetChange(e) {
@@ -132,12 +142,20 @@ class MassTransfer extends React.Component {
     }
 
     onSubmit(e) {
+
+        this._transfer(e)
+
+    }
+
+    _transfer(e){
         e.preventDefault();
         const {toAndValues} = this.state;
 
         let keys=Object.keys(toAndValues)
         let i=0;
         let sleep=new Sleep()
+        let asset=this.state.asset
+        let self=this
 
         sleep.loop(1000,function(){
             let name=keys[i++]
@@ -149,27 +167,82 @@ class MassTransfer extends React.Component {
                     "1.2.542",
                     to,
                     value,
-                    this.state.asset,
-                    "Initial send",
+                    asset,
+                    "活动奖励",
                     null,
                     "1.3.0",
                     false,
                     6000
                 ).then(() => {
-                    this.resetForm.call(this);
+                    self.resetForm.call(this);
                     TransactionConfirmStore.unlisten(this.onTrxIncluded);
                     TransactionConfirmStore.listen(this.onTrxIncluded);
                 }).catch(e => {
                     let msg = e.message ? e.message.split('\n')[1] : null;
                     console.log("error: ", e, msg);
-                    this.setState({error: msg});
+                    self.setState({error: msg});
                 });
 
             }
+            else
+                console.log(toAndValues[name])
         })
-
     }
+    _mass_transfer(e){
+        e.preventDefault();
+        let asset=this.state.asset
+        let precision = utils.get_asset_precision(ChainStore.getAsset(asset).get("precision"));
+        const {toAndValues} = this.state;
 
+        let keys=Object.keys(toAndValues)
+        let i=0;
+        let sleep=new Sleep()
+        let self=this
+
+        let unknownAccount=[]
+        const maxOps=100
+        const sec=10000
+        sleep.loop(sec,function(){
+
+            let subKeys=keys.slice(i*maxOps,(i+1)*maxOps-1)
+            let tos=[];
+            let amounts=[];
+
+            for(let i=0;i<100;i++){
+                let name=keys[i++]
+                let to = toAndValues[name].id;
+                if(to!="")
+                {
+                    tos.push(to)
+                    amounts.push(toAndValues[name].value*precision)
+                    console.log("try to send token ", to, value)
+                }
+                else
+                    unknownAccount.push(name)
+            }
+
+            let to = toAndValues[name].id;
+            let value = toAndValues[name].value * 100000000
+
+            AccountActions.mass_transfer(
+                "1.2.542",
+                tos,
+                amounts,
+                asset,
+                "",
+                null,
+                "1.3.0",
+                false,
+                sec
+            ).then(() => {
+                self.resetForm.call(this);
+            }).catch(e => {
+                let msg = e.message ? e.message.split('\n')[1] : null;
+                console.log("error: ", e, msg);
+                self.setState({error: msg});
+            });
+        })
+    }
     render() {
 
         let isSendNotValid=false
@@ -192,6 +265,7 @@ class MassTransfer extends React.Component {
                         <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
                             <Translate component="span" content="transfer.send" />
                         </button>
+
                     </form>
                 </div>
 

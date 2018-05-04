@@ -196,7 +196,7 @@ const ApplicationApi = {
     /**
      @param propose_account (or null) pays the fee to create the proposal, also used as memo from
      */
-   /* mass_transfer({ // OBJECT: { ... }
+   mass_transfer({ // OBJECT: { ... }
         from_account,
         to_accounts,
         amounts,
@@ -208,8 +208,7 @@ const ApplicationApi = {
         propose_account = null,
         fee_asset_id = "1.3.0",
         need_comfirm=true,
-        expire_seconds=0
-    }) {
+        expire_seconds=0}){
         let memo_sender = propose_account || from_account;
 
         let unlock_promise = WalletUnlockActions.unlock();
@@ -294,7 +293,7 @@ const ApplicationApi = {
                 },
                 from: from_account,
                 to: to_accounts[i],
-                amount: { amounts[i], asset_id: chain_asset.get("id") },
+                amount: { amount:amounts[i], asset_id: chain_asset.get("id") },
                 memo: memo_object
             });
         }
@@ -320,7 +319,7 @@ const ApplicationApi = {
     });
     });
     },
-    */
+    
     issue_asset(
         to_account,
         from_account,
