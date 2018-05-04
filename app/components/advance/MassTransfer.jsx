@@ -92,13 +92,14 @@ class MassTransfer extends React.Component {
             toAndValues: {},
             totalSends: 0,
             asset:"JRC",
-            unknownAccount:[]
+            unknownAccount:{}
         };
 
     };
     onGetKeyStore(result) {
 
         let toAndValues = {}
+        let toAndValuesA={}
         let datas = result.split("\r")
         let totalSends=0
         for (var i = 0; i < datas.length; i++) {
@@ -107,6 +108,7 @@ class MassTransfer extends React.Component {
                 let accountName=(data[0].replace(/(^\s*)|(\s*$)/g, "")).toLowerCase()
 
                 toAndValues[accountName]={
+                    name:accountName,
                     id: "",
                     value: parseInt(data[1], 10)
                 }
@@ -122,18 +124,22 @@ class MassTransfer extends React.Component {
             }
 
             //console.log(toAndValues)
-            this.setState({
-                toAndValues: toAndValues,
-                totalSends:totalSends
-            })
 
             let keys=Object.keys(toAndValues)
-            let noAccounts=[]
+            let noAccounts={}
             for(let i=0;i<keys.length;i++){
                 let name =keys[i]
-                if (toAndValues[name]["id"]== "") {noAccounts.push(name)}
+                if (toAndValues[name]["id"]== "")
+                    {noAccounts[name]=toAndValues[name]}
+                else
+                    toAndValuesA[name]=toAndValues[name]
             }
             console.log(noAccounts)
+            this.setState({
+                toAndValues: toAndValuesA,
+                unknownAccount:noAccounts,
+                totalSends:totalSends
+            })
 
         })
     }
@@ -247,6 +253,20 @@ class MassTransfer extends React.Component {
 
         let isSendNotValid=false
         let tabIndex=0
+
+        let arr=Object.entries(this.state.unknownAccount);
+        let unkonw_account= arr.length?arr
+            .map(to_value => {
+
+                return (
+                    <tr >
+                        <td>{to_value.name}</td>
+                        <td>""</td>
+                        <td>{to_value.value}</td>
+                    </tr>
+                );
+            }).toArray():null;
+
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
@@ -262,6 +282,26 @@ class MassTransfer extends React.Component {
                         </div>
 
                         <FileInputs onGetKeyStore={this.onGetKeyStore.bind(this)}/>
+                        {unkonw_account ? <div className="content-block generic-bordered-box">
+                            <div className="block-content-header">
+                                无效账户
+                            </div>
+                            <div className="box-content">
+                                <table className="table dashboard-table">
+                                    <thead>
+                                    <tr>
+                                        <th>账户名</th>
+                                        <th style={{maxWidth: "200px"}}>账户ID</th>
+                                        <th>发送数量</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {unkonw_account}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>:null}
                         <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
                             <Translate component="span" content="transfer.send" />
                         </button>
