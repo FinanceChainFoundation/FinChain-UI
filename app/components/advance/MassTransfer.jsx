@@ -162,15 +162,16 @@ class MassTransfer extends React.Component {
         let sleep=new Sleep()
         let asset=this.state.asset
         let self=this
+        let precision = utils.get_asset_precision(ChainStore.getAsset(asset).get("precision"));
 
-        sleep.loop(1000,function(){
+        sleep.loop(5000,function(){
             let name=keys[i++]
             let to = toAndValues[name].id;
-            let value = toAndValues[name].value * 100000000
+            let value = toAndValues[name].value * precision
             if (to != "") {
                 console.log("send token ", to, value)
                 AccountActions.transfer(
-                    "1.2.542",
+                    "1.2.10006",
                     to,
                     value,
                     asset,
@@ -178,7 +179,7 @@ class MassTransfer extends React.Component {
                     null,
                     "1.3.0",
                     false,
-                    6000
+                    10000
                 ).then(() => {
                     self.resetForm.call(this);
                     TransactionConfirmStore.unlisten(this.onTrxIncluded);
@@ -217,21 +218,14 @@ class MassTransfer extends React.Component {
             for(let i=0;i<100;i++){
                 let name=keys[i++]
                 let to = toAndValues[name].id;
-                if(to!="")
-                {
-                    tos.push(to)
-                    amounts.push(toAndValues[name].value*precision)
-                    console.log("try to send token ", to, value)
-                }
-                else
-                    unknownAccount.push(name)
+
+                tos.push(to)
+                amounts.push(toAndValues[name].value*precision)
+                console.log("try to send token ", to, toAndValues[name].value)
+
             }
-
-            let to = toAndValues[name].id;
-            let value = toAndValues[name].value * 100000000
-
             AccountActions.mass_transfer(
-                "1.2.542",
+                "1.2.10006",
                 tos,
                 amounts,
                 asset,
@@ -255,7 +249,8 @@ class MassTransfer extends React.Component {
         let tabIndex=0
 
         let arr=Object.entries(this.state.unknownAccount);
-        let unkonw_account= arr.length?arr
+        let unkonw_account=null
+        /*arr.length?arr
             .map(to_value => {
 
                 return (
@@ -266,6 +261,7 @@ class MassTransfer extends React.Component {
                     </tr>
                 );
             }).toArray():null;
+            */
 
         return (
             <div className="grid-block vertical">
