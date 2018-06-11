@@ -208,6 +208,10 @@ const routes = (
         <Route path="lock" getComponent={(location, cb) => {
             System.import("components/LockBalance/LockAsset").then(loadRoute(cb)).catch(errorLoading);
         }}/>
+        <Route path="advance/mass-transfer" getComponent={(location, cb) => {
+            System.import("components/advance/MassTransfer").then(loadRoute(cb)).catch(errorLoading);
+        }}/>
+
     </Route>
 );
 
