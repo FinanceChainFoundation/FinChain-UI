@@ -333,7 +333,7 @@ class Header extends React.Component {
                 <div className="grid-block show-for-medium shrink">
                     <div className="grp-menu-items-group header-right-menu">
 
-                        {/*
+
                         {!myAccountCount || !walletBalance ? null : walletBalance}
 
                         {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
@@ -347,7 +347,7 @@ class Header extends React.Component {
                         <div className="grp-menu-item overflow-visible account-drop-down">
                             {accountsDropDown}
                         </div>
-                         */}
+
                         {!myAccountCount ? null : <div className="grp-menu-item overflow-visible account-drop-down">
                             {flagDropdown}
                         </div>}
