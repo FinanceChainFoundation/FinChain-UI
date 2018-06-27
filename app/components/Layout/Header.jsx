@@ -276,7 +276,7 @@ class Header extends React.Component {
         const flagDropdown = <ActionSheet>
             <ActionSheet.Button title="">
                 <a style={{padding: "1rem", border: "none"}} className="button">
-                    {/*<FlagImage flag={this.props.currentLocale} />*/}
+                    <FlagImage flag={this.props.currentLocale} />
                 </a>
             </ActionSheet.Button>
             <ActionSheet.Content>
@@ -285,7 +285,7 @@ class Header extends React.Component {
                         return (
                             <li key={locale}>
                                 <a href onClick={(e) => {e.preventDefault(); IntlActions.switchLocale(locale);}}>
-                                    {/*<div className="table-cell"><FlagImage flag={locale} /></div>*/}
+                                    <div className="table-cell"><FlagImage flag={locale} /></div>
                                     <div className="table-cell" style={{paddingLeft: 10}}><Translate content={"languages." + locale} /></div>
 
                                 </a>
