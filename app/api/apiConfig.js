@@ -18,7 +18,7 @@ export const rudexAPIs = {
 export const settingsAPIs = {
     DEFAULT_WS_NODE: "wss://fake.automatic-selection.com",
     WS_NODE_LIST: [
-        {url: "ws://47.95.22.107:9090", location: "test"}
+        {url: "ws://47.95.22.107:9095", location: "test"}
 
     ],
     DEFAULT_FAUCET: "http://47.95.22.107",

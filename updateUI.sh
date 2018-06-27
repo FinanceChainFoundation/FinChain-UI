@@ -1,1 +1,1 @@
-scp -r ./build/dist/* ssh test:/www/current/public/
+scp -r ./build/dist/* ssh FC-d4:/www/current/public/
