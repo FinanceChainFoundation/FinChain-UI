@@ -335,7 +335,7 @@ class Header extends React.Component {
 
 
                         {!myAccountCount || !walletBalance ? null : walletBalance}
-
+                        */}
                         {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
                             {settingsDropdown}
                         </div>}
@@ -343,7 +343,7 @@ class Header extends React.Component {
                         {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
                             {flagDropdown}
                         </div>}
-
+                        {/*
                         <div className="grp-menu-item overflow-visible account-drop-down">
                             {accountsDropDown}
                         </div>
