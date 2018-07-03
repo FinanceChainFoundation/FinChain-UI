@@ -334,7 +334,7 @@ class Header extends React.Component {
                     <div className="grp-menu-items-group header-right-menu">
 
 
-                        {!myAccountCount || !walletBalance ? null : walletBalance}
+                        {/*{!myAccountCount || !walletBalance ? null : walletBalance}*/}
 
                         {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
                             {settingsDropdown}
