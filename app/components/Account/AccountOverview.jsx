@@ -138,7 +138,8 @@ class AccountOverview extends React.Component {
         let account=this.props.account
         let asset_type=this.state.lockDetails.asset_id
         let account_balances = account.get("balances");
-        let balanceObject =account_balances.size? ChainStore.getObject(account_balances.get(asset_type)):null;
+        let account_balances_id=account_balances.get(asset_type)
+        let balanceObject =account_balances.size&&account_balances_id? ChainStore.getObject(account_balances_id):null;
         let lockeds=balanceObject?balanceObject.get("lockeds").toObject():[]
         let keys=Object.keys(lockeds);
 
