@@ -549,7 +549,8 @@
     "asset_reserve": "Burn (reserve) {amount} using {account}",
     "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
     "feed_producer": "Update the feed producers for the asset {asset} using the account {account}",
-    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}"
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
+    "lifetime_upgrade_account": "Upgrade account"
   },
   "transaction": {
     "confirm": "Please confirm the transaction",

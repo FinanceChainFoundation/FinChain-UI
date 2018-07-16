@@ -1309,7 +1309,8 @@
     "reject": "否决",
     "asset_create": "使用账户{account}创建资产%{asset}s",
     "asset_update": "使用 {account} 更新 {asset} ",
-    "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权"
+    "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
+    "lifetime_upgrade_account": "账号升级"
   },
   "proposal_create": {
     "review_period": "复审期开始",
