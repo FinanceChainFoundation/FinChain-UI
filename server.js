@@ -25,7 +25,7 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "app/assets/index-dev.html"));
 });
 
-app.listen(8080, function (err) {
+app.listen(8180, function (err) {
     if (err) {
         return console.error(err);
     }
