@@ -10,6 +10,7 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
+import {ChainStore} from "bitsharesjs/es";
 
 const {operations} = grapheneChainTypes;
 const alignLeft = {textAlign: "left"};
@@ -134,9 +135,13 @@ class RecentTransactions extends React.Component {
     _getHistory(accountsList, filterOp, customFilter) {
         let history = [];
         let seen_ops = new Set();
-        for (let account of accountsList) {
-            if(account) {
+        for (let accountold of accountsList) {
+            if(accountold) {
+                let account=ChainStore.getAccount(accountold.get("id"))
                 let h = account.get("history");
+                let historySize=h?h.size:0
+                if(historySize<this.state.limit){
+                    ChainStore.fetchRecentHistory(account.get("id"))}
                 if (h) history = history.concat(h.toJS().filter(op => !seen_ops.has(op.id) && seen_ops.add(op.id)));
             }
         }
