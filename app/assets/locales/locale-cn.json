@@ -580,7 +580,11 @@
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
       "lock_balance":"锁定",
-      "unlock_balance":  "解锁" ,
+      "unlock_balance":  "解锁",
+      "asset_settle_cancel": "Asset settle cancel",
+      "op44": "Op44",
+      "set_lock_data": "Set lock lata",
+      "donation_balance": "Donation balance",
       "all": "Show all"
     },
     "confirm": "请确认交易",
