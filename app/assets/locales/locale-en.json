@@ -663,8 +663,13 @@
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
-      "lock_balance":"锁定",
-      "unlock_balance":  "解锁"
+      "lock_balance":"Lock balance",
+      "unlock_balance":  "Unlock balance",
+      "asset_settle_cancel": "Asset settle cancel",
+      "op44": "Op44",
+      "set_lock_data": "Set lock lata",
+      "donation_balance": "Donation balance",
+      "all": "Show all"
     },
     "feeGroups": {
       "general": "General",

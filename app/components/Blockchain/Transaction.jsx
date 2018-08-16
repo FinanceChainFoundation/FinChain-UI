@@ -16,9 +16,10 @@ import Icon from "../Icon/Icon";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import ProposedOperation from "./ProposedOperation";
-import {ChainTypes} from "bitsharesjs/es";
-let {operations} = ChainTypes;
+import {ChainTypes, ChainStore} from "bitsharesjs/es";
 import ReactTooltip from "react-tooltip";
+import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
+let {operations} = ChainTypes;
 
 require("./operations.scss");
 require("./json-inspector.scss");
@@ -84,7 +85,9 @@ class OperationTable extends React.Component {
 }
 
 class Transaction extends React.Component {
-
+    state = {
+        showCommitteeDetail: false,
+    }
     componentDidMount() {
         ReactTooltip.rebuild();
     }
@@ -927,6 +930,7 @@ class Transaction extends React.Component {
                     break;
 
                 case "proposal_create":
+                    let trxTypes = counterpart.translate("transaction.trxTypes");
                     var expiration_date = new Date(op[1].expiration_time+'Z')
                     var has_review_period = op[1].review_period_seconds !== undefined
                     var review_begin_time = ! has_review_period ? null :
@@ -971,13 +975,78 @@ class Transaction extends React.Component {
                             />
                         );
                     });
+                    const options = [(
+                        <ul key='details-title' style={{listStyle: 'none',}}>
+                            <li>
+                                <span style={{display: 'inline-block', width: '33%'}}><Translate content={"explorer.block.op"} /></span>
+                                <span style={{display: 'inline-block', width: '33%'}}><Translate content={"explorer.fees.type"} /></span>
+                                <span style={{display: 'inline-block', width: '33%',textAlign: "right"}}><Translate content={"explorer.fees.fee"} /></span>
+                            </li>
+                        </ul>
+                    )];
+                    let operation_name = '';
+                    let feename        = '';
+                    let fee            = {};
+                    let labelClass = classNames("label", "info");
+                    let preferredUnit = ChainStore.getAsset(op[1].proposed_ops[0].op[1].fee.asset_id).get("symbol");
+                    const scale = op[1].proposed_ops[0].op[1].new_parameters.current_fees.scale;
+                    op[1].proposed_ops[0].op[1].new_parameters.current_fees.parameters.forEach((i, index) => {
+                        operation_name = ops[i[0]];
+                        feename        = trxTypes[ operation_name ];
+                        fee            = i[1]
+                        let headIncluded = false;
+                        const option = [];
+                        for (let key in fee) {
+                            let amount = fee[key]*scale/1e4;
+                            let feeTypes = counterpart.translate("transaction.feeTypes");
+                            let assetAmount = amount ? <FormattedAsset amount={amount} asset="1.3.0"/> : feeTypes["_none"];
+                            let equivalentAmount = amount ? <EquivalentValueComponent fromAsset="1.3.0" fullPrecision={true} amount={amount} toAsset={preferredUnit}/> : feeTypes["_none"];
+                            let title = null;
 
+                            if (!headIncluded) {
+                                headIncluded = true
+                                title = (
+                                    <span className={labelClass}>
+                                        {feename}
+                                    </span>
+                                )
+                            }
+                            option.push(
+                                <li key={`details-${index}-${key}`}>
+                                    <span style={{display: 'inline-block', width: '33%'}}>{title}</span>
+                                    <span style={{display: 'inline-block', width: '33%'}}>{feeTypes[key]}</span>
+                                    <span style={{display: 'inline-block', width: '33%', textAlign: "right"}}>{equivalentAmount}</span>
+                                </li>
+                            );
+                        }
+                        options.push(<li key={`details-${index}`}><ul style={{listStyle: 'none',}}>{option}</ul></li>)
+                    })
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.proposed_operations" /></td>
-                            <td>{proposalsText}</td>
+                            <td style={{position: 'relative'}}>
+                                {proposalsText}
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        top: '30%',
+                                        right: '0',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.5s',
+                                        transform: this.state.showCommitteeDetail ? '' : 'rotate(90deg)'
+                                    }}
+                                    onClick={()=> {this.setState({showCommitteeDetail: !this.state.showCommitteeDetail})}}
+                                >
+                                    ▼
+                                </span>
+                            </td>
                         </tr>
                     )
+                    rows.push(<tr key={key++} style={{ display: this.state.showCommitteeDetail ? '' : 'none', transition: '0.5s'}}>
+                        <td colSpan='2' >
+                            <ul style={{listStyle: 'none',}}>{options}</ul>
+                        </td>
+                    </tr>)
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.fee_paying_account" /></td>
