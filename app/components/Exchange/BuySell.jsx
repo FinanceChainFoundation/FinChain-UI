@@ -74,12 +74,11 @@ class BuySell extends React.Component {
             feeAsset, feeAssets, hasFeeBalance, backedCoin} = this.props;
         let amount, price, total;
         let caret = this.props.isOpen ? <span>&#9660;</span> : <span>&#9650;</span>;
-
         if (this.props.amount) amount = this.props.amount;
         if (this.props.price) price = this.props.price;
         if (this.props.total) total = this.props.total;
-
         let balanceAmount = new Asset({amount: balance ? balance.get("balance") : 0, precision: balancePrecision, asset_id: this.props.balanceId});
+        // let balanceAmount = new Asset({amount: balance ? balance.get("balance") : 0, precision: 8, asset_id: this.props.balanceId});
         // if (!balanceAmount) {
         //     balanceAmount = 0;
         // }
@@ -97,7 +96,6 @@ class BuySell extends React.Component {
 
         let buttonClass = classNames("button buySellButton", type, {disabled: disabled});
         let balanceSymbol = isBid ? base.get("symbol") : quote.get("symbol");
-
         let disabledText = invalidPrice ? counterpart.translate("exchange.invalid_price") :
                            invalidAmount ? counterpart.translate("exchange.invalid_amount") :
                            noBalance ? counterpart.translate("exchange.no_balance") :
@@ -133,7 +131,7 @@ class BuySell extends React.Component {
                         {this.props.onFlip ? <span onClick={this.props.onFlip} style={{cursor: "pointer", fontSize: "1rem"}}>  &#8646;</span> : null}
                         {this.props.onTogglePosition ? <span onClick={this.props.onTogglePosition} style={{cursor: "pointer", fontSize: "1rem"}}>  &#8645;</span> : null}
                         {<div onClick={this.props.onToggleOpen} className="float-right clickable hide-for-xlarge" style={{paddingLeft: 10}}>{caret}</div>}
-                        {this.props.currentBridges ? <div className="float-right buy-sell-deposit"><a onClick={this._onBuy.bind(this)}><Translate content="exchange.buy" />&nbsp;<span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
+                        {this.props.currentBridges ? <div className="float-right buy-sell-deposit"><a onClick={this._onBuy.bind(this)}><Translate content="exchange.buy" />&nbsp;<span className="asset-name"> {buyBorrowDepositName}</span></a></div> : null}
                         {this.props.backedCoin ? <div className="float-right buy-sell-deposit"><a onClick={this._onDeposit.bind(this)}><Translate content="modal.deposit.submit" /> <span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
                         {this.props.onBorrow ? <div className="float-right buy-sell-deposit"><a onClick={this.props.onBorrow}><Translate content="exchange.borrow" />&nbsp;<span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
 
@@ -144,52 +142,51 @@ class BuySell extends React.Component {
                         <div className="grid-block vertical no-overflow no-padding">
 
                                 <div className="grid-block no-padding buy-sell-row">
-                                    <div className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                                        <Translate content="exchange.price" />:
+                                    <div className="grid-block small-2 no-margin no-overflow buy-sell-label">
+                                        &nbsp;&nbsp;&nbsp; <Translate content="exchange.price" />:
                                     </div>
-                                    <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
+                                    <div className="grid-block small-7 no-margin no-overflow buy-sell-input" >
                                         <ExchangeInput id="buyPrice" value={price} onChange={priceChange} autoComplete="off" placeholder="0.0" />
                                     </div>
-                                    <div className="grid-block small-4 no-margin no-overflow buy-sell-box">
-                                        <AssetName dataPlace="right" name={base.get("symbol")} />
-                                        &nbsp;/&nbsp;
-                                        <AssetName dataPlace="right" name={quote.get("symbol")} />
+                                    <div className="grid-block small-2  no-overflow buy-sell-box" style={{margin:"0 0 0 10px"}}>
+                                         <AssetName dataPlace="right" name={base.get("symbol")} />
+                                     {/*&nbsp;/&nbsp;<AssetName dataPlace="right" name={quote.get("symbol")} />*/}
                                     </div>
                                 </div>
 
                                 <div className="grid-block no-padding buy-sell-row">
-                                    <div className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                                        <Translate content="transfer.amount" />:
+                                    <div className="grid-block small-2 no-margin no-overflow buy-sell-label">
+                                        &nbsp;&nbsp;&nbsp; <Translate content="transfer.amount" />:
                                     </div>
-                                    <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
+                                    <div className="grid-block small-7 no-margin no-overflow buy-sell-input">
                                         <ExchangeInput id="buyAmount" value={amount} onChange={amountChange} autoComplete="off" placeholder="0.0"/>
                                     </div>
-                                    <div className="grid-block small-4 no-margin no-overflow buy-sell-box">
+                                    <div className="grid-block small-2  no-overflow buy-sell-box" style={{margin:"0 0 0 10px"}}>
                                         <AssetName dataPlace="right" name={quote.get("symbol")} />
                                     </div>
                                 </div>
 
                                 <div className="grid-block buy-sell-row bottom-row">
-                                    <div className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                                        <Translate content="exchange.total" />:
+                                    <div className="grid-block small-2 no-margin no-overflow buy-sell-label">
+                                        &nbsp;&nbsp;&nbsp; <Translate content="exchange.total" />:
                                     </div>
-                                    <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
+                                    <div className="grid-block small-7 no-margin no-overflow buy-sell-input">
                                         <ExchangeInput id="buyAmount" value={total} onChange={totalChange} autoComplete="off" placeholder="0.0"/>
                                     </div>
-                                    <div className="grid-block small-4 no-margin no-overflow buy-sell-box">
+                                    <div className="grid-block small-2  no-overflow buy-sell-box" style={{margin:"0 0 0 10px"}}>
                                         <AssetName dataPlace="right" name={base.get("symbol")} />
                                     </div>
                                 </div>
 
                                 <div className="grid-block no-padding buy-sell-row">
-                                    <div className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                                        <Translate content="transfer.fee" />:
+                                    <div className="grid-block small-2 no-margin no-overflow buy-sell-label">
+                                        &nbsp;&nbsp;&nbsp;<Translate content="transfer.fee" />:
                                     </div>
-                                    <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
+                                    <div className="grid-block small-7 no-margin no-overflow buy-sell-input">
                                         <input className={!hasFeeBalance ? "no-balance" : ""} disabled type="text" id="fee" value={!hasFeeBalance ? counterpart.translate("transfer.errors.insufficient") : fee.getAmount({real: true})} autoComplete="off"/>
                                     </div>
 
-                                    <div className="grid-block small-4 no-margin no-overflow buy-sell-box" style={{paddingLeft: feeAssets.length !== 1 ? 0 : 5}}>
+                                    <div className="grid-block small-2  no-overflow buy-sell-box" style={{margin:"0 0 0 10px", paddingLeft: feeAssets.length !== 1 ? 0 : 5}}>
                                         <select
                                             style={feeAssets.length === 1 ? {background: "none"} : null}
                                             disabled={feeAssets.length === 1}

@@ -64,7 +64,7 @@ class WalletDb extends BaseStore {
     }
 
     getWallet() {
-        return this.state.wallet
+        return this.state.wallet;
     }
 
     onLock() {
@@ -83,17 +83,17 @@ class WalletDb extends BaseStore {
             return _passwordKey[private_key_tcomb.pubkey];
         }
         let private_key_hex = aes_private.decryptHex(private_key_tcomb.encrypted_key)
-        return PrivateKey.fromBuffer(new Buffer(private_key_hex, 'hex'))
+        return PrivateKey.fromBuffer(new Buffer(private_key_hex, 'hex'));
     }
 
     /** @return ecc/PrivateKey or null */
     getPrivateKey(public_key) {
         if (_passwordKey) return _passwordKey[public_key];
-        if(! public_key) return null
-        if(public_key.Q) public_key = public_key.toPublicKeyString()
-        let private_key_tcomb = PrivateKeyStore.getTcomb_byPubkey(public_key)
-        if(! private_key_tcomb) return null
-        return this.decryptTcomb_PrivateKey(private_key_tcomb)
+        if(! public_key) return null;
+        if(public_key.Q) public_key = public_key.toPublicKeyString();
+        let private_key_tcomb = PrivateKeyStore.getTcomb_byPubkey(public_key);
+        if(! private_key_tcomb) return null;
+        return this.decryptTcomb_PrivateKey(private_key_tcomb);
     }
 
     process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
@@ -102,7 +102,7 @@ class WalletDb extends BaseStore {
         if(!passwordLogin && Apis.instance().chain_id !== this.state.wallet.chain_id)
             return Promise.reject("Mismatched chain_id; expecting " +
                 this.state.wallet.chain_id + ", but got " +
-                Apis.instance().chain_id)
+                Apis.instance().chain_id);
 
         return WalletUnlockActions.unlock().then( () => {
             AccountActions.tryToSetCurrentAccount();
@@ -383,30 +383,30 @@ class WalletDb extends BaseStore {
     /** This may lock the wallet unless <b>unlock</b> is used. */
     changePassword( old_password, new_password, unlock = false ) {
         return new Promise( resolve => {
-            let wallet = this.state.wallet
+            let wallet = this.state.wallet;
             if( ! this.validatePassword( old_password ))
-                throw new Error("wrong password")
+                throw new Error("wrong password");
 
-            let old_password_aes = Aes.fromSeed( old_password )
-            let new_password_aes = Aes.fromSeed( new_password )
+            let old_password_aes = Aes.fromSeed( old_password );
+            let new_password_aes = Aes.fromSeed( new_password );
 
             if( ! wallet.encryption_key)
                 // This change pre-dates the live chain..
-                throw new Error("This wallet does not support the change password feature.")
-            let encryption_plainbuffer = old_password_aes.decryptHexToBuffer( wallet.encryption_key )
-            wallet.encryption_key = new_password_aes.encryptToHex( encryption_plainbuffer )
+                throw new Error("This wallet does not support the change password feature.");
+            let encryption_plainbuffer = old_password_aes.decryptHexToBuffer( wallet.encryption_key );
+            wallet.encryption_key = new_password_aes.encryptToHex( encryption_plainbuffer );
 
-            let new_password_private = PrivateKey.fromSeed( new_password )
-            wallet.password_pubkey = new_password_private.toPublicKey().toPublicKeyString()
+            let new_password_private = PrivateKey.fromSeed( new_password );
+            wallet.password_pubkey = new_password_private.toPublicKey().toPublicKeyString();
 
             if( unlock ) {
-                aes_private = Aes.fromSeed( encryption_plainbuffer )
+                aes_private = Aes.fromSeed( encryption_plainbuffer );
             } else {
                 // new password, make sure the wallet gets locked
-                aes_private = null
+                aes_private = null;
             }
-            resolve( this.setWalletModified() )
-        })
+            resolve( this.setWalletModified() );
+        });
     }
 
     /** @throws "missing brainkey", "wallet locked"
@@ -415,52 +415,52 @@ class WalletDb extends BaseStore {
     generateNextKey(save = true) {
         if (this.generatingKey) return;
         this.generatingKey = true;
-        let brainkey = this.getBrainKey()
-        let wallet = this.state.wallet
+        let brainkey = this.getBrainKey();
+        let wallet = this.state.wallet;
         let sequence = Math.max(wallet.brainkey_sequence, 0);
-        let used_sequence = null
+        let used_sequence = null;
         // Skip ahead in the sequence if any keys are found in use
         // Slowly look ahead (1 new key per block) to keep the wallet fast after unlocking
-        this.brainkey_look_ahead = Math.min(10, (this.brainkey_look_ahead || 0) + 1)
+        this.brainkey_look_ahead = Math.min(10, (this.brainkey_look_ahead || 0) + 1);
         /* If sequence is 0 this is the first lookup, so check at least the first 10 positions */
         const loopMax = !sequence ? Math.max(sequence + this.brainkey_look_ahead, 10) : sequence + this.brainkey_look_ahead;
         // console.log("generateNextKey, save:", save, "sequence:", sequence, "loopMax", loopMax, "brainkey_look_ahead:", this.brainkey_look_ahead);
 
         for (let i = sequence; i < loopMax; i++) {
-            let private_key = key.get_brainPrivateKey( brainkey, i )
+            let private_key = key.get_brainPrivateKey( brainkey, i );
             let pubkey =
                 this.generateNextKey_pubcache[i] ?
                 this.generateNextKey_pubcache[i] :
                 this.generateNextKey_pubcache[i] =
-                private_key.toPublicKey().toPublicKeyString()
+                private_key.toPublicKey().toPublicKeyString();
 
             let next_key = ChainStore.getAccountRefsOfKey( pubkey );
             // TODO if ( next_key === undefined ) return undefined
 
             /* If next_key exists, it means the generated private key controls an account, so we need to save it */
             if(next_key && next_key.size) {
-                used_sequence = i
+                used_sequence = i;
                 console.log("WARN: Private key sequence " + used_sequence + " in-use. " +
-                    "I am saving the private key and will go onto the next one.")
+                    "I am saving the private key and will go onto the next one.");
                 this.saveKey( private_key, used_sequence );
                 // this.brainkey_look_ahead++;
             }
         }
         if(used_sequence !== null) {
-            wallet.brainkey_sequence = used_sequence + 1
-            this._updateWallet()
+            wallet.brainkey_sequence = used_sequence + 1;
+            this._updateWallet();
         }
         sequence = Math.max(wallet.brainkey_sequence, 0);
-        let private_key = key.get_brainPrivateKey( brainkey, sequence )
+        let private_key = key.get_brainPrivateKey( brainkey, sequence );
         if( save && private_key ) {
             // save deterministic private keys ( the user can delete the brainkey )
             // console.log("** saving a key and incrementing brainkey sequence **")
-            this.saveKey( private_key, sequence )
+            this.saveKey( private_key, sequence );
             //TODO  .error( error => ErrorStore.onAdd( "wallet", "saveKey", error ))
-            this.incrementBrainKeySequence()
+            this.incrementBrainKeySequence();
         }
         this.generatingKey = false;
-        return { private_key, sequence }
+        return { private_key, sequence };
     }
 
     incrementBrainKeySequence( transaction ) {
@@ -480,84 +480,84 @@ class WalletDb extends BaseStore {
     }
 
     resetBrainKeySequence() {
-        let wallet = this.state.wallet
+        let wallet = this.state.wallet;
         // increment in RAM so this can't be out-of-sync
         wallet.brainkey_sequence = 0;
         console.log("reset sequence", wallet.brainkey_sequence);
         // update last modified
-        return this._updateWallet()
+        return this._updateWallet();
     }
 
     importKeysWorker(private_key_objs) {
         return new Promise( (resolve, reject) => {
-            let pubkeys = []
+            let pubkeys = [];
             for(let private_key_obj of private_key_objs)
-                pubkeys.push( private_key_obj.public_key_string )
-            let addyIndexPromise = AddressIndex.addAll(pubkeys)
+                pubkeys.push( private_key_obj.public_key_string );
+            let addyIndexPromise = AddressIndex.addAll(pubkeys);
 
-            let private_plainhex_array = []
+            let private_plainhex_array = [];
             for(let private_key_obj of private_key_objs) {
                 private_plainhex_array.push( private_key_obj.private_plainhex );
             }
             if (!__ELECTRON__) {
                 AesWorker = require("worker-loader!workers/AesWorker");
             }
-            let worker = new AesWorker
+            let worker = new AesWorker;
             worker.postMessage({
                 private_plainhex_array,
                 key: aes_private.key, iv: aes_private.iv
-            })
-            let _this = this
-            this.setState({ saving_keys: true })
+            });
+            let _this = this;
+            this.setState({ saving_keys: true });
             worker.onmessage = event => { try {
                 console.log("Preparing for private keys save");
-                let private_cipherhex_array = event.data
-                let enc_private_key_objs = []
+                let private_cipherhex_array = event.data;
+                let enc_private_key_objs = [];
                 for(let i = 0; i < private_key_objs.length; i++) {
-                    let private_key_obj = private_key_objs[i]
-                    let {import_account_names, public_key_string, private_plainhex} = private_key_obj
-                    let private_cipherhex = private_cipherhex_array[i]
+                    let private_key_obj = private_key_objs[i];
+                    let {import_account_names, public_key_string, private_plainhex} = private_key_obj;
+                    let private_cipherhex = private_cipherhex_array[i];
                     if( ! public_key_string) {
                         // console.log('WARN: public key was not provided, this will incur slow performance')
-                        let private_key = PrivateKey.fromHex(private_plainhex)
-                        let public_key = private_key.toPublicKey() // S L O W
-                        public_key_string = public_key.toPublicKeyString()
+                        let private_key = PrivateKey.fromHex(private_plainhex);
+                        let public_key = private_key.toPublicKey() ;// S L O W
+                        public_key_string = public_key.toPublicKeyString();
                     } else
                         if(public_key_string.indexOf(ChainConfig.address_prefix) != 0)
-                            throw new Error("Public Key should start with " + ChainConfig.address_prefix)
+                            throw new Error("Public Key should start with " + ChainConfig.address_prefix);
 
                     let private_key_object = {
                         import_account_names,
                         encrypted_key: private_cipherhex,
                         pubkey: public_key_string
                         // null brainkey_sequence
-                    }
-                    enc_private_key_objs.push(private_key_object)
+                    };
+                    enc_private_key_objs.push(private_key_object);
                 }
                 console.log("Saving private keys", new Date().toString());
-                let transaction = _this.transaction_update_keys()
-                let insertKeysPromise = idb_helper.on_transaction_end(transaction)
+                let transaction = _this.transaction_update_keys();
+                let insertKeysPromise = idb_helper.on_transaction_end(transaction);
                 try {
                     let duplicate_count = PrivateKeyStore
-                        .addPrivateKeys_noindex(enc_private_key_objs, transaction )
+                        .addPrivateKeys_noindex(enc_private_key_objs, transaction );
                     if( private_key_objs.length != duplicate_count )
-                        _this.setWalletModified(transaction)
-                    _this.setState({saving_keys: false})
+                        _this.setWalletModified(transaction);
+                    _this.setState({saving_keys: false});
                     resolve(Promise.all([ insertKeysPromise, addyIndexPromise ]).then( ()=> {
-                        console.log("Done saving keys", new Date().toString())
+                        console.log("Done saving keys", new Date().toString());
                         // return { duplicate_count }
-                    }))
+                    }));
                 } catch(e) {
-                    transaction.abort()
-                    console.error(e)
-                    reject(e)
+                    transaction.abort();
+                    console.error(e);
+                    reject(e);
                 }
-            } catch( e ) { console.error('AesWorker.encrypt', e) }}
-        })
+            } catch( e ) { console.error('AesWorker.encrypt', e); }};
+        });
     }
 
     saveKeys(private_keys, transaction, public_key_string) {
-        let promises = []
+        let promises = [];
         for(let private_key_record of private_keys) {
             promises.push( this.saveKey(
                 private_key_record.private_key,
@@ -565,9 +565,9 @@ class WalletDb extends BaseStore {
                 null, //import_account_names
                 public_key_string,
                 transaction
-            ))
+            ));
         }
-        return Promise.all(promises)
+        return Promise.all(promises);
     }
 
     saveKey(
@@ -577,16 +577,16 @@ class WalletDb extends BaseStore {
         public_key_string,
         transaction = this.transaction_update_keys()
     ) {
-        let private_cipherhex = aes_private.encryptToHex( private_key.toBuffer() )
-        let wallet = this.state.wallet
+        let private_cipherhex = aes_private.encryptToHex( private_key.toBuffer() );
+        let wallet = this.state.wallet;
         if( ! public_key_string) {
             //S L O W
             // console.log('WARN: public key was not provided, this may incur slow performance')
-            let public_key = private_key.toPublicKey()
-            public_key_string = public_key.toPublicKeyString()
+            let public_key = private_key.toPublicKey();
+            public_key_string = public_key.toPublicKeyString();
         } else
             if(public_key_string.indexOf(ChainConfig.address_prefix) != 0)
-                throw new Error("Public Key should start with " + ChainConfig.address_prefix)
+                throw new Error("Public Key should start with " + ChainConfig.address_prefix);
 
         let private_key_object = {
             import_account_names,
@@ -597,65 +597,65 @@ class WalletDb extends BaseStore {
         let p1 = PrivateKeyActions.addKey(
             private_key_object, transaction
         ).then((ret)=> {
-            if(TRACE) console.log('... WalletDb.saveKey result',ret.result)
-            return ret
-        })
-        return p1
+            if(TRACE) console.log('... WalletDb.saveKey result',ret.result);
+            return ret;
+        });
+        return p1;
     }
 
     setWalletModified(transaction) {
-        return this._updateWallet( transaction )
+        return this._updateWallet( transaction );
     }
 
     setBackupDate() {
-        let wallet = this.state.wallet
-        wallet.backup_date = new Date()
-        return this._updateWallet()
+        let wallet = this.state.wallet;
+        wallet.backup_date = new Date();
+        return this._updateWallet();
     }
 
     setBrainkeyBackupDate() {
-        let wallet = this.state.wallet
-        wallet.brainkey_backup_date = new Date()
-        return this._updateWallet()
+        let wallet = this.state.wallet;
+        wallet.brainkey_backup_date = new Date();
+        return this._updateWallet();
     }
 
     /** Saves wallet object to disk.  Always updates the last_modified date. */
     _updateWallet(transaction = this.transaction_update()) {
-        let wallet = this.state.wallet
+        let wallet = this.state.wallet;
         if ( ! wallet) {
-            reject("missing wallet")
-            return
+            reject("missing wallet");
+            return;
         }
         //DEBUG console.log('... wallet',wallet)
-        let wallet_clone = cloneDeep( wallet )
-        wallet_clone.last_modified = new Date()
+        let wallet_clone = cloneDeep( wallet );
+        wallet_clone.last_modified = new Date();
 
-        WalletTcomb(wallet_clone) // validate
+        WalletTcomb(wallet_clone) ;// validate
 
-        let wallet_store = transaction.objectStore("wallet")
-        let p = idb_helper.on_request_end( wallet_store.put(wallet_clone) )
+        let wallet_store = transaction.objectStore("wallet");
+        let p = idb_helper.on_request_end( wallet_store.put(wallet_clone) );
         let p2 = idb_helper.on_transaction_end( transaction  ).then( () => {
-            this.state.wallet = wallet_clone
-            this.setState({ wallet: wallet_clone })
-        })
-        return Promise.all([p,p2])
+            this.state.wallet = wallet_clone;
+            this.setState({ wallet: wallet_clone });
+        });
+        return Promise.all([p,p2]);
     }
 
     /** This method may be called again should the main database change */
     loadDbData() {
         return idb_helper.cursor("wallet", cursor => {
-            if( ! cursor) return false
-            let wallet = cursor.value
+            if( ! cursor) return false;
+            let wallet = cursor.value;
             // Convert anything other than a string or number back into its proper type
-            wallet.created = new Date(wallet.created)
-            wallet.last_modified = new Date(wallet.last_modified)
-            wallet.backup_date = wallet.backup_date ? new Date(wallet.backup_date):null
-            wallet.brainkey_backup_date = wallet.brainkey_backup_date ? new Date(wallet.brainkey_backup_date):null
-            try { WalletTcomb(wallet) } catch(e) {
+            wallet.created = new Date(wallet.created);
+            wallet.last_modified = new Date(wallet.last_modified);
+            wallet.backup_date = wallet.backup_date ? new Date(wallet.backup_date):null;
+            wallet.brainkey_backup_date = wallet.brainkey_backup_date ? new Date(wallet.brainkey_backup_date):null;
+            try { WalletTcomb(wallet); } catch(e) {
                 console.log("WalletDb format error", e); }
-            this.state.wallet = wallet
-            this.setState({ wallet })
-            return false //stop iterating
+            this.state.wallet = wallet;
+            this.setState({ wallet });
+            return false; //stop iterating
         });
     }
 
@@ -665,6 +665,6 @@ const WalletDbWrapped = alt.createStore(WalletDb, "WalletDb");
 export default WalletDbWrapped;
 
 function reject(error) {
-    console.error( "----- WalletDb reject error -----", error)
-    throw new Error(error)
+    console.error( "----- WalletDb reject error -----", error);
+    throw new Error(error);
 }

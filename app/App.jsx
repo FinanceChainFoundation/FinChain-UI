@@ -46,8 +46,6 @@ class App extends React.Component {
         this._onSettingsChange = this._onSettingsChange.bind(this);
         this._chainStoreSub = this._chainStoreSub.bind(this);
         this._syncStatus = this._syncStatus.bind(this);
-
-        console.log("App")
     }
 
     componentWillUnmount() {
@@ -248,11 +246,11 @@ class Root extends React.Component {
 
     componentDidMount(){
         //Detect OS for platform specific fixes
-        if(navigator.platform.indexOf('Win') > -1){
-            var main = document.getElementById('content');
-            var windowsClass = 'windows';
-            if(main.className.indexOf('windows') === -1){
-                main.className = main.className + (main.className.length ? ' ' : '') + windowsClass;
+        if(navigator.platform.indexOf("Win") > -1){
+            var main = document.getElementById("content");
+            var windowsClass = "windows";
+            if(main.className.indexOf("windows") === -1){
+                main.className = main.className + (main.className.length ? " " : "") + windowsClass;
             }
         }
     }

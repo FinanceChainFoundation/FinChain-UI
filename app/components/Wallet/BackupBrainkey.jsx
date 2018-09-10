@@ -4,7 +4,7 @@ import Translate from "react-translate-component";
 import WalletActions from "actions/WalletActions";
 import WalletDb from "stores/WalletDb";
 import {hash} from "bitsharesjs/es";
-
+import {Link} from "react-router/es";
 export default class BackupBrainkey extends Component {
 
     constructor() {
@@ -38,7 +38,13 @@ export default class BackupBrainkey extends Component {
                 <pre className="no-overflow">sha1 hash of the brainkey: {sha1}</pre>
                 <br/>
                 {brainkey_backup_time}
-            </div>
+                <br/>
+                <Link to="/dashboard">
+                    <div style={{width: "50%"}} className="button">
+                        <Translate content="wallet.ok_done" />
+                    </div>
+                </Link>
+            </div>;
         }
 
         if(!content && this.state.brainkey) {

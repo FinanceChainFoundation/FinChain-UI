@@ -16,7 +16,6 @@ require("./components/Utility/Prototypes"); // Adds a .equals method to Array fo
 * The same is true for servers without configuration options, such as Github Pages
 */
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
-
 const rootEl = document.getElementById("content");
 const render = () => {
     ReactDOM.render(
@@ -27,3 +26,4 @@ const render = () => {
     );
 };
 render();
+// console.log(header.explorer);

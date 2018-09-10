@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 1400px;
+    height: auto;
+    min-height: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+.tab_title_wrap{
+    width: 1400px;
+    height: 60px;
+}
+.tab_title{
+    width: 150px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    color: #8E979B;
+    background-color: #FFF;
+    display: inline-block;
+}
+.active{
+    color: #5DC3F2;
+    /*background-color: #FF260E;*/
+    border-bottom:2px solid #5DC3F2;
+}
+.tab_item_wrap{
+    width: 1400px;
+    /*height: 300px;*/
+}
+.tab_item{
+    width: 1400px;
+    /*height: 300px;*/
+    text-align: center;
+    /*line-height: 300px;*/
+    color: #FFF;
+    display: none;
+}
+.tab_item:nth-of-type(1){
+    /*background-color: red;*/
+}
+.tab_item:nth-of-type(2){
+    /*background-color: blue;*/
+}
+.tab_item:nth-of-type(3){
+    /*background-color:yellow;*/
+}
+.tab_item:nth-of-type(4){
+    /*background-color: #07D739;*/
+}
+.tab_item:nth-of-type(5){
+    /*background-color: gainsboro;*/
+}
+.show{
+    display: block;
+}

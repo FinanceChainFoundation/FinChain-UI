@@ -71,7 +71,7 @@ class AssetSelector extends React.Component {
             error = counterpart.translate("explorer.asset.invalid", {name: input});
         return error;
     }
-
+	
     getNameType(value) {
         if(!value) return null;
         // if(value[0] === "#" && utils.is_object_id("1.2." + value.substring(1))) return "id";

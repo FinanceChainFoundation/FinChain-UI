@@ -13,7 +13,6 @@ if (window) {
 import Routes from "./Routes-dev";
 
 require("./components/Utility/Prototypes"); // Adds a .equals method to Array for use in shouldComponentUpdate
-
 const rootEl = document.getElementById("content");
 const render = () => {
     ReactDOM.render(

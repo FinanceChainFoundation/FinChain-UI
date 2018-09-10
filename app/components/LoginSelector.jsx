@@ -30,21 +30,21 @@ export default class LoginSelector extends React.Component {
             <div className="grid-block align-center">
                 <div className="grid-block shrink vertical">
                     <div className="grid-content shrink text-center account-creation">
-                        <div><img src={logo}/></div>
+                        <div><img src={require('./110.png')}/></div>
                         <Translate content="account.intro_text_title" component="h4"/>
                         <Translate unsafe content="account.intro_text_1" component="p" />
 
                         {!!childCount ? null :
                         <div className="button-group">
                             <label style={{textAlign: "center"}}><Translate content="account.new_user" /><br/>
-                                <Link to="/create-account/wallet">
+                                <Link to="/create-account/password">
                                     <div className="button">
                                         <Translate content="header.create_account" />
                                     </div>
                                 </Link>
                             </label>
 
-                            {/*<label style={{textAlign: "left"}}><Translate content="account.existing_user" /><br/>
+                            {<label style={{textAlign: "left"}}><Translate content="account.existing_user" /><br/>
                                 <div className="button success" onClick={() => {
                                     SettingsActions.changeSetting({setting: "passwordLogin", value: true});
                                     WalletUnlockActions.unlock.defer();
@@ -52,7 +52,7 @@ export default class LoginSelector extends React.Component {
                                     <Translate content="header.unlock_short" />
                                 </div>
                             </label>
-                            */}
+                            }
                         </div>}
 
                         {!!childCount ? null :

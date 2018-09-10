@@ -86,7 +86,7 @@ class HelpContent extends React.Component {
             if (value.amount && value.asset) value = utils.format_asset(value.amount, value.asset, false, false);
             if (value.date) value = utils.format_date(value.date);
             if (value.time) value = utils.format_time(value.time);
-            //console.log("-- var -->", key, value);
+//            console.log("-- var -->", key, value);
             return value;
         });
     }

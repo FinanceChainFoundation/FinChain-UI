@@ -96,7 +96,7 @@ class Exchange extends React.Component {
         /* Make sure the indicators objects only contains the current indicators */
         let savedIndicators = ws.get("indicators", {});
         let indicators = {};
-        [["sma", true], ["ema1", false], ["ema2", false], ["smaVolume", true], ["macd", false], ["bb", false]].forEach(i => {
+        [["sma", true], ["ema1", false], ["ema2", false], ["smaVolume", true], ["macd", true], ["bb", false]].forEach(i => {
             indicators[i[0]] = (i[0] in savedIndicators) ? savedIndicators[i[0]] : i[1];
         });
 
@@ -114,7 +114,7 @@ class Exchange extends React.Component {
             flipBuySell: ws.get("flipBuySell", false),
             favorite: false,
             showDepthChart: ws.get("showDepthChart", false),
-            leftOrderBook: ws.get("leftOrderBook", false),
+            leftOrderBook: ws.get("leftOrderBook", true),
             buyDiff: false,
             sellDiff: false,
             indicators,
@@ -581,7 +581,6 @@ class Exchange extends React.Component {
         SettingsActions.changeViewSetting({
             leftOrderBook: !this.state.leftOrderBook
         });
-
         this.setState({ leftOrderBook: !this.state.leftOrderBook });
     }
 
@@ -799,7 +798,6 @@ class Exchange extends React.Component {
         let current = this.state[type];
         // const isBid = type === "bid";
         current.for_sale.setAmount({real: parseFloat(e.target.value) || 0});
-
         if (current.price.isValid()) {
             this._setReceive(current, isBid);
         } else {
@@ -977,9 +975,9 @@ class Exchange extends React.Component {
         }
 
         let orderMultiplier = leftOrderBook ? 2 : 1;
-        const minChartHeight = 300
+        const minChartHeight = 300;
         const height = Math.max(
-            this.state.height > 1100 ? chartHeight : chartHeight - 125,
+            this.state.height > 850 ? this.state.height - 410 : chartHeight - 125,
             minChartHeight
         );
 
@@ -1105,7 +1103,7 @@ class Exchange extends React.Component {
 
                     {/* Left Column - Open Orders */}
                     {leftOrderBook ? (
-                    <div className="grid-block left-column shrink no-overflow">
+                    <div className="grid-block left-column shrink no-overflow" style={{width:"20%"}}>
                         {orderBook}
                     </div>) : null}
 

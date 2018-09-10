@@ -195,7 +195,7 @@ class TransactionConfirm extends React.Component {
                     <div className="grid-block shrink" style={{paddingTop: "1rem"}}>
                         {button_group}
 
-                        {/*P R O P O S E   T O G G L E*/}
+                        {/* P R O P O S E   T O G G L E
                             { !this.props.transaction.has_proposed_operation() && !(broadcast || broadcasting) ?
                                 <div className="align-right grid-block">
                                     <label style={{paddingTop: "0.5rem", paddingRight: "0.5rem"}}><Translate content="propose" />:</label>
@@ -205,7 +205,7 @@ class TransactionConfirm extends React.Component {
                                     </div>
                                 </div>
                             :null}
-
+                         */}
                     </div>
                     </div>
 

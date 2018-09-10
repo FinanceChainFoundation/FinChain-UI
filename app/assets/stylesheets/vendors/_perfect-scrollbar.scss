@@ -12,8 +12,9 @@
       overflow: auto !important; } }
   .ps-container.ps-active-x > .ps-scrollbar-x-rail,
   .ps-container.ps-active-y > .ps-scrollbar-y-rail {
-    display: block;
-    background-color: transparent; }
+    //display: block;
+    //background-color: transparent;
+  }
   .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
     background-color: #eee;
     opacity: 0.9; }

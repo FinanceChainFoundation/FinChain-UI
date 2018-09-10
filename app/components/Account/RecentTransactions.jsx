@@ -10,7 +10,6 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
-import {ChainStore} from "bitsharesjs/es";
 
 const {operations} = grapheneChainTypes;
 const alignLeft = {textAlign: "left"};
@@ -52,7 +51,6 @@ class RecentTransactions extends React.Component {
             limit: props.limit || 20,
             csvExport: false,
             headerHeight: 85,
-            hasMoreHistory: true,
             filter: "all"
         };
     }
@@ -79,7 +77,6 @@ class RecentTransactions extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(nextState.hasMoreHistory !== this.state.hasMoreHistory) return true;
         if(!utils.are_equal_shallow(this.props.accountsList, nextProps.accountsList)) return true;
         if(this.props.maxHeight !== nextProps.maxHeight) return true;
         if(this.state.headerHeight !== nextState.headerHeight) return true;
@@ -128,12 +125,17 @@ class RecentTransactions extends React.Component {
 
     }
 
+    _onIncreaseLimit() {
+        this.setState({
+            limit: this.state.limit + 30
+        });
+    }
+
     _getHistory(accountsList, filterOp, customFilter) {
         let history = [];
         let seen_ops = new Set();
-        for (let accountold of accountsList) {
-            if(accountold) {
-                let account=ChainStore.getAccount(accountold.get("id"))
+        for (let account of accountsList) {
+            if(account) {
                 let h = account.get("history");
                 if (h) history = history.concat(h.toJS().filter(op => !seen_ops.has(op.id) && seen_ops.add(op.id)));
             }
@@ -178,23 +180,6 @@ class RecentTransactions extends React.Component {
         let current_account_id = accountsList.length === 1 && accountsList[0] ? accountsList[0].get("id") : null;
         let history = this._getHistory(accountsList, this.props.showFilters && this.state.filter !== "all" ?  this.state.filter : filter, customFilter).sort(compareOps);
         let historyCount = history.length;
-        const _onIncreaseLimit = () => {
-            if (this.state.hasMoreHistory) {
-                if (this.state.limit <= historyCount) {
-                    this.setState({
-                        limit: this.state.limit + 30,
-                    });
-                } else {
-                    this.setState({
-                        hasMoreHistory: false,
-                    })
-                    return
-                }
-                if (this.state.limit + 30 > historyCount) {
-                    ChainStore.fetchRecentHistory(accountsList[0].get("id"));
-                }
-            }
-        }
 
         style = style ? style : {};
         style.width = "100%";
@@ -234,7 +219,7 @@ class RecentTransactions extends React.Component {
                 </td>
                 <td style={{textAlign: "center"}}>
                     &nbsp;{this.props.showMore && historyCount > this.props.limit || 20 && limit < historyCount ? (
-                        <a onClick={_onIncreaseLimit.bind(this)}>
+                        <a onClick={this._onIncreaseLimit.bind(this)}>
                             <Icon name="chevron-down" className="icon-14px" />
                         </a>
                     ) : null}

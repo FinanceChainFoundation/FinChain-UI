@@ -198,12 +198,12 @@ class AccountDepositWithdraw extends React.Component {
                                 issuer_account="blocktrades"
                                 account={account}
                                 initial_deposit_input_coin_type="btc"
-                                initial_deposit_output_coin_type="bts"
+                                initial_deposit_output_coin_type="JRC"
                                 initial_deposit_estimated_input_amount="1.0"
-                                initial_withdraw_input_coin_type="bts"
+                                initial_withdraw_input_coin_type="JRC"
                                 initial_withdraw_output_coin_type="btc"
                                 initial_withdraw_estimated_input_amount="100000"
-                                initial_conversion_input_coin_type="bts"
+                                initial_conversion_input_coin_type="JRC"
                                 initial_conversion_output_coin_type="bitbtc"
                                 initial_conversion_estimated_input_amount="1000"
                             />
@@ -267,23 +267,24 @@ class AccountDepositWithdraw extends React.Component {
                             <HelpContent path="components/DepositWithdraw" section="deposit-short"/>
                         </div>
                         <div className="medium-5 medium-offset-1">
-                            <HelpContent account={account.get("name")} path="components/DepositWithdraw" section="receive"/>
+                            {/*<HelpContent account={account.get("name")} path="components/DepositWithdraw" section="receive"/>*/}
                         </div>
                     </div>
                     <div>
                         <div className="grid-block vertical medium-horizontal no-margin no-padding">
-                            <div className="medium-6 small-order-2 medium-order-1">
-                                <Translate component="label" className="left-label" content="gateway.service" />
-                                <select onChange={this.onSetService.bind(this)} className="bts-select" value={activeService} >
-                                    {options}
-                                </select>
-                                {
-                                  currentServiceDown ?
-                                  <Translate style={{color: "red", marginBottom: "1em", display: "block"}} content={`gateway.unavailable_${currentServiceName}`} />
-                                  : null
-                                }
-                            </div>
-                            <div className="medium-5 medium-offset-1 small-order-1 medium-order-2" style={{paddingBottom: 20}}>
+                            {/*<div className="medium-6 small-order-2 medium-order-1">*/}
+                                {/*<Translate component="label" className="left-label" content="gateway.service" />*/}
+                                {/*<select onChange={this.onSetService.bind(this)} className="bts-select" value={activeService} >*/}
+                                    {/*{options}*/}
+                                {/*</select>*/}
+                                {/*{*/}
+                                  {/*currentServiceDown ?*/}
+                                  {/*<Translate style={{color: "red", marginBottom: "1em", display: "block"}} content={`gateway.unavailable_${currentServiceName}`} />*/}
+                                  {/*: null*/}
+                                {/*}*/}
+                            {/*</div>*/}
+                            {/*medium-offset-1*/}
+                            <div className="medium-5  small-order-1 medium-order-2" style={{paddingBottom: 20}}>
                                 <Translate component="label" className="left-label" content="gateway.your_account" />
                                 <div className="inline-label">
                                     <AccountImage

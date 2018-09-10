@@ -46,11 +46,12 @@
   > thead > tr > th {
       font-size: 14px;
       padding: 5px 5px;
-      text-align: right;
+      text-align: left;
   }
 
   > tbody > tr > td {
-      font-size: 12px;
+      //font-size: 12px;
+      font-size: .75rem;
       padding-bottom: 4px;
   }
 }
@@ -89,7 +90,7 @@ p.order-table-title {
 
 .buySellButton {
   float: right;
-  min-width: 4rem;
+  min-width: 5rem;
 }
 
 form.order-form {
@@ -296,7 +297,7 @@ div.bucket-option {
 }
 
 .buy-sell-label {
-    font-size: 90%;
+    font-size: 0.92rem;
     line-height: 1.75rem;
     height: 1.75rem;
 }
@@ -311,7 +312,7 @@ div.bucket-option {
     padding: 0;
     height: 1.75rem;
     text-align: right;
-    font-size: 90%;
+    font-size: 1.23rem;
     padding-right: 0.4rem;
 }
 
@@ -569,4 +570,83 @@ form.hide-container {
         text-transform: none;
     }
 
+}
+
+
+.darkTheme{
+    .haha{
+        color: red;
+    }
+    div.disabled * {
+    pointer-events: auto !important;
+}
+    .menu-group.primary .menu-bar > li > a, .menu-group.primary .menu-bar .menu-bar > li > a {
+        color:#B5B9BF !important;
+    }
+    .menu-group.primary .menu-bar > li > a.active,.menu-group.primary .menu-bar .menu-bar > li > a.active {
+        color:#5DC3F2 !important;
+        background: #3A434B !important;
+    }
+    .button {
+        background: #5DC3F2 !important;
+    }
+    .button.outline{
+        background:none !important;
+    }
+    .footer div.footer-status > span.success {
+        color:#5DC3F2 !important;
+    }
+    .bottom-row {
+    border: none;
+    }
+    .mymarkets-header{
+        border-bottom-color: #5DC3F2 !important;
+    }
+    .mymarkets-header.inactive {
+        border-bottom-color: transparent !important;
+        color: #cccccc;
+    }
+    .mymarkets-header.inactive {
+        border-bottom-color: transparent !important;
+        color: #cccccc;
+    }
+    .button:hover{
+        background: #5DC3F2 !important;    
+    }
+    a{
+        color:#5DC3F2 !important;
+    }
+    .settings-menu > li.active {
+        color: #5DC3F2 !important;
+    }
+    .txtlabel.success {
+        color:#5DC3F2 !important;
+    }
+    .label.success {
+        color:#5DC3F2 !important;
+        border-color:#5DC3F2 !important;
+    }
+    .label.info {
+        color:#5DC3F2 !important;
+        border-color:#5DC3F2 !important;
+    }
+     ul.button-group.segmented > li.is-active > a {
+        border-bottom: 1px solid #5DC3F2 !important;
+    }
+    .exchange-content-header{
+        border-bottom: 1px solid #5DC3F2 !important;
+        .ask {
+            border-bottom: 1px solid #5DC3F2 !important;
+        }
+        .ask-total {
+            color: #5DC3F2 !important;
+        }
+    }
+    table .ask-total {
+      color: #5DC3F2 !important;
+    }
+    .btn-buy .ask {
+        background-color: #5DC3F2 !important;
+    }
+    
 }

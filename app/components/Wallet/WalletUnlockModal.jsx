@@ -93,9 +93,9 @@ class WalletUnlockModal extends React.Component {
         //DEBUG console.log('... componentDidUpdate this.props.resolve', this.props.resolve)
         if(this.props.resolve) {
             if (WalletDb.isLocked())
-                ZfApi.publish(this.props.modalId, "open")
+                ZfApi.publish(this.props.modalId, "open");
             else
-                this.props.resolve()
+                this.props.resolve();
         }
     }
 
@@ -104,6 +104,7 @@ class WalletUnlockModal extends React.Component {
         e.preventDefault();
         const password = passwordLogin ? this.refs.password_input.value : this.refs.password_input.value();
         const account = passwordLogin ? this.state.account && this.state.account.get("name") : null;
+        
         this.setState({password_error: null});
         WalletDb.validatePassword(
             password || "",
@@ -116,6 +117,7 @@ class WalletUnlockModal extends React.Component {
         } else {
             if (!passwordLogin) {
                 this.refs.password_input.clear();
+                
             } else {
                 this.refs.password_input.value = "";
                 AccountActions.setPasswordAccount(account);
@@ -124,6 +126,15 @@ class WalletUnlockModal extends React.Component {
             this.props.resolve();
             WalletUnlockActions.change();
             this.setState({password_input_reset: Date.now(), password_error: false});
+
+            // console.log(333);
+            // console.log(location.pathname);
+            // console.log(444);
+            if(location.pathname == "/" || location.pathname == "/create-account"){
+                location.pathname = "/trade";
+            }
+            //
+            // console.log(location);
         }
         return false;
     }
@@ -139,7 +150,7 @@ class WalletUnlockModal extends React.Component {
         ZfApi.publish(this.props.modalId, "close");
         this.context.router.push("/create-account/wallet");
     }
-
+	
     renderWalletLogin() {
         if (!WalletDb.getWallet()) {
             return (
@@ -225,12 +236,14 @@ class WalletUnlockModal extends React.Component {
 
                 <div style={{marginLeft: "3.5rem"}}>
                     <div className="button-group">
+                    	
                         <button tabIndex={tabIndex++} className="button" type="submit" onClick={this.onPasswordEnter}><Translate content="header.unlock_short" /></button>
+                       
                         <Trigger close={this.props.modalId}>
                             <div tabIndex={tabIndex++} className=" button"><Translate content="account.perm.cancel" /></div>
                         </Trigger>
                     </div>
-                    {/* <div onClick={this._toggleLoginType.bind(this)} className="button small outline float-right"><Translate content="wallet.switch_model_wallet" /></div> */}
+                     <div onClick={this._toggleLoginType.bind(this)} className="button small outline float-right"><Translate content="wallet.switch_model_wallet" /></div> 
                 </div>
             </form>
         );
@@ -247,7 +260,7 @@ class WalletUnlockModal extends React.Component {
             // U N L O C K
             <BaseModal id={this.props.modalId} ref="modal" overlay={true} overlayClose={false}>
                 <div className="text-center">
-                    <img src={logo}/>
+                    <img src={require("../110.png")}/>
                     <div style={{marginTop: "1rem"}}>
                         <Translate component="h4" content={"header.unlock" + (passwordLogin ? "_password" : "")} />
                     </div>
@@ -291,4 +304,4 @@ class WalletUnlockModalContainer extends React.Component {
         );
     }
 }
-export default WalletUnlockModalContainer
+export default WalletUnlockModalContainer;

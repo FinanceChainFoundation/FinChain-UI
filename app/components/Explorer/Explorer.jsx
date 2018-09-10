@@ -6,7 +6,7 @@ import Icon from "../Icon/Icon";
 class ExplorerCard extends React.Component {
 
     render() {
-
+		
         return (
             <div className="grid-content">
                 <div className="card">
@@ -20,7 +20,6 @@ class ExplorerCard extends React.Component {
 class Explorer extends React.Component {
 
     render() {
-
         return (
             <div className="grid-block page-layout flex-start">
                 <div className="grid-block regular-padding small-up-1 medium-up-2 large-up-3">

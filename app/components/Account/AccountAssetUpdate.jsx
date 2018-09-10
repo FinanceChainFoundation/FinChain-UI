@@ -236,7 +236,7 @@ class AccountAssetUpdate extends React.Component {
 
             case "max_market_fee":
                 let marketFee = e.amount.replace(/,/g, "");
-                if ((new big(marketFee)).times(precision).gt(GRAPHENE_MAX_SHARE_SUPPLY)) {
+                if ((new big(marketFee)).times(Math.pow(10, precision)).gt(GRAPHENE_MAX_SHARE_SUPPLY)) {
                     updateState = false;
                     return this.setState({errors: {max_market_fee: "The number you tried to enter is too large"}});
                 }
@@ -428,7 +428,7 @@ class AccountAssetUpdate extends React.Component {
         let cr_base_asset = ChainStore.getAsset(core_exchange_rate.base.asset_id);
         let basePrecision = utils.get_asset_precision(cr_base_asset.get("precision"));
 
-        let cr_quote_amount = (new big(core_exchange_rate.quote.amount)).times(precision).toString();
+        let cr_quote_amount = (new big(core_exchange_rate.quote.amount)).times(Math.pow(10, precision)).toString();
         let cr_base_amount = (new big(core_exchange_rate.base.amount)).times(Math.pow(10, basePrecision)).toString();
 
         let originalPermissions = assetUtils.getFlagBooleans(asset.getIn(["options", "issuer_permissions"]), asset.get("bitasset") !== undefined);

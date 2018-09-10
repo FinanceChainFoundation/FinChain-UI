@@ -14,6 +14,8 @@ import Translate from "react-translate-component";
 import {ChainConfig} from "bitsharesjs-ws";
 import {PrivateKey} from "bitsharesjs/es";
 import SettingsActions from "actions/SettingsActions";
+import BackupBrainkey from "./BackupBrainkey";
+
 
 const connectObject = {
     listenTo() {
@@ -58,10 +60,10 @@ BackupCreate = connect(BackupCreate, connectObject);
 class BackupRestore extends Component {
 
     constructor() {
-        super()
+        super();
         this.state = {
             newWalletName: null
-        }
+        };
     }
 
     componentWillMount() {
@@ -69,9 +71,9 @@ class BackupRestore extends Component {
     }
 
     render() {
-        let new_wallet = this.props.wallet.new_wallet
-        let has_new_wallet = this.props.wallet.wallet_names.has(new_wallet)
-        let restored = has_new_wallet
+        let new_wallet = this.props.wallet.new_wallet;
+        let has_new_wallet = this.props.wallet.wallet_names.has(new_wallet);
+        let restored = has_new_wallet;
 
         return (
             <div>
@@ -95,8 +97,8 @@ BackupRestore = connect(BackupRestore, connectObject);
 class Restore extends Component {
 
     constructor() {
-        super()
-        this.state = { }
+        super();
+        this.state = { };
     }
 
     isRestored() {
@@ -106,8 +108,8 @@ class Restore extends Component {
     }
 
     render() {
-        let new_wallet = this.props.wallet.new_wallet
-        let has_new_wallet = this.isRestored()
+        let new_wallet = this.props.wallet.new_wallet;
+        let has_new_wallet = this.isRestored();
 
         if(has_new_wallet)
             return <span>
@@ -118,13 +120,13 @@ class Restore extends Component {
                     </div>
                 </Link>
                 <div>{this.props.children}</div>
-            </span>
+            </span>;
 
         return <span>
             <h3><Translate content="wallet.ready_to_restore" /></h3>
             <div className="button outline"
                 onClick={this.onRestore.bind(this)}><Translate content="wallet.restore_wallet_of" name={new_wallet} /></div>
-        </span>
+        </span>;
     }
 
     onRestore() {
@@ -144,39 +146,39 @@ Restore = connect(Restore, connectObject);
 class NewWalletName extends Component {
 
     constructor() {
-        super()
+        super();
         this.state = {
             new_wallet: null,
             accept: false
-        }
+        };
     }
 
     componentWillMount() {
-        let has_current_wallet = !!this.props.wallet.current_wallet
+        let has_current_wallet = !!this.props.wallet.current_wallet;
         if( ! has_current_wallet) {
             let walletName = "default";
             if (this.props.backup.name) {
-                walletName = this.props.backup.name.match(/[a-z0-9_-]*/)[0]
+                walletName = this.props.backup.name.match(/[a-z0-9_-]*/)[0];
             }
-            WalletManagerStore.setNewWallet(walletName)
-            this.setState({accept: true})
+            WalletManagerStore.setNewWallet(walletName);
+            this.setState({accept: true});
         }
         if( has_current_wallet && this.props.backup.name && ! this.state.new_wallet) {
             // begning of the file name might make a good wallet name
-            let new_wallet = this.props.backup.name.match(/[a-z0-9_-]*/)[0]
+            let new_wallet = this.props.backup.name.match(/[a-z0-9_-]*/)[0];
             if( new_wallet )
-                this.setState({new_wallet})
+                this.setState({new_wallet});
         }
     }
 
     render() {
         if(this.state.accept)
-            return <span>{this.props.children}</span>
+            return <span>{this.props.children}</span>;
 
-        let has_wallet_name = !!this.state.new_wallet
+        let has_wallet_name = !!this.state.new_wallet;
         let has_wallet_name_conflict = has_wallet_name ?
-            this.props.wallet.wallet_names.has(this.state.new_wallet) : false
-        let name_ready = ! has_wallet_name_conflict && has_wallet_name
+            this.props.wallet.wallet_names.has(this.state.new_wallet) : false;
+        let name_ready = ! has_wallet_name_conflict && has_wallet_name;
 
         return (
         <form onSubmit={this.onAccept.bind(this)}>
@@ -196,22 +198,22 @@ class NewWalletName extends Component {
 
     onAccept(e) {
         if (e) e.preventDefault();
-        this.setState({accept: true})
-        WalletManagerStore.setNewWallet(this.state.new_wallet)
+        this.setState({accept: true});
+        WalletManagerStore.setNewWallet(this.state.new_wallet);
     }
 
     formChange(event) {
-        let key_id = event.target.id
-        let value = event.target.value
+        let key_id = event.target.id;
+        let value = event.target.value;
         if(key_id === "new_wallet") {
             //case in-sensitive
-            value = value.toLowerCase()
+            value = value.toLowerCase();
             // Allow only valid file name characters
-            if( /[^a-z0-9_-]/.test(value) ) return
+            if( /[^a-z0-9_-]/.test(value) ) return;
         }
-        let state = {}
-        state[key_id] = value
-        this.setState(state)
+        let state = {};
+        state[key_id] = value;
+        this.setState(state);
     }
 }
 NewWalletName = connect(NewWalletName, connectObject);
@@ -224,20 +226,20 @@ class Download extends Component {
 
     componentDidMount() {
         if( ! this.isFileSaverSupported )
-            notify.error("File saving is not supported")
+            notify.error("File saving is not supported");
     }
 
     render() {
         return <div className="button"
-            onClick={this.onDownload.bind(this)}><Translate content="wallet.download" /></div>
+            onClick={this.onDownload.bind(this)}><Translate content="wallet.download" /></div>;
     }
 
     onDownload() {
         let blob = new Blob([ this.props.backup.contents ], {
-            type: "application/octet-stream; charset=us-ascii"})
+            type: "application/octet-stream; charset=us-ascii"});
 
         if(blob.size !== this.props.backup.size)
-            throw new Error("Invalid backup to download conversion")
+            throw new Error("Invalid backup to download conversion");
         saveAs(blob, this.props.backup.name);
         WalletActions.setBackupDate();
 
@@ -250,11 +252,18 @@ Download = connect(Download, connectObject);
 
 class Create extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            show : true
+        };
+    }
     getBackupName() {
-        let name = this.props.wallet.current_wallet
-        let address_prefix = ChainConfig.address_prefix.toLowerCase()
+        let name = this.props.wallet.current_wallet;
+        let address_prefix = ChainConfig.address_prefix.toLowerCase();
         if(name.indexOf(address_prefix) !== 0)
-            name = address_prefix + "_" + name
+            name = address_prefix + "_" + name;
 
         let date =  new Date();
         let month = date.getMonth() + 1;
@@ -268,10 +277,11 @@ class Create extends Component {
 
     render() {
 
-        let has_backup = !!this.props.backup.contents
-        if( has_backup ) return <div>{this.props.children}</div>
-
-        let ready = WalletDb.getWallet() != null
+        let has_backup = !!this.props.backup.contents;
+        if( has_backup ) return <div>{this.props.children}</div>;
+        let content;
+        content = <BackupBrainkey />;
+        let ready = WalletDb.getWallet() != null;
 
         return (
             <div>
@@ -287,18 +297,51 @@ class Create extends Component {
                 >
                     <Translate content="wallet.create_backup_of" name={this.props.wallet.current_wallet} />
                 </div>
+                {/*添加新的按钮代码*/}
+                <div
+                    onClick={this.onCreateBackup2.bind(this)}
+                    className={cname("button", {disabled: !ready})}
+                    style={{marginBottom: 10, marginLeft:10}}
+                >
+                    <Translate content="wallet.create_brainkey_of" name={this.props.wallet.current_wallet} />
+                </div>
+                <div id='parent' style={{display:'none'}}>
+                    {content}
+                </div>
+                {/*END 结束*/}
+
+
                 <LastBackupDate/>
             </div>
         );
     }
 
     onCreateBackup() {
-        let backup_pubkey = WalletDb.getWallet().password_pubkey
+        let backup_pubkey = WalletDb.getWallet().password_pubkey;
         backup(backup_pubkey).then( contents => {
             let name = this.getBackupName();
-            BackupActions.incommingBuffer({name, contents})
-        })
+            BackupActions.incommingBuffer({name, contents});
+        });
     }
+    /*脑钱包设置按钮*/
+    onCreateBackup2() {
+        var that = this;
+        // 点击按钮改变样式
+        console.log(this.state.show);
+        if(this.state.show)
+        {
+            document.getElementById('parent').style.display = 'block';
+        }
+        else
+        {
+            document.getElementById('parent').style.display = 'none';
+        }
+
+        this.setState({show: !this.state.show});
+
+
+    }
+
 }
 Create = connect(Create, connectObject);
 
@@ -307,21 +350,21 @@ class LastBackupDate extends Component {
         if (!WalletDb.getWallet()) {
             return null;
         }
-        let backup_date = WalletDb.getWallet().backup_date
-        let last_modified = WalletDb.getWallet().last_modified
+        let backup_date = WalletDb.getWallet().backup_date;
+        let last_modified = WalletDb.getWallet().last_modified;
         let backup_time = backup_date ?
             <h4><Translate content="wallet.last_backup" /> <FormattedDate value={backup_date}/></h4>:
-            <Translate style={{paddingTop: 20}} className="facolor-error" component="p" content="wallet.never_backed_up" />
-        let needs_backup = null
+            <Translate style={{paddingTop: 20}} className="facolor-error" component="p" content="" />;
+        let needs_backup = null;
         if( backup_date ) {
             needs_backup = last_modified.getTime() > backup_date.getTime() ?
                 <h4 className="facolor-error"><Translate content="wallet.need_backup" /></h4>:
-                <h4 className="success"><Translate content="wallet.noneed_backup" /></h4>
+                <h4 className="success"><Translate content="wallet.noneed_backup" /></h4>;
         }
         return <span>
             {backup_time}
             {needs_backup}
-        </span>
+        </span>;
     }
 }
 
@@ -380,7 +423,7 @@ class NameSizeModified extends Component {
             {this.props.backup.last_modified ?
                 <div>{this.props.backup.last_modified}</div> : null }
             <br/>
-        </span>
+        </span>;
     }
 }
 NameSizeModified = connect(NameSizeModified, connectObject);
@@ -392,19 +435,19 @@ class DecryptBackup extends Component {
     }
 
     constructor() {
-        super()
-        this.state = this._getInitialState()
+        super();
+        this.state = this._getInitialState();
     }
 
     _getInitialState() {
         return {
             backup_password: "",
             verified: false
-        }
+        };
     }
 
     render() {
-        if(this.state.verified) return <span>{this.props.children}</span>
+        if(this.state.verified) return <span>{this.props.children}</span>;
         return (
         <form onSubmit={this.onPassword.bind(this)}>
             <label><Translate content="wallet.enter_password" /></label>
@@ -424,27 +467,27 @@ class DecryptBackup extends Component {
 
     onPassword(e) {
         if (e) e.preventDefault();
-        let private_key = PrivateKey.fromSeed(this.state.backup_password || "")
-        let contents = this.props.backup.contents
+        let private_key = PrivateKey.fromSeed(this.state.backup_password || "");
+        let contents = this.props.backup.contents;
         decryptWalletBackup(private_key.toWif(), contents).then( wallet_object => {
-            this.setState({verified: true})
+            this.setState({verified: true});
             if(this.props.saveWalletObject)
-                BackupStore.setWalletObjct(wallet_object)
+                BackupStore.setWalletObjct(wallet_object);
 
         }).catch( error => {
             console.error("Error verifying wallet " + this.props.backup.name,
-                error, error.stack)
+                error, error.stack);
             if(error === "invalid_decryption_key")
-                notify.error("Invalid Password")
+                notify.error("Invalid Password");
             else
-                notify.error(""+error)
-        })
+                notify.error(""+error);
+        });
     }
 
     formChange(event) {
-        let state = {}
-        state[event.target.id] = event.target.value
-        this.setState(state)
+        let state = {};
+        state[event.target.id] = event.target.value;
+        this.setState(state);
     }
 
 }

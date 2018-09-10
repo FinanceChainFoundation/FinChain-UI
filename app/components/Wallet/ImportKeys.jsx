@@ -670,7 +670,7 @@ class ImportKeys extends Component {
                                     key={this.state.reset_file_name}
                                     onChange={this.upload.bind(this)}
                                 />
-                                <div>{this.state.import_file_message}</div>
+                                <div>{this.state.import}</div>
                                 { ! this.state.no_file ?
                                     (<div>
                                         <input
