@@ -12,6 +12,8 @@ import Translate from "react-translate-component";
 import SliderItem2 from "./Slider/SliderItem2";
 import SliderItem from "./Slider/SliderItem";
 import {Link} from "react-router";
+import MarketCard from './MarketCard';
+
 var back ={
     height:"560px",
     position:"relative",
@@ -1307,209 +1309,271 @@ class Trade extends React.Component {
                     {/*</div>*/}
                     <div style={{background:"white"}}>
                     <div className="my-list">
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/icon-02.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/ETH_JRC"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/JRC</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p>   <p className="c1">57，999.99829</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p>   <p className="c2">500.40K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p>    <p className="c3">  -8.65%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require("./image/icon-01.png")}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/BTC_JRC"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BTC/JRC</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">4,999.929</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">6789K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +7.65%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require("./image/12.png")}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/USDT_JRC"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>USDT/JRC</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">112</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">997.87K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -9.45%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require("./image/icon-02.png")}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/ETH_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">3.98</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">67.99K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -8.65%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/icon-01.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/BTC_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BTC/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">700.968</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">679.09K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -10.65%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/13.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/BCH_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BCH/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/15.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/BMAN_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BMAN/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/icon-03.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/EOS_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>EOS/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/14.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/ETC_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETC/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/17.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/LTC_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>LTC/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/16.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/IOTA_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>IOTA/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/19.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/XRP_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XRP/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/20.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/XMR_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XMR/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/21.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/XLM_USDT"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XLM/USDT</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
-
-                        <div className="my-l">
-                            <div className="my-l-img">
-                                <img src={require('./image/icon-02.png')}/>
-                            </div>
-                            <div className="my-l-txt">
-                                <Link to={"/market/ETH_JRC"}>
-                                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/JRC</p>
-                                </Link>
-                                <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
-                                <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
-                                <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
-                            </div>
-                        </div>
+                        {[
+                            {
+                                logo: require('./image/icon-02.png'),
+                                quoteAsset: 'ETH',
+                                baseAsset: 'JRC'
+                            }, {
+                                logo: require("./image/icon-01.png"),
+                                quoteAsset: 'BTC',
+                                baseAsset: 'JRC'
+                            }, {
+                                logo: require("./image/12.png"),
+                                quoteAsset: 'USDT',
+                                baseAsset: 'JRC'
+                            }, {
+                                logo: require("./image/icon-02.png"),
+                                quoteAsset: 'ETH',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/icon-01.png'),
+                                quoteAsset: 'BTC',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/13.png'),
+                                quoteAsset: 'BCH',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/15.png'),
+                                quoteAsset: 'BMAN',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/icon-03.png'),
+                                quoteAsset: 'EOS',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/14.png'),
+                                quoteAsset: 'ETC',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/17.png'),
+                                quoteAsset: 'LTC',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/16.png'),
+                                quoteAsset: 'IOTA',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/19.png'),
+                                quoteAsset: 'XRP',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/20.png'),
+                                quoteAsset: 'XMR',
+                                baseAsset: 'USDT'
+                            }, {
+                                logo: require('./image/21.png'),
+                                quoteAsset: 'XLM',
+                                baseAsset: 'USDT'
+                            }
+                        ].map(i => <MarketCard key={`${i.quoteAsset}_${i.baseAsset}`} logo={i.logo} quoteAsset={i.quoteAsset} baseAsset={i.baseAsset}/> )
+                        }
+                        {
+                        //     <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/icon-02.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/ETH_JRC"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/JRC</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p>   <p className="c1">57，999.99829</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p>   <p className="c2">500.40K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p>    <p className="c3">  -8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require("./image/icon-01.png")}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/BTC_JRC"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BTC/JRC</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">4,999.929</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">6789K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +7.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require("./image/12.png")}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/USDT_JRC"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>USDT/JRC</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">112</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">997.87K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -9.45%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require("./image/icon-02.png")}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/ETH_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">3.98</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">67.99K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/icon-01.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/BTC_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BTC/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">700.968</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">679.09K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c3">  -10.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/13.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/BCH_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BCH/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/15.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/BMAN_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>BMAN/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/icon-03.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/EOS_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>EOS/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/14.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/ETC_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETC/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/17.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/LTC_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>LTC/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/16.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/IOTA_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>IOTA/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/19.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/XRP_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XRP/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/20.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/XMR_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XMR/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/21.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/XLM_USDT"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XLM/USDT</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                        //
+                        // <div className="my-l">
+                        //     <div className="my-l-img">
+                        //         <img src={require('./image/icon-02.png')}/>
+                        //     </div>
+                        //     <div className="my-l-txt">
+                        //         <Link to={"/market/ETH_JRC"}>
+                        //             <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>ETH/JRC</p>
+                        //         </Link>
+                        //         <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>
+                        //         <div> <p><Translate content="All_increase.trade_sl" /></p> <p className="c2">55.88K</p> </div>
+                        //         <div> <p><Translate content="All_increase.trade_zdf" /></p><p className="c4">  +8.65%</p> </div>
+                        //     </div>
+                        // </div>
+                    }
                     </div>
                 </div>
 
