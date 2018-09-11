@@ -3,7 +3,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import market_utils from "common/market_utils";
 import {Apis} from "bitsharesjs-ws";
-import {Link} from "react-router";
+import {browserHistory} from "react-router";
 import Translate from "react-translate-component";
 import utils from "common/utils";
 
@@ -170,21 +170,22 @@ class MarketCard extends React.Component {
         }
     }
 
+    clickHandler() {
+        browserHistory.push(`/market/${this.props.quoteAsset.get('symbol')}_${this.props.baseAsset.get('symbol')}`)
+    }
     render() {
         const { quoteAsset, baseAsset, logo } = this.props;
         return(
-            <div className="my-l">
-                    <div className="my-l-img">
-                        <img src={logo} alt='asset logo'/>
-                    </div>
-                    <div className="my-l-txt">
-                        <Link to={`/market/${quoteAsset.get('symbol')}_${baseAsset.get('symbol')}`}>
-                            <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>{`${quoteAsset.get('symbol')}/${baseAsset.get('symbol')}`}</p>
-                        </Link>
-                        <div> <p><Translate content="All_increase.trade_jg" /></p>   <p className="c1">{utils.price_text(this.state.latestPrice, quoteAsset, baseAsset)}</p></div>
-                        <div> <p><Translate content="All_increase.trade_sl" /></p>   <p className="c2">{utils.format_volume(this.state.volumeQuote)}</p> </div>
-                        <div> <p><Translate content="All_increase.trade_zdf" /></p>    <p className={this.state.change >= 0 ? "c4" : "c3"}>  {this.state.change > 0 ? `+${this.state.change}` : `${this.state.change}` }%</p> </div>
-                    </div>
+            <div className="my-l" onClick={this.clickHandler.bind(this)}>
+                <div className="my-l-img">
+                    <img src={logo} alt='asset logo'/>
+                </div>
+                <div className="my-l-txt">
+                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>{`${quoteAsset.get('symbol')}/${baseAsset.get('symbol')}`}</p>
+                    <div> <p><Translate content="All_increase.trade_jg" /></p>   &nbsp;<p className="c1">{utils.price_text(this.state.latestPrice, quoteAsset, baseAsset)}</p></div>
+                    <div> <p><Translate content="All_increase.trade_sl" /></p>   <p className="c2">{utils.format_volume(this.state.volumeQuote)}</p> </div>
+                    <div> <p><Translate content="All_increase.trade_zdf" /></p>    <p className={this.state.change >= 0 ? "c4" : "c3"}>  {this.state.change > 0 ? `+${this.state.change}` : `${this.state.change}` }%</p> </div>
+                </div>
             </div>
         )
     }

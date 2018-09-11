@@ -59,6 +59,7 @@ textarea{
 	border-radius: 8px;
 	margin-bottom: 60px;
 	display: flex;
+	cursor: pointer;
 }
 .my-l-img{
 	width:38%;
@@ -84,6 +85,7 @@ textarea{
 }
 .my-l-txt p{
 	margin:9px 0; 
+	white-space: nowrap;
 	font-family: MicrosoftYaHei;
 	font-size: 16px;
 	color: #92989E;
