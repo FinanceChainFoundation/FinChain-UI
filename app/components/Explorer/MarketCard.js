@@ -21,6 +21,8 @@ class MarketCard extends React.Component {
             latestPrice: 0,
             change: 0,
             // volumeBase: 0,
+            high: 0,
+            low: 0,
             volumeQuote: 0
         };
         this._subToMarket = this._subToMarket.bind(this);
@@ -105,7 +107,23 @@ class MarketCard extends React.Component {
                     change = 0,
                     last = {close_quote: null, close_base: null},
                     invert,
+                    high = 0,
+                    low = 0,
+                    _high = 0,
+                    _low = 0,
+                    open = 0,
+                    close = 0,
                     noTrades = true;
+
+                function findMax(a, b) {
+                    if (a !== Infinity && b !== Infinity) {
+                        return Math.max(a, b);
+                    } else if (a === Infinity) {
+                        return b;
+                    } else {
+                        return a;
+                    }
+                }
 
                 if (results[1].length) {
                     let first;
@@ -113,6 +131,26 @@ class MarketCard extends React.Component {
                         let date = new Date(bucket.key.open + "+00:00").getTime();
                         if (date > yesterday) {
                             noTrades = false;
+                            if (quoteAsset.get("id") === bucket.key.quote) {
+                                _high = utils.get_asset_price(bucket.high_base, baseAsset, bucket.high_quote, quoteAsset);
+                                _low = utils.get_asset_price(bucket.low_base, baseAsset, bucket.low_quote, quoteAsset);
+                                open = utils.get_asset_price(bucket.open_base, baseAsset, bucket.open_quote, quoteAsset);
+                                close = utils.get_asset_price(bucket.close_base, baseAsset, bucket.close_quote, quoteAsset);
+                            } else {
+                                _high = utils.get_asset_price(bucket.low_quote, baseAsset, bucket.low_base, quoteAsset);
+                                _low = utils.get_asset_price(bucket.high_quote, baseAsset, bucket.high_base, quoteAsset);
+                                open = utils.get_asset_price(bucket.open_quote, baseAsset, bucket.open_base, quoteAsset);
+                                close = utils.get_asset_price(bucket.close_quote, baseAsset, bucket.close_base, quoteAsset);
+                            }
+                            if (isNaN(high) || high === Infinity) {
+                                high = findMax(open, close);
+                            }
+                            if (high > 1.3 * ((open + close) / 2)) {
+                                high = findMax(open, close);
+                            }
+                            if (_high > high) high = _high;
+                            if (low == 0 || _low < low) low = _low;
+
                             if (!first) {
                                 first = results[1][i > 0 ? i - 1 : i];
                                 invert = first.key.base === baseAsset.get("id");
@@ -162,6 +200,8 @@ class MarketCard extends React.Component {
                     change: change.toFixed(2),
                     // volumeBase,
                     volumeQuote,
+                    high,
+                    low,
                     sub: `${quoteAsset.get("id")}_${baseAsset.get("id")}`
                 })
             }).catch((error) => {
@@ -173,20 +213,19 @@ class MarketCard extends React.Component {
     clickHandler() {
         browserHistory.push(`/market/${this.props.quoteAsset.get('symbol')}_${this.props.baseAsset.get('symbol')}`)
     }
+
     render() {
-        const { quoteAsset, baseAsset, logo } = this.props;
+        const { quoteAsset, baseAsset } = this.props;
         return(
-            <div className="my-l" onClick={this.clickHandler.bind(this)}>
-                <div className="my-l-img">
-                    <img src={logo} alt='asset logo'/>
-                </div>
-                <div className="my-l-txt">
-                    <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>{`${quoteAsset.get('symbol')}/${baseAsset.get('symbol')}`}</p>
-                    <div> <p><Translate content="All_increase.trade_jg" /></p>   &nbsp;<p className="c1">{utils.price_text(this.state.latestPrice, quoteAsset, baseAsset)}</p></div>
-                    <div> <p><Translate content="All_increase.trade_sl" /></p>   <p className="c2">{utils.format_volume(this.state.volumeQuote)}</p> </div>
-                    <div> <p><Translate content="All_increase.trade_zdf" /></p>    <p className={this.state.change >= 0 ? "c4" : "c3"}>  {this.state.change > 0 ? `+${this.state.change}` : `${this.state.change}` }%</p> </div>
-                </div>
-            </div>
+            <tr>
+                <td>{`${quoteAsset.get('symbol')}/${baseAsset.get('symbol')}`}</td>
+                <td>{utils.price_text(this.state.latestPrice, quoteAsset, baseAsset)}</td>
+                <td><span className={this.state.change >= 0 ? "c4" : "c3"}>  {this.state.change > 0 ? `+${this.state.change}` : `${this.state.change}` }%</span> </td>
+                <td>{this.state.low.toFixed(2)}</td>
+                <td>{this.state.high.toFixed(2)}</td>
+                <td>{utils.format_volume(this.state.volumeQuote)}</td>
+                <td><button className='button' onClick={this.clickHandler.bind(this)}>去交易</button></td>
+            </tr>
         )
     }
 }
