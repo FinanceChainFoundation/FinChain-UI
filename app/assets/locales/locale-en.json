@@ -770,6 +770,7 @@
       "invalid": "The asset name %(name)s is invalid",
       "summary": {
         "asset_type": "Asset type",
+        "asset_id": "Asset ID",
         "issuer": "Issuer",
         "current_supply": "Current supply",
         "stealth_supply": "Stealth supply",

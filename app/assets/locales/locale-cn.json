@@ -718,6 +718,7 @@
       "invalid": "The asset name %(name)s is invalid",
       "summary": {
         "asset_type": "资产类型",
+        "asset_id": "资产ID",
         "issuer": "发行人",
         "current_supply": "当前供给",
         "stealth_supply": "隐私供给",

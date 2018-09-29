@@ -317,6 +317,10 @@ class Asset extends React.Component {
                             <td> {this._assetType(asset)} </td>
                         </tr>
                         <tr>
+                            <td> <Translate content="explorer.asset.summary.asset_id"/> </td>
+                            <td> {asset.id}</td>
+                        </tr>
+                        <tr>
                             <td> <Translate content="explorer.asset.summary.issuer"/> </td>
                             <td> <LinkToAccountById account={asset.issuer}/> </td>
                         </tr>
