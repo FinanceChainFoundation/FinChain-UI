@@ -256,7 +256,7 @@ class Trade2 extends React.Component {
                                 <img src={require('./image/19.png')}/>
                             </div>
                             <div className="my-l-txt">
-                                <Link to={"/market/XRP_USDT"}>
+                                <Link to={"/market/JRC_USDT"}>
                                     <p style={{fontFamily: "MicrosoftYaHei-Bold",fontSize: "20px", color: "#4A5660"}}>XRP/USDT</p>
                                 </Link>
                                 <div> <p><Translate content="All_increase.trade_jg" /></p> <p className="c1">1.78</p></div>

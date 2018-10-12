@@ -165,7 +165,7 @@ class AccountDepositWithdraw extends React.Component {
                                 className={rudexService === "gateway" ? "is-active" : ""}><a><Translate
                                 content="gateway.gateway"/></a></li>
                             <li onClick={this.toggleRuDEXService.bind(this, "fiat")}
-                                className={rudexService === "fiat" ? "is-active" : ""}><a>Fiat</a></li>
+                                className={rudexService === "fiat" ? "is-active" : ""}><a>gateway.gateways</a></li>
                         </ul>
                     </div>
 

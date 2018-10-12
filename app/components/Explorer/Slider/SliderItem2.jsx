@@ -36,8 +36,8 @@ export default class SliderItem2 extends Component {
           if(item.key ==1 || item.key ==2  || item.key ==3 ||item.key ==5 ||item.key ==6 ||item.key ==7 ){
               style = {
                   float: "left",
-                  width: "300px",
-                  height: "300px",
+                  width: "200px",
+                  height: "150px",
                   borderBottom: "#28395F 1px solid",
                   borderRight: "#28395F 1px solid",
 
@@ -46,8 +46,8 @@ export default class SliderItem2 extends Component {
           }else if(item.key ==4 ||item.key ==8 ){
               style = {
                   float: "left",
-                  width: "300px",
-                  height: "300px",
+                  width: "200px",
+                  height: "150px",
                   borderBottom: "#28395F 1px solid",
 
               };
@@ -55,15 +55,15 @@ export default class SliderItem2 extends Component {
 
               style = {
                   float: "left",
-                  width: "300px",
-                  height: "300px",
+                  width: "200px",
+                  height: "150px",
                   borderRight: "#28395F 1px solid",
               };
           }else{
               style = {
                   float: "left",
-                  width: "300px",
-                  height: "300px",
+                  width: "200px",
+                  height: "150px",
               };
           }
 
@@ -74,8 +74,8 @@ export default class SliderItem2 extends Component {
             if(item.key ==1 || item.key ==2 || item.key ==3 ||item.key ==5 ||item.key ==6 ||item.key ==7 ){
                 style = {
                     float: "left",
-                    width: "300px",
-                    height: "300px",
+                    width: "200px",
+                    height: "150px",
                     borderBottom: "#28395F 1px solid",
                     borderRight: "#28395F 1px solid",
 
@@ -84,8 +84,8 @@ export default class SliderItem2 extends Component {
             }else if(item.key ==4 ||item.key ==8 ){
                 style = {
                     float: "left",
-                    width: "300px",
-                    height: "300px",
+                    width: "200px",
+                    height: "150px",
                     borderBottom: "#28395F 1px solid",
 
                 };
@@ -93,15 +93,15 @@ export default class SliderItem2 extends Component {
             else if(item.key ==9 ||item.key ==10 ||item.key ==11){
                 style = {
                     float: "left",
-                    width: "300px",
-                    height: "300px",
+                    width: "200px",
+                    height: "150px",
                     borderRight: "#28395F 1px solid",
                 };
             }else{
                 style = {
                     float: "left",
-                    width: "300px",
-                    height: "300px",
+                    width: "200px",
+                    height: "150px",
                 };
             }
 
@@ -117,8 +117,7 @@ export default class SliderItem2 extends Component {
             onMouseLeave={this.handleOut}>
             <a href={item.herf} target="_blank">
           <em>
-            <img src= {imgs} onMouseEnter={this.handleEnter}
-                 onMouseLeave={this.handleOut} />
+            <img src= {imgs} onMouseEnter={this.handleEnter} onMouseLeave={this.handleOut} />
           </em>
             </a>
         </li>

@@ -65,7 +65,7 @@ textarea{
 	width:38%;
 	height:100%;
 	display: flex;
-	margin-left:6%;
+	margin-left:4%;
 	align-items: center;
 	
 }
@@ -75,7 +75,7 @@ textarea{
 	border-radius:50%;
 }
 .my-l-txt{
-	width:46%;
+	width:48%;
 	padding-top:30px;
 }
 .my-l-txt div{
@@ -85,7 +85,6 @@ textarea{
 }
 .my-l-txt p{
 	margin:9px 0; 
-	white-space: nowrap;
 	font-family: MicrosoftYaHei;
 	font-size: 16px;
 	color: #92989E;
@@ -192,7 +191,7 @@ textarea{
 	width: 162px;
 	margin-left: 0px;
 }
-.gTqwWp2.left span{
+.gTqwWp2.left divs{
 	display: block;
 	width: 100%;
 	text-align: left;
@@ -380,7 +379,7 @@ textarea{
 	background: #F6F8FB;
 }
 .home-marketwarp{
-	width: 1400px;
+	width: 1200px;
 	margin: 0 auto;
 
 }
@@ -389,34 +388,39 @@ textarea{
 	color: #051D27;
 	font-size: 24px;
 	line-height: 85px;
-	border:1px solid #f0f0f0;
+	border-bottom:1px solid #f0f0f0;
 
 }
 
 .productTickers{
 	border: none;
-	margin: 24px 0 46px;
-	width: 100%;
+	margin: 0px auto;
+	width: 1200px;
+	background: #ffffff;
 }
 .align-left{
-	/*text-align: center;*/
+	text-align: left;
 	height: 24px;
 	font-size: 14px;
 	line-height: 24px;
 	color: #8E979B;
+	padding-top: 20px;
+	font-size: 15px;
 }
 .align-right{
 	text-align: right;
 	height: 24px;
-	font-size: 14px;
 	line-height: 24px;
 	color: #8E979B;
+	padding-top: 20px;
+	font-size: 15px;
 }
 .align-center{
 	text-align: center;
 	height: 24px;
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 24px;
+	padding-top: 20px;
 	color: #8E979B;
 }
 
@@ -442,6 +446,12 @@ textarea{
 }
 .tdsnnzhang{
 	color: #2ECF63;
+}
+.c4{
+	color: #2ECF63;
+}
+.c3{
+	color: #CF2E3B;
 }
 .tbotd2sp{
 	width: 72px;
@@ -531,7 +541,7 @@ textarea{
 	display: block;
 	margin: 0 auto;
 }
-.bwarp03.warp ul li span{
+.bwarp03.warp ul li div{
 	display: block;
 	width: 100%;
 	text-align: center;
@@ -541,7 +551,7 @@ textarea{
 	color: #051D27;
 }
 .bwarp03.warp ul li p{
-	width: 220px;
+	width: 302px;
 	margin: 0 auto;
 	text-align: center;
 	font-size: 16px;
@@ -584,7 +594,7 @@ textarea{
 	display: block;
 	margin: 0 auto;
 }
-.bwrap.warp.info ul li span{
+.bwrap.warp.info ul li divs{
 	display: block;
 	background: #FFFFFF;
 	width: 100%;
@@ -613,18 +623,14 @@ textarea{
 	position: initial;
 }
 
-
-.bwarp04.warpaa{
-
-}
 .bwarp04.warpaa{
 	margin: 32px auto 0px;
-	height: 1050px;
+	height: 650px;
 }
 .bwarp04.warpaa ul{
 	margin: 0 auto;
 	height: 1140px;
-	padding: 80px 0;
+	padding: 80px 195px;
 }
 .bwarp04.warpaa ul li{
 	float: left;
@@ -633,7 +639,7 @@ textarea{
 }
 .bwarp04.warpaa ul li em{
 	text-align: center;
-	line-height: 300px;
+	line-height: 150px;
 	width: 200px;
 	display: block;
 	margin: 0 auto;

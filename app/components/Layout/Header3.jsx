@@ -370,8 +370,8 @@ class Header3 extends React.Component {
                             {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`} className={cnames({active: active.indexOf("account/") !== -1})}><Translate content="header.account" /></Link></li>}
                             <li>{tradeLink}</li>
 
-                            {currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("deposit-withdraw") !== -1})} href="https://gateway-tran.finchain.info/qrcode" target="_blank"><Translate component="span" content="account.deposit_withdraw" /></a></li> : null}
-
+                            {currentAccount || myAccounts.length ? <li><Link to={`/account/${currentAccount}/dashboard`} className={cnames({active: active.indexOf("account/") !== -1})}> <Translate component="span" content="account.deposit_withdraw" /></Link></li> : null}
+                            {/*<a className={cnames({active: active.indexOf("deposit-withdraw") !== -1})} href="https://gateway-tran.finchain.info/qrcode" target="_blank"></a>*/}
                             {currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("transfer") !== -1})} onClick={this._onNavigate.bind(this, "/transfer")}><Translate component="span" content="header.payments" /></a></li> : null}
 
                             {/*currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("transfer") !== -1})} onClick={this._onNavigate.bind(this, "/lock")}><Translate component="span" content="header.deposit" /></a></li> : null*/}
