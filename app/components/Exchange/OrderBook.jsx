@@ -295,6 +295,7 @@ class OrderBook extends React.Component {
 
 	render() {
 		let {
+			currencyPrice,
 			combinedBids,
 			combinedAsks,
 			highestBid,
@@ -462,7 +463,7 @@ class OrderBook extends React.Component {
                         </th>
                         <th><span className="header-sub-title"><AssetName dataPlace="top" name={quoteSymbol} /></span></th>
                         <th><span className="header-sub-title"><AssetName dataPlace="top" name={baseSymbol} /></span></th>
-                        <th><Translate className="header-sub-title" content="exchange.total" /><span className="header-sub-title"> (<AssetName dataPlace="top" name={baseSymbol} />)</span></th>   
+                        <th><Translate className="header-sub-title" content="exchange.total" /><span className="header-sub-title"> (<AssetName dataPlace="top" name={baseSymbol} />)</span></th>
                     </tr>
                 </thead>
 			);
@@ -608,7 +609,7 @@ class OrderBook extends React.Component {
                             <div ref="center_text" style={{minHeight: 35}}>
                                     <div key="spread" className="orderbook-latest-price" ref="centerRow">
                                         <div className="text-center spread">
-                                            {this.props.latest ? <span className={this.props.changeClass}><PriceText preFormattedPrice={this.props.latest} /> <AssetName name={baseSymbol} />/<AssetName name={quoteSymbol} /></span> : null}
+                                            {this.props.latest ? <span className={this.props.changeClass}><PriceText preFormattedPrice={this.props.latest} /> <AssetName name={baseSymbol} /> ≈ {currencyPrice}</span> : null}
                                         </div>
                                     </div>
                             </div>

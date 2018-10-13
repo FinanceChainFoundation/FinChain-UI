@@ -107,6 +107,7 @@ class Exchange extends React.Component {
         });
 
         return {
+            currencyPrice: 0,
             history: [],
             buySellOpen: ws.get("buySellOpen", true),
             bid,
@@ -157,6 +158,7 @@ class Exchange extends React.Component {
         });
 
         window.addEventListener("resize", this._getWindowSize, {capture: false, passive: true});
+        this.updateCurrencyPrice(this.props.coinMarketId, this.props.locale === 'cn' ? 'CNY' : 'USD');
     }
 
     shouldComponentUpdate(nextProps) {
@@ -212,8 +214,43 @@ class Exchange extends React.Component {
         if (this.props.sub && nextProps.bucketSize !== this.props.bucketSize) {
             return this._changeBucketSize(nextProps.bucketSize);
         }
+        const currencyType = nextProps.locale === 'cn' ? 'CNY' : 'USD';
+        if (nextProps.coinMarketId !== this.props.coinMarketId || nextProps.locale !== this.props.locale) {
+            this.updateCurrencyPrice(nextProps.coinMarketId, currencyType);
+            this._checkFeeStatus();
+        }
     }
 
+    updateCurrencyPrice(coinMarketId, currencyType) {
+        const self = this;
+        if (coinMarketId) {
+            fetch(`https://api.coinmarketcap.com/v2/ticker/${coinMarketId}/?convert=${currencyType}`)
+              .then(function(response) {
+                return response.json();
+              }).then(function(json) {
+                 self.setState({
+                     currencyPrice: json.data.quotes[currencyType].price
+                 })
+              }).catch(function(e) {
+                console.log('get currency price failed', e)
+              })
+        } else {// quoteAsset.get("symbol") === 'JRC'
+            Promise.all([
+                Apis.instance().history_api().exec("get_fill_order_history", ['1.3.3', '1.3.0', 1]),
+                fetch(`https://api.coinmarketcap.com/v2/ticker/1027/?convert=${currencyType}`)
+            ])
+            .then(res => {
+                const latest = res[0][0].op;
+                res[1].json().then(function(json) {
+                    self.setState({
+                        currencyPrice: json.data.quotes[currencyType].price*(latest.receives.amount/Math.pow(10,6))/(latest.pays.amount/Math.pow(10,8))
+                    })
+                })
+            }).catch(function(e) {
+              console.log('get currency price failed', e)
+            })
+        }
+    }
     componentWillUnmount() {
         window.removeEventListener("resize", this._getWindowSize);
     }
@@ -874,6 +911,7 @@ class Exchange extends React.Component {
             baseBalance = null, coreBalance = null, quoteSymbol, baseSymbol,
             showCallLimit = false, latestPrice, changeClass;
 
+        let currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + this.state.currencyPrice.toFixed(2);
 
         let isNullAccount = currentAccount.get("id") === "1.2.3";
 
@@ -1072,6 +1110,7 @@ class Exchange extends React.Component {
 
         let orderBook = (
             <OrderBook
+                currencyPrice={currencyPrice}
                 latest={latestPrice}
                 changeClass={changeClass}
                 orders={marketLimitOrders}
