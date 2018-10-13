@@ -183,7 +183,7 @@ class MarketHistory extends React.Component {
                         ref="history"
                         style={{maxHeight: 210, overflow: "hidden"}}
                     >
-                        <table className="table order-table text-right fixed-table market-right-padding">
+                        <table className="table order-table text-right fixed-table market-right-padding" style={{textAlign: "left"}}>
                             <TransitionWrapper
                                 component="tbody"
                                 transitionName="newrow"

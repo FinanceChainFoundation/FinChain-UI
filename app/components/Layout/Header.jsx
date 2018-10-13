@@ -341,11 +341,11 @@ class Header2 extends React.Component {
                 <div className="grid-block show-for-medium">
                     <ul className="menu-bar">
                         <li>{dashboard}</li>
-                        {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`} className={cnames({active: active.indexOf("account/") !== -1})}><Translate content="header.account" /></Link></li>}
+                        {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`} className={cnames({active: active.indexOf("/dashboard") !== -1})}><Translate content="header.account" /></Link></li>}
                         <li>{tradeLink}</li>
 
-                        {currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("deposit-withdraw") !== -1})} href="https://gateway-tran.finchain.info/qrcode" target="_blank"><Translate component="span" content="account.deposit_withdraw" /></a></li> : null}
-
+                        {currentAccount || myAccounts.length ? <li><Link to={`/account/${currentAccount}/deposit-withdraw`} className={cnames({active: active.indexOf("/deposit-withdraw") !== -1})}> <Translate component="span" content="account.deposit_withdraw" /></Link></li> : null}
+                        {/*<a className={cnames({active: active.indexOf("deposit-withdraw") !== -1})} href="https://gateway-tran.finchain.info/qrcode" target="_blank"></a>*/}
                         {currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("transfer") !== -1})} onClick={this._onNavigate.bind(this, "/transfer")}><Translate component="span" content="header.payments" /></a></li> : null}
 
                         {/*currentAccount || myAccounts.length ? <li><a className={cnames({active: active.indexOf("transfer") !== -1})} onClick={this._onNavigate.bind(this, "/lock")}><Translate component="span" content="header.deposit" /></a></li> : null*/}
