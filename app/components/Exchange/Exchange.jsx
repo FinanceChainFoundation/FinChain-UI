@@ -234,7 +234,7 @@ class Exchange extends React.Component {
               }).catch(function(e) {
                 console.log('get currency price failed', e)
               })
-        } else {// quoteAsset.get("symbol") === 'JRC'
+        } else {// baseAsset.get("symbol") === 'JRC'
             Promise.all([
                 Apis.instance().history_api().exec("get_fill_order_history", ['1.3.3', '1.3.0', 1]),
                 fetch(`https://api.coinmarketcap.com/v2/ticker/1027/?convert=${currencyType}`)
@@ -911,7 +911,7 @@ class Exchange extends React.Component {
             baseBalance = null, coreBalance = null, quoteSymbol, baseSymbol,
             showCallLimit = false, latestPrice, changeClass;
 
-        let currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + this.state.currencyPrice.toFixed(2);
+        let currencyPrice = 0;
 
         let isNullAccount = currentAccount.get("id") === "1.2.3";
 
@@ -965,6 +965,7 @@ class Exchange extends React.Component {
             }
             let flipped = base.get("id").split(".")[2] > quote.get("id").split(".")[2];
             latestPrice = market_utils.parse_order_history(latest, paysAsset, receivesAsset, isAsk, flipped);
+            currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + (this.state.currencyPrice * latestPrice.full).toFixed(2);
 
             isAsk = false;
             if (second_latest) {

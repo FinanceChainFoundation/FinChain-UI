@@ -130,7 +130,7 @@ class ExchangeSubscriber extends React.Component {
     }
 
     componentDidMount() {
-        this.getCoinMarketId(this.props.quoteAsset.get("symbol"));
+        this.getCoinMarketId(this.props.baseAsset.get("symbol"));
     }
     componentWillMount() {
         if (this.props.quoteAsset.toJS && this.props.baseAsset.toJS) {
@@ -154,8 +154,8 @@ class ExchangeSubscriber extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.quoteAsset.get("symbol") !== this.props.quoteAsset.get("symbol")) {
-            this.getCoinMarketId(nextProps.quoteAsset.get("symbol"));
+        if (nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol")) {
+            this.getCoinMarketId(nextProps.baseAsset.get("symbol"));
         }
 
         /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
