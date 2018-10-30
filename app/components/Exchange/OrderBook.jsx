@@ -609,7 +609,7 @@ class OrderBook extends React.Component {
                             <div ref="center_text" style={{minHeight: 35}}>
                                     <div key="spread" className="orderbook-latest-price" ref="centerRow">
                                         <div className="text-center spread">
-                                            {this.props.latest ? <span className={this.props.changeClass}><PriceText preFormattedPrice={this.props.latest} /> <AssetName name={baseSymbol} /> ≈ {currencyPrice}</span> : null}
+                                            {this.props.latest ? <span className={this.props.changeClass}><PriceText preFormattedPrice={this.props.latest} /> <AssetName name={baseSymbol} />{currencyPrice ? ' ≈' + currencyPrice : null}</span> : null}
                                         </div>
                                     </div>
                             </div>

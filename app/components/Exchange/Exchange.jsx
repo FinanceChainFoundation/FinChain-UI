@@ -36,6 +36,26 @@ Highcharts.setOptions({
     }
 });
 
+const coinMarketId = {
+    ETH: 1027,
+    BTC: 1,
+    JRC: 0,
+}
+
+function getIndexOfDecimal(value) {
+    if (typeof value !== 'number') return 0;
+    const values = String(value).split('.');
+    if (!values[1]) return 0;
+    let index = 0;
+    for(let i = 0; i < values[1].length; i++) {
+        if ( values[1][i] !== '0') {
+            index = i + 1;
+            break;
+        }
+    }
+
+    return index;
+}
 class Exchange extends React.Component {
     static propTypes = {
         marketCallOrders: PropTypes.object.isRequired,
@@ -158,7 +178,7 @@ class Exchange extends React.Component {
         });
 
         window.addEventListener("resize", this._getWindowSize, {capture: false, passive: true});
-        this.updateCurrencyPrice(this.props.coinMarketId, this.props.locale === 'cn' ? 'CNY' : 'USD');
+        this.updateCurrencyPrice(this.props.baseAsset.get("symbol"), this.props.locale === 'cn' ? 'CNY' : 'USD');
     }
 
     shouldComponentUpdate(nextProps) {
@@ -203,6 +223,13 @@ class Exchange extends React.Component {
             nextProps.currentAccount !== this.props.currentAccount) {
             this._checkFeeStatus([nextProps.coreAsset, nextProps.baseAsset, nextProps.quoteAsset], nextProps.currentAccount);
         }
+
+        const currencyType = nextProps.locale === 'cn' ? 'CNY' : 'USD';
+        if (nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol") || nextProps.locale !== this.props.locale) {
+            this.updateCurrencyPrice(nextProps.baseAsset.get("symbol"), currencyType);
+            this._checkFeeStatus();
+        }
+
         if (nextProps.quoteAsset.get("symbol") !== this.props.quoteAsset.get("symbol") || nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol")) {
             this.setState(this._initialState(nextProps));
 
@@ -214,40 +241,44 @@ class Exchange extends React.Component {
         if (this.props.sub && nextProps.bucketSize !== this.props.bucketSize) {
             return this._changeBucketSize(nextProps.bucketSize);
         }
-        const currencyType = nextProps.locale === 'cn' ? 'CNY' : 'USD';
-        if (nextProps.coinMarketId !== this.props.coinMarketId || nextProps.locale !== this.props.locale) {
-            this.updateCurrencyPrice(nextProps.coinMarketId, currencyType);
-            this._checkFeeStatus();
-        }
     }
 
-    updateCurrencyPrice(coinMarketId, currencyType) {
+    updateCurrencyPrice(symbol, currencyType) {
         const self = this;
-        if (coinMarketId) {
-            fetch(`https://api.coinmarketcap.com/v2/ticker/${coinMarketId}/?convert=${currencyType}`)
-              .then(function(response) {
-                return response.json();
-              }).then(function(json) {
-                 self.setState({
-                     currencyPrice: json.data.quotes[currencyType].price
-                 })
-              }).catch(function(e) {
-                console.log('get currency price failed', e)
-              })
-        } else {// baseAsset.get("symbol") === 'JRC'
+        if (!coinMarketId.hasOwnProperty(symbol)) return
+        if (symbol === 'JRC') {
             Promise.all([
                 Apis.instance().history_api().exec("get_fill_order_history", ['1.3.3', '1.3.0', 1]),
                 fetch(`https://api.coinmarketcap.com/v2/ticker/1027/?convert=${currencyType}`)
             ])
             .then(res => {
                 const latest = res[0][0].op;
+                let baseAmount, quoteAmount
+                if (latest.pays.asset_id === '1.3.3') {
+                    baseAmount = latest.pays.amount/Math.pow(10,6);
+                    quoteAmount = latest.receives.amount/Math.pow(10,8);
+                } else {
+                    baseAmount = latest.receives.amount/Math.pow(10,6);
+                    quoteAmount = latest.pays.amount/Math.pow(10,8);
+                }
                 res[1].json().then(function(json) {
                     self.setState({
-                        currencyPrice: json.data.quotes[currencyType].price*(latest.receives.amount/Math.pow(10,6))/(latest.pays.amount/Math.pow(10,8))
+                        currencyPrice: json.data.quotes[currencyType].price * baseAmount / quoteAmount
                     })
                 })
             }).catch(function(e) {
               console.log('get currency price failed', e)
+            })
+        } else {
+            fetch(`https://api.coinmarketcap.com/v2/ticker/${coinMarketId[symbol]}/?convert=${currencyType}`)
+            .then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                self.setState({
+                    currencyPrice: json.data.quotes[currencyType].price
+                })
+            }).catch(function(e) {
+                console.log('get currency price failed', e)
             })
         }
     }
@@ -965,7 +996,11 @@ class Exchange extends React.Component {
             }
             let flipped = base.get("id").split(".")[2] > quote.get("id").split(".")[2];
             latestPrice = market_utils.parse_order_history(latest, paysAsset, receivesAsset, isAsk, flipped);
-            currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + (this.state.currencyPrice * latestPrice.full).toFixed(2);
+            if (coinMarketId.hasOwnProperty(base.get("symbol"))) {
+                currencyPrice = this.state.currencyPrice * latestPrice.full;
+                const decimalIndex = getIndexOfDecimal(currencyPrice) + 1;
+                currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + (this.state.currencyPrice * latestPrice.full).toFixed(decimalIndex > 2 ? decimalIndex : 2);
+            }
 
             isAsk = false;
             if (second_latest) {

@@ -129,9 +129,6 @@ class ExchangeSubscriber extends React.Component {
         this._subToMarket = this._subToMarket.bind(this);
     }
 
-    componentDidMount() {
-        this.getCoinMarketId(this.props.baseAsset.get("symbol"));
-    }
     componentWillMount() {
         if (this.props.quoteAsset.toJS && this.props.baseAsset.toJS) {
             this._subToMarket(this.props);
@@ -154,10 +151,6 @@ class ExchangeSubscriber extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol")) {
-            this.getCoinMarketId(nextProps.baseAsset.get("symbol"));
-        }
-
         /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
         if (nextProps.baseAsset && nextProps.baseAsset.getIn(["bitasset", "is_prediction_market"])) {
             this.props.router.push(`/market/${nextProps.baseAsset.get("symbol")}_${nextProps.quoteAsset.get("symbol")}`);
@@ -199,27 +192,6 @@ class ExchangeSubscriber extends React.Component {
         }
     }
 
-    getCoinMarketId(symbol) {
-        const self = this;
-        fetch('https://api.coinmarketcap.com/v2/listings/')
-        .then(function(response) {
-         return response.json();
-        }).then(function(json) {
-            let id = 0;
-           json.data.some(i => {
-               if (i.symbol === symbol) {
-                   id = i.id;
-                   return true;
-               }
-               return false;
-           });
-           self.setState({
-               coinMarketId: id
-           })
-        }).catch(function(e) {
-         console.log('get cryptocurrency list failed', e)
-        })
-     }
     render() {
         return <div className="grid-block vertical">
             {!this.props.marketReady ? <LoadingIndicator /> : null}
