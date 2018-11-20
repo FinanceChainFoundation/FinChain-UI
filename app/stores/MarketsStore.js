@@ -98,6 +98,13 @@ class MarketsStore {
             onFeedUpdate: MarketsActions.feedUpdate,
             onToggleStars: MarketsActions.toggleStars
         });
+
+        this.subscribers = new Map();
+        this.exportPublicMethods({
+            subscribe: this.subscribe.bind(this),
+            unsubscribe: this.unsubscribe.bind(this),
+            clearSubs: this.clearSubs.bind(this)
+        });
     }
 
     onGetCollateralPositions(payload) {
@@ -191,6 +198,7 @@ class MarketsStore {
     }
 
     onSubscribeMarket(result) {
+        let newMarket = false;
         if (result.switchMarket) {
             this.marketReady = false;
             return this.emitChange();
@@ -213,6 +221,14 @@ class MarketsStore {
             // console.log("switch active market from", this.activeMarket, "to", result.market);
             this.onClearMarket();
             this.activeMarket = result.market;
+            newMarket = true;
+
+            /*
+            * To prevent the callback from DataFeed to be called with new data
+            * before subscribeBars in DataFeed has been updated, we clear the
+            * callback subscription here
+            */
+            this.unsubscribe("subscribeBars");
         }
 
         /* Set the feed price (null if not a bitasset market) */
@@ -317,6 +333,40 @@ class MarketsStore {
             });
         }
 
+        if (result.ticker) {
+            let marketName =
+                this.quoteAsset.get("symbol") +
+                "_" +
+                this.baseAsset.get("symbol");
+            let stats = this._calcMarketStats(
+                this.baseAsset,
+                this.quoteAsset,
+                marketName,
+                result.ticker
+            );
+
+            this.allMarketStats = this.allMarketStats.set(marketName, stats);
+            let {invertedStats, invertedMarketName} = this._invertMarketStats(
+                stats,
+                marketName
+            );
+            this.allMarketStats = this.allMarketStats.set(
+                invertedMarketName,
+                invertedStats
+            );
+            this._saveMarketStats();
+
+            this.marketStats = this.marketStats.set("change", stats.change);
+            this.marketStats = this.marketStats.set(
+                "volumeBase",
+                stats.volumeBase
+            );
+            this.marketStats = this.marketStats.set(
+                "volumeQuote",
+                stats.volumeQuote
+            );
+        }
+
         if (result.recent && result.recent.length) {
 
             let stats = this._calcMarketStats(result.recent, this.baseAsset, this.quoteAsset, result.history, this.quoteAsset.get("symbol") + "_" + this.baseAsset.get("symbol"));
@@ -350,6 +400,15 @@ class MarketsStore {
 
         this.marketReady = true;
         this.emitChange();
+        if (newMarket) {
+            this._notifySubscriber(
+                "market_change",
+                this.quoteAsset.get("symbol") +
+                    "_" +
+                    this.baseAsset.get("symbol")
+            );
+        }
+        if (result.resolve) result.resolve();
     }
 
     onCancelLimitOrderSuccess(cancellations) {
@@ -617,7 +676,7 @@ class MarketsStore {
                 low = findMin(open, close);
             }
 
-            prices.push({date, open, high, low, close, volume});
+            prices.push({time: date.getTime(), date, open, high, low, close, volume});
             volumeData.push([date, volume]);
         }
 
@@ -634,11 +693,12 @@ class MarketsStore {
             let finalDate = addTime(prices[0].date, i - 1, this.bucketSize);
             if (prices[priceLength - 1].date !== finalDate) {
                 if (priceLength === 1) {
-                    prices.push({date: addTime(finalDate, -1, this.bucketSize), open: prices[0].close, high: prices[0].close, low: prices[0].close, close: prices[0].close, volume: 0});
-                    prices.push({date: finalDate, open: prices[0].close, high: prices[0].close, low: prices[0].close, close: prices[0].close, volume: 0});
+                    const date = addTime(finalDate, -1, this.bucketSize);
+                    prices.push({time: date.getTime(), date: date, open: prices[0].close, high: prices[0].close, low: prices[0].close, close: prices[0].close, volume: 0});
+                    prices.push({time: finalDate.getTime(),date: finalDate, open: prices[0].close, high: prices[0].close, low: prices[0].close, close: prices[0].close, volume: 0});
                     volumeData.push([addTime(finalDate, -1, this.bucketSize), 0]);
                 } else {
-                    prices.push({date: finalDate, open: prices[priceLength - 1].close, high: prices[priceLength - 1].close, low: prices[priceLength - 1].close, close: prices[priceLength - 1].close, volume: 0});
+                    prices.push({time: finalDate.getTime(), date: finalDate, open: prices[priceLength - 1].close, high: prices[priceLength - 1].close, low: prices[priceLength - 1].close, close: prices[priceLength - 1].close, volume: 0});
                 }
                 volumeData.push([finalDate, 0]);
             }
@@ -652,8 +712,8 @@ class MarketsStore {
                     if (addTime(prices[ii].date, 1, this.bucketSize).getTime() > now) {
                         break;
                     }
-
-                    prices.splice(ii + 1, 0, {date: addTime(prices[ii].date, 1, this.bucketSize), open: prices[ii].close, high: prices[ii].close, low: prices[ii].close, close: prices[ii].close, volume: 0});
+                    const date = addTime(prices[ii].date, 1, this.bucketSize);
+                    prices.splice(ii + 1, 0, {time: date.getTime(), date: date, open: prices[ii].close, high: prices[ii].close, low: prices[ii].close, close: prices[ii].close, volume: 0});
                     volumeData.splice(ii + 1, 0, [addTime(prices[ii].date, 1, this.bucketSize), 0]);
                 }
             };
@@ -661,6 +721,7 @@ class MarketsStore {
 
         this.priceData = prices;
         this.volumeData = volumeData;
+        this._notifySubscriber("subscribeBars");
     }
 
     _orderBook(limitsChanged = true, callsChanged = false) {
@@ -1072,6 +1133,32 @@ class MarketsStore {
                 );
             });
         }
+    }
+
+    /**
+     *  Add a callback that will be called anytime any object in the cache is updated
+     */
+    subscribe(id, callback) {
+        if (this.subscribers.has(id) && this.subscribers.get(id) === callback)
+            return console.error("Subscribe callback already exists", callback);
+        this.subscribers.set(id, callback);
+    }
+
+    /**
+     *  Remove a callback that was previously added via subscribe
+     */
+    unsubscribe(id) {
+        if (this.subscribers.has(id)) {
+            this.subscribers.delete(id);
+        }
+    }
+
+    clearSubs() {
+        this.subscribers.clear();
+    }
+
+    _notifySubscriber(id, data) {
+        if (this.subscribers.has(id)) this.subscribers.get(id)(data);
     }
 }
 

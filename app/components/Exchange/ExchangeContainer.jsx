@@ -10,6 +10,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import { EmitterInstance } from "bitsharesjs/es";
 import BindToChainState from "../Utility/BindToChainState";
 import MarketsActions from "actions/MarketsActions";
+import {DataFeed} from "components/Exchange/tradingViewClasses";
 
 class ExchangeContainer extends React.Component {
 
@@ -94,7 +95,8 @@ class ExchangeContainer extends React.Component {
                         },
                         miniDepthChart: () => {
                             return SettingsStore.getState().viewSettings.get("miniDepthChart", true);
-                        }
+                        },
+                        dataFeed: () => new DataFeed(),
                     }}
                   >
                     <ExchangeSubscriber router={this.props.router} quoteAsset={symbols[0]} baseAsset={symbols[1]} />

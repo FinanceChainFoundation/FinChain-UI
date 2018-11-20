@@ -7,7 +7,6 @@ import MarketHistory from "./MarketHistory";
 import MyMarkets from "./MyMarkets";
 import BuySell from "./BuySell";
 import utils from "common/utils";
-import PriceChartD3 from "./PriceChartD3";
 import assetUtils from "common/asset_utils";
 import DepthHighChart from "./DepthHighChart";
 import { debounce, cloneDeep } from "lodash";
@@ -29,6 +28,7 @@ import Translate from "react-translate-component";
 import { Apis } from "bitsharesjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import { checkFeeStatusAsync } from "common/trxHelper";
+import TradingViewPriceChart from "./TradingViewPriceChart";
 
 Highcharts.setOptions({
     global: {
@@ -577,18 +577,6 @@ class Exchange extends React.Component {
         }
     }
 
-    _changeZoomPeriod(size, e) {
-        e.preventDefault();
-        if (size !== this.state.currentPeriod) {
-            this.setState({
-                currentPeriod: size
-            });
-            SettingsActions.changeViewSetting({
-                currentPeriod: size
-            });
-        }
-    }
-
     _depthChartClick(base, quote, power, e) {
         e.preventDefault();
         let {bid, ask} = this.state;
@@ -729,36 +717,6 @@ class Exchange extends React.Component {
         return !!(showCallLimit && lowestCallPrice && !quoteAsset.getIn(["bitasset", "is_prediction_market"]));
     }
 
-    _changeIndicator(key) {
-        let indicators = cloneDeep(this.state.indicators);
-        indicators[key] = !indicators[key];
-        this.setState({
-            indicators
-        });
-
-        SettingsActions.changeViewSetting({
-            indicators
-        });
-    }
-
-    _changeIndicatorSetting(key, e) {
-        e.preventDefault();
-        let indicatorSettings = cloneDeep(this.state.indicatorSettings);
-        let value = parseInt(e.target.value, 10);
-        if (isNaN(value)) {
-            value = 1;
-        }
-        indicatorSettings[key] = value;
-
-        this.setState({
-            indicatorSettings: indicatorSettings
-        });
-
-        SettingsActions.changeViewSetting({
-            indicatorSettings: indicatorSettings
-        });
-    }
-
     onChangeFeeAsset(type, e) {
         e.preventDefault();
         if (type === "buy") {
@@ -778,18 +736,6 @@ class Exchange extends React.Component {
                 "sellFeeAssetIdx": e.target.value
             });
         }
-    }
-
-    onChangeChartHeight({value, increase}) {
-        const newHeight = value ? value : this.state.chartHeight + (increase ? 20 : -20);
-        console.log("newHeight", newHeight);
-        this.setState({
-            chartHeight: newHeight
-        });
-
-        SettingsActions.changeViewSetting({
-            "chartHeight": newHeight
-        });
     }
 
     _toggleBuySellPosition() {
@@ -1170,6 +1116,26 @@ class Exchange extends React.Component {
                 wrapperClass={`order-${buySellTop ? 3 : 1} xlarge-order-${buySellTop ? 4 : 1}`}
             />
         );
+        let tinyScreen = width < 640 ? true : false,
+            thisChartHeight = Math.max(
+                this.state.height > 1100 ? chartHeight : chartHeight - 125,
+                minChartHeight
+            );
+        let tradingViewChart = <TradingViewPriceChart
+                    locale={this.props.locale === 'cn' ? 'zh' : this.props.locale}
+                    dataFeed={this.props.dataFeed}
+                    baseSymbol={baseSymbol}
+                    quoteSymbol={quoteSymbol}
+                    marketReady={marketReady}
+                    theme={this.props.settings.get("themes")}
+                    buckets={buckets}
+                    bucketSize={bucketSize}
+                    currentPeriod={this.state.currentPeriod}
+                    chartHeight={thisChartHeight}
+                    chartZoom={!tinyScreen}
+                    chartTools={!tinyScreen}
+                    mobile={false}
+                />
 
         return (
             <div className="grid-block page-layout market-layout">
@@ -1199,55 +1165,12 @@ class Exchange extends React.Component {
                             onToggleCharts={this._toggleCharts.bind(this)}
                             showVolumeChart={showVolumeChart}
                         />
-
                         <div className="grid-block vertical no-padding" id="CenterContent" ref="center">
-                        {!showDepthChart ? (
+                        {
+                            !showDepthChart ? (
                             <div className="grid-block shrink no-overflow" id="market-charts" >
                                 {/* Price history chart */}
-                                <PriceChartD3
-                                    priceData={this.props.priceData}
-                                    volumeData={this.props.volumeData}
-                                    base={base}
-                                    quote={quote}
-                                    baseSymbol={baseSymbol}
-                                    quoteSymbol={quoteSymbol}
-                                    height={height}
-                                    leftOrderBook={leftOrderBook}
-                                    marketReady={marketReady}
-                                    indicators={indicators}
-                                    indicatorSettings={indicatorSettings}
-                                    latest={latestPrice}
-                                    theme={this.props.settings.get("themes")}
-                                    zoom={this.state.currentPeriod}
-                                    tools={tools}
-                                    showVolumeChart={showVolumeChart}
-                                    enableChartClamp={enableChartClamp}
-
-                                    buckets={buckets} bucketSize={bucketSize}
-                                    currentPeriod={this.state.currentPeriod}
-                                    changeBucketSize={this._changeBucketSize.bind(this)}
-                                    changeZoomPeriod={this._changeZoomPeriod.bind(this)}
-                                    onSelectIndicators={this._onSelectIndicators.bind(this)}
-                                    onChangeIndicators={this._changeIndicator.bind(this)}
-                                    onChangeTool={(key) => {
-                                        let tools = cloneDeep(this.state.tools);
-                                        for (let k in tools) {
-                                            if (k === key) {
-                                                tools[k] = !tools[k];
-                                            } else {
-                                                tools[k] = false;
-                                            }
-                                        }
-                                        this.setState({tools}, () => {
-                                            this.setState({tools: {fib: false, trendline: false}});
-                                        });
-                                    }}
-                                    onChangeChartHeight={this.onChangeChartHeight.bind(this)}
-                                    chartHeight={chartHeight}
-                                    onToggleVolume={() => {SettingsActions.changeViewSetting({showVolumeChart: !showVolumeChart});}}
-                                    onToggleChartClamp={() => {SettingsActions.changeViewSetting({enableChartClamp: !enableChartClamp});}}
-                                    onChangeIndicatorSetting={this._changeIndicatorSetting.bind(this)}
-                                />
+                                {tradingViewChart}
                             </div>) : (
                             <div className="grid-block vertical no-padding shrink" >
                                 <DepthHighChart
@@ -1277,7 +1200,8 @@ class Exchange extends React.Component {
                                     theme={this.props.settings.get("themes")}
                                     centerRef={this.refs.center}
                                 />
-                            </div>)}
+                            </div>)
+                        }
 
                             <div className="grid-block no-overflow wrap shrink" >
                                 {hasPrediction ? <div className="small-12 no-overflow" style={{margin: "0 10px", lineHeight: "1.2rem"}}><p>{description}</p></div> : null}
