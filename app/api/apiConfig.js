@@ -20,6 +20,8 @@ export const settingsAPIs = {
 //  DEFAULT_WS_NODE: "ws://47.95.22.107:9095",
     WS_NODE_LIST: [
         {url: "wss://tests.finchain.info", location: "正式／"},
+        {url: "ws://47.97.121.117:9999", location: "杭州"},
+        {url: "ws://47.97.8.71:9090", location: "上海"},
        // {url: "wss://bitshares-api.wancloud.io/ws", location: "数据链／shuju"},
      // {url: "ws://47.97.8.71:9090", location: "上海／ShangHai"},
      // {url: "ws://47.95.22.107:9090", location: "北京／BeiJing"},

@@ -50,7 +50,7 @@ class ProposalApproveModal extends React.Component {
         let {active, key, owner, payee} = this.state;
 
         let proposal = {
-            fee_paying_account: payee || active,
+            fee_paying_account: active,
             proposal: proposalObject.id,
             active_approvals_to_add: [],
             active_approvals_to_remove: [],
@@ -151,13 +151,15 @@ class ProposalApproveModal extends React.Component {
                     </div>
 
                     <div className="content-block full-width-content">
-                       <div className="full-width-content form-group">
-                           <Translate content="modal.proposals.pay_with" component="label" />
-                            <AccountSelect
-                                account_names={myAccounts}
-                                onChange={this.onChangePayee.bind(this)}
-                            />
-                        </div>
+                    {
+                        // <div className="full-width-content form-group">
+                        //     <Translate content="modal.proposals.pay_with" component="label" />
+                        //      <AccountSelect
+                        //          account_names={myAccounts}
+                        //          onChange={this.onChangePayee.bind(this)}
+                        //      />
+                        //  </div>
+                    }
 
                         {accountNames.length || keyNames.length ? (
                         <div className="full-width-content form-group">
