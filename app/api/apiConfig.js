@@ -25,7 +25,8 @@ export const settingsAPIs = {
         {url: "ws://139.162.51.89:9090", location: "新加坡／Singapore"}
 
     ],
-    DEFAULT_FAUCET: "https://finchain-faucet.com",
+    DEFAULT_FAUCET: "http://139.196.111.65",
+    // DEFAULT_FAUCET: "https://finchain-faucet.com",
     TESTNET_FAUCET: "https://finchain-faucet.com",
     RPC_URL: "https://openledger.info/api/"
 };
