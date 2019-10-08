@@ -16,16 +16,14 @@ export const rudexAPIs = {
 };
 
 export const settingsAPIs = {
-    DEFAULT_WS_NODE: "ws://47.97.121.117:9999",
+    DEFAULT_WS_NODE: "ws://47.105.69.124:9090",
     WS_NODE_LIST: [
-        {url: "ws://47.97.121.117:9999", location: "杭州／HangZhou"},
         {url: "ws://47.97.8.71:9090", location: "上海／ShangHai"},
-        {url: "ws://47.95.22.107:9090", location: "北京／BeiJing"},
-        {url: "ws://119.23.163.232:9090", location: "广州／GuangZhou"},
+        {url: "ws://47.105.69.124:9090", location: "青岛／Qindao"},
         {url: "ws://139.162.51.89:9090", location: "新加坡／Singapore"}
 
     ],
-    DEFAULT_FAUCET: "http://139.196.111.65",
+    DEFAULT_FAUCET: "http://47.105.69.124",
     // DEFAULT_FAUCET: "https://finchain-faucet.com",
     TESTNET_FAUCET: "https://finchain-faucet.com",
     RPC_URL: "https://openledger.info/api/"

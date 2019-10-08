@@ -1,6 +1,6 @@
 {
   "name": "FinChain-Wallet",
-  "version": "v0.1.11",
+  "version": "v0.1.12",
   "description": "Advanced wallet interface for the FinChain financial blockchain.",
   "homepage": "https://github.com/FinanceChainFoundation/FinChain-UI",
   "author": "FinChain GUI Develop Team",
@@ -124,7 +124,7 @@
     "alt-container": "^1.0.0",
     "alt-react": "0.0.1",
     "bignumber.js": "^4.0.0",
-    "bitsharesjs": "https://github.com/FinanceChainFoundation/Fin-Chainjs.git#6001f8533e814b236b487ee94f06c4c58a5a1e17 ",
+    "bitsharesjs": "git+https://github.com/FinanceChainFoundation/Fin-Chainjs.git#6001f8533e814b236b487ee94f06c4c58a5a1e17",
     "browser-locale": "^1.0.3",
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",
