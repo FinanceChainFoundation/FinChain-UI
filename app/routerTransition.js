@@ -137,6 +137,7 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
                     .catch((error) => {
                         console.error("----- WalletDb.willTransitionTo error ----->", error);
                         replaceState("/init-error");
+                        callback();
                     }),
                     WalletManagerStore.init()
                 ]).then(()=> {
@@ -162,9 +163,14 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
             level: "error",
             autoDismiss: 10
         });
+        //sreplaceState("/init-error");
+        callback();
+        /*
         return Apis.close().then(() => {
             return willTransitionTo(nextState, replaceState, callback, true);
         });
+        */
+
     };
 
     connectionManager = new Manager({url: connectionString, urls});
