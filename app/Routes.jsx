@@ -33,6 +33,15 @@ const routes = (
         <Route path="/dashboard" getComponent={(location, cb) => {
             System.import("components/Dashboard/DashboardContainer").then(loadRoute(cb)).catch(errorLoading);
         }}/>
+        <Route path="trade" getComponent={(location, cb) => {
+            System.import("components/Explorer/Trade").then(loadRoute(cb)).catch(errorLoading);
+        }}/>  {/*首页 */}
+        <Route path="recharge" getComponent={(location, cb) => {
+            System.import("components/Explorer/Recharge").then(loadRoute(cb)).catch(errorLoading);
+        }}/>  {/*充值页 */}
+        <Route path="cash" getComponent={(location, cb) => {
+            System.import("components/Explorer/Cash").then(loadRoute(cb)).catch(errorLoading);
+        }}/>  {/*提现页 */}
         <Route path="explorer" getComponent={(location, cb) => {
             System.import("components/Explorer/Explorer").then(loadRoute(cb)).catch(errorLoading);
         }}/>

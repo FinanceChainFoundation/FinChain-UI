@@ -474,7 +474,7 @@
   }
 
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], textarea {
-    background-color: $input-background;
+    background-color: rgba(128, 128, 128, 0.45);
     border: 0;
     color: $primary-text-color;
     &:hover, &:focus, &:active {
@@ -834,10 +834,12 @@
     border-bottom: 1px solid $button-bg-color;
     &.bid {
       border-bottom: 1px solid $bid-color;
+      color: #46a656;
     }
 
     &.ask {
       border-bottom: 1px solid $ask-color;
+      color:#e66653;
     }
   }
 
@@ -849,7 +851,7 @@
   td.orderHistoryBid {
 
     > span.price-integer, > span > span.price-integer {
-      font-weight: bold;
+      font-weight: 700;
       color: $bid-color;
     }
 
@@ -864,7 +866,7 @@
   .orderbook td.orderHistoryBid {
     > span.price-integer, > span > span.price-integer {
       font-weight: bold;
-      color: $primary-text-color;
+      
     }
   }
 
@@ -887,13 +889,13 @@
 
   > span.price-integer, > span > span.price-integer {
     font-weight: bold;
-    color: $primary-text-color;
+    
   }
   }
 
   td.orderHistoryCall {
     > span.price-integer, > span > span.price-integer {
-      font-weight: bold;
+      font-weight: 700;
       color: $call-color;
     }
 
@@ -918,7 +920,7 @@
         border-top: 1px solid grey !important;
         padding: 10px 0 !important;
         font-weight: bold;
-        font-size: 13px;
+        font-size: 17px;
       }
   }
 
@@ -964,7 +966,8 @@
   }
 
   .buy-sell-box {
-      background-color: $header-color;
+      //background-color: $header-color;
+      background-color: #22292d;
 
       > select {
           padding: 0;
@@ -988,11 +991,12 @@
   }
 
   .change-down {
-    color: $negative-color !important;
+    color: #ce5151 !important;
   }
 
   .header-sub-title {
-    font-size: 80%;
+    //font-size: 80%;
+    font-size: .95rem;
     color: $light-text-color;
   }
 

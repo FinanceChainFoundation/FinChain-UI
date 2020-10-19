@@ -241,12 +241,12 @@ class CreateAccount extends React.Component {
                         </Link>
                     </label>
 
-                    {/* <label>
+                     <label>
                         <Link to="/create-wallet-brainkey">
                             <Translate content="settings.backup_brainkey" />
                         </Link>
                     </label>
-                     */}
+                    
                 </div>
 
                 {/* Skip to step 3 */}
@@ -324,6 +324,64 @@ class CreateAccount extends React.Component {
                                 <Link to="/dashboard"><Translate content="wallet.start" /></Link>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <Translate content="wallet.tips_dashboard" />:
+                            </td>
+                            <td>
+                                <Link to="/">
+                                    <Translate content="header.dashboard" />
+                                </Link>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <Translate content="wallet.tips_account" />:
+                            </td>
+                            <td>
+                                <Link
+                                    to={`/account/${
+                                        this.state.accountName
+                                    }/overview`}
+                                >
+                                    <Translate content="wallet.link_account" />
+                                </Link>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <Translate content="wallet.tips_deposit" />:
+                            </td>
+                            <td>
+                                <Link to="/deposit-withdraw">
+                                    <Translate content="wallet.link_deposit" />
+                                </Link>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <Translate content="wallet.tips_transfer" />:
+                            </td>
+                            <td>
+                                <Link to="/transfer">
+                                    <Translate content="wallet.link_transfer" />
+                                </Link>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <Translate content="wallet.tips_settings" />:
+                            </td>
+                            <td>
+                                <Link to="/settings">
+                                    <Translate content="header.settings" />
+                                </Link>
+                            </td>
+                        </tr>
                     </tbody>
 
                 </table>
@@ -362,12 +420,12 @@ class CreateAccount extends React.Component {
                         }
                     </div>
 
-                {/*<div style={{maxWidth: "95vw", paddingTop: "2rem"}} className="grid-content small-12">
+                <div style={{maxWidth: "95vw", paddingTop: "2rem"}} className="grid-content small-12">
                         {step === 1 ? this._renderAccountCreateText() : step === 2 ? this._renderBackupText() :
                             this._renderGetStartedText()
                         }
                     </div>
-                    */}
+                    
             </div>
         );
     }

@@ -7,7 +7,6 @@ import MarketHistory from "./MarketHistory";
 import MyMarkets from "./MyMarkets";
 import BuySell from "./BuySell";
 import utils from "common/utils";
-import PriceChartD3 from "./PriceChartD3";
 import assetUtils from "common/asset_utils";
 import DepthHighChart from "./DepthHighChart";
 import { debounce, cloneDeep } from "lodash";
@@ -29,6 +28,7 @@ import Translate from "react-translate-component";
 import { Apis } from "bitsharesjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import { checkFeeStatusAsync } from "common/trxHelper";
+import TradingViewPriceChart from "./TradingViewPriceChart";
 
 Highcharts.setOptions({
     global: {
@@ -36,6 +36,26 @@ Highcharts.setOptions({
     }
 });
 
+const coinMarketId = {
+    ETH: 1027,
+    BTC: 1,
+    JRC: 0,
+}
+
+function getIndexOfDecimal(value) {
+    if (typeof value !== 'number') return 0;
+    const values = String(value).split('.');
+    if (!values[1]) return 0;
+    let index = 0;
+    for(let i = 0; i < values[1].length; i++) {
+        if ( values[1][i] !== '0') {
+            index = i + 1;
+            break;
+        }
+    }
+
+    return index;
+}
 class Exchange extends React.Component {
     static propTypes = {
         marketCallOrders: PropTypes.object.isRequired,
@@ -96,7 +116,7 @@ class Exchange extends React.Component {
         /* Make sure the indicators objects only contains the current indicators */
         let savedIndicators = ws.get("indicators", {});
         let indicators = {};
-        [["sma", true], ["ema1", false], ["ema2", false], ["smaVolume", true], ["macd", false], ["bb", false]].forEach(i => {
+        [["sma", true], ["ema1", false], ["ema2", false], ["smaVolume", true], ["macd", true], ["bb", false]].forEach(i => {
             indicators[i[0]] = (i[0] in savedIndicators) ? savedIndicators[i[0]] : i[1];
         });
 
@@ -107,6 +127,7 @@ class Exchange extends React.Component {
         });
 
         return {
+            currencyPrice: 0,
             history: [],
             buySellOpen: ws.get("buySellOpen", true),
             bid,
@@ -114,7 +135,7 @@ class Exchange extends React.Component {
             flipBuySell: ws.get("flipBuySell", false),
             favorite: false,
             showDepthChart: ws.get("showDepthChart", false),
-            leftOrderBook: ws.get("leftOrderBook", false),
+            leftOrderBook: ws.get("leftOrderBook", true),
             buyDiff: false,
             sellDiff: false,
             indicators,
@@ -157,6 +178,7 @@ class Exchange extends React.Component {
         });
 
         window.addEventListener("resize", this._getWindowSize, {capture: false, passive: true});
+        this.updateCurrencyPrice(this.props.baseAsset.get("symbol"), this.props.locale === 'cn' ? 'CNY' : 'USD');
     }
 
     shouldComponentUpdate(nextProps) {
@@ -201,6 +223,13 @@ class Exchange extends React.Component {
             nextProps.currentAccount !== this.props.currentAccount) {
             this._checkFeeStatus([nextProps.coreAsset, nextProps.baseAsset, nextProps.quoteAsset], nextProps.currentAccount);
         }
+
+        const currencyType = nextProps.locale === 'cn' ? 'CNY' : 'USD';
+        if (nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol") || nextProps.locale !== this.props.locale) {
+            this.updateCurrencyPrice(nextProps.baseAsset.get("symbol"), currencyType);
+            this._checkFeeStatus();
+        }
+
         if (nextProps.quoteAsset.get("symbol") !== this.props.quoteAsset.get("symbol") || nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol")) {
             this.setState(this._initialState(nextProps));
 
@@ -214,6 +243,45 @@ class Exchange extends React.Component {
         }
     }
 
+    updateCurrencyPrice(symbol, currencyType) {
+        const self = this;
+        if (!coinMarketId.hasOwnProperty(symbol)) return
+        if (symbol === 'JRC') {
+            Promise.all([
+                Apis.instance().history_api().exec("get_fill_order_history", ['1.3.3', '1.3.0', 1]),
+                fetch(`https://api.coinmarketcap.com/v2/ticker/1027/?convert=${currencyType}`)
+            ])
+            .then(res => {
+                const latest = res[0][0].op;
+                let baseAmount, quoteAmount
+                if (latest.pays.asset_id === '1.3.3') {
+                    baseAmount = latest.pays.amount/Math.pow(10,6);
+                    quoteAmount = latest.receives.amount/Math.pow(10,8);
+                } else {
+                    baseAmount = latest.receives.amount/Math.pow(10,6);
+                    quoteAmount = latest.pays.amount/Math.pow(10,8);
+                }
+                res[1].json().then(function(json) {
+                    self.setState({
+                        currencyPrice: json.data.quotes[currencyType].price * baseAmount / quoteAmount
+                    })
+                })
+            }).catch(function(e) {
+              console.log('get currency price failed', e)
+            })
+        } else {
+            fetch(`https://api.coinmarketcap.com/v2/ticker/${coinMarketId[symbol]}/?convert=${currencyType}`)
+            .then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                self.setState({
+                    currencyPrice: json.data.quotes[currencyType].price
+                })
+            }).catch(function(e) {
+                console.log('get currency price failed', e)
+            })
+        }
+    }
     componentWillUnmount() {
         window.removeEventListener("resize", this._getWindowSize);
     }
@@ -509,18 +577,6 @@ class Exchange extends React.Component {
         }
     }
 
-    _changeZoomPeriod(size, e) {
-        e.preventDefault();
-        if (size !== this.state.currentPeriod) {
-            this.setState({
-                currentPeriod: size
-            });
-            SettingsActions.changeViewSetting({
-                currentPeriod: size
-            });
-        }
-    }
-
     _depthChartClick(base, quote, power, e) {
         e.preventDefault();
         let {bid, ask} = this.state;
@@ -581,7 +637,6 @@ class Exchange extends React.Component {
         SettingsActions.changeViewSetting({
             leftOrderBook: !this.state.leftOrderBook
         });
-
         this.setState({ leftOrderBook: !this.state.leftOrderBook });
     }
 
@@ -662,36 +717,6 @@ class Exchange extends React.Component {
         return !!(showCallLimit && lowestCallPrice && !quoteAsset.getIn(["bitasset", "is_prediction_market"]));
     }
 
-    _changeIndicator(key) {
-        let indicators = cloneDeep(this.state.indicators);
-        indicators[key] = !indicators[key];
-        this.setState({
-            indicators
-        });
-
-        SettingsActions.changeViewSetting({
-            indicators
-        });
-    }
-
-    _changeIndicatorSetting(key, e) {
-        e.preventDefault();
-        let indicatorSettings = cloneDeep(this.state.indicatorSettings);
-        let value = parseInt(e.target.value, 10);
-        if (isNaN(value)) {
-            value = 1;
-        }
-        indicatorSettings[key] = value;
-
-        this.setState({
-            indicatorSettings: indicatorSettings
-        });
-
-        SettingsActions.changeViewSetting({
-            indicatorSettings: indicatorSettings
-        });
-    }
-
     onChangeFeeAsset(type, e) {
         e.preventDefault();
         if (type === "buy") {
@@ -711,18 +736,6 @@ class Exchange extends React.Component {
                 "sellFeeAssetIdx": e.target.value
             });
         }
-    }
-
-    onChangeChartHeight({value, increase}) {
-        const newHeight = value ? value : this.state.chartHeight + (increase ? 20 : -20);
-        console.log("newHeight", newHeight);
-        this.setState({
-            chartHeight: newHeight
-        });
-
-        SettingsActions.changeViewSetting({
-            "chartHeight": newHeight
-        });
     }
 
     _toggleBuySellPosition() {
@@ -799,7 +812,6 @@ class Exchange extends React.Component {
         let current = this.state[type];
         // const isBid = type === "bid";
         current.for_sale.setAmount({real: parseFloat(e.target.value) || 0});
-
         if (current.price.isValid()) {
             this._setReceive(current, isBid);
         } else {
@@ -876,6 +888,7 @@ class Exchange extends React.Component {
             baseBalance = null, coreBalance = null, quoteSymbol, baseSymbol,
             showCallLimit = false, latestPrice, changeClass;
 
+        let currencyPrice = 0;
 
         let isNullAccount = currentAccount.get("id") === "1.2.3";
 
@@ -929,6 +942,11 @@ class Exchange extends React.Component {
             }
             let flipped = base.get("id").split(".")[2] > quote.get("id").split(".")[2];
             latestPrice = market_utils.parse_order_history(latest, paysAsset, receivesAsset, isAsk, flipped);
+            if (coinMarketId.hasOwnProperty(base.get("symbol"))) {
+                currencyPrice = this.state.currencyPrice * latestPrice.full;
+                const decimalIndex = getIndexOfDecimal(currencyPrice) + 1;
+                currencyPrice = (this.props.locale === 'cn' ? '￥' : '$') + (this.state.currencyPrice * latestPrice.full).toFixed(decimalIndex > 2 ? decimalIndex : 2);
+            }
 
             isAsk = false;
             if (second_latest) {
@@ -977,9 +995,9 @@ class Exchange extends React.Component {
         }
 
         let orderMultiplier = leftOrderBook ? 2 : 1;
-        const minChartHeight = 300
+        const minChartHeight = 300;
         const height = Math.max(
-            this.state.height > 1100 ? chartHeight : chartHeight - 125,
+            this.state.height > 850 ? this.state.height - 410 : chartHeight - 125,
             minChartHeight
         );
 
@@ -1074,6 +1092,7 @@ class Exchange extends React.Component {
 
         let orderBook = (
             <OrderBook
+                currencyPrice={currencyPrice}
                 latest={latestPrice}
                 changeClass={changeClass}
                 orders={marketLimitOrders}
@@ -1097,6 +1116,26 @@ class Exchange extends React.Component {
                 wrapperClass={`order-${buySellTop ? 3 : 1} xlarge-order-${buySellTop ? 4 : 1}`}
             />
         );
+        let tinyScreen = width < 640 ? true : false,
+            thisChartHeight = Math.max(
+                this.state.height > 1100 ? chartHeight : chartHeight - 125,
+                minChartHeight
+            );
+        let tradingViewChart = <TradingViewPriceChart
+                    locale={this.props.locale === 'cn' ? 'zh' : this.props.locale}
+                    dataFeed={this.props.dataFeed}
+                    baseSymbol={baseSymbol}
+                    quoteSymbol={quoteSymbol}
+                    marketReady={marketReady}
+                    theme={this.props.settings.get("themes")}
+                    buckets={buckets}
+                    bucketSize={bucketSize}
+                    currentPeriod={this.state.currentPeriod}
+                    chartHeight={thisChartHeight}
+                    chartZoom={!tinyScreen}
+                    chartTools={!tinyScreen}
+                    mobile={false}
+                />
 
         return (
             <div className="grid-block page-layout market-layout">
@@ -1105,7 +1144,7 @@ class Exchange extends React.Component {
 
                     {/* Left Column - Open Orders */}
                     {leftOrderBook ? (
-                    <div className="grid-block left-column shrink no-overflow">
+                    <div className="grid-block left-column shrink no-overflow" style={{width:"20%"}}>
                         {orderBook}
                     </div>) : null}
 
@@ -1126,55 +1165,12 @@ class Exchange extends React.Component {
                             onToggleCharts={this._toggleCharts.bind(this)}
                             showVolumeChart={showVolumeChart}
                         />
-
                         <div className="grid-block vertical no-padding" id="CenterContent" ref="center">
-                        {!showDepthChart ? (
+                        {
+                            !showDepthChart ? (
                             <div className="grid-block shrink no-overflow" id="market-charts" >
                                 {/* Price history chart */}
-                                <PriceChartD3
-                                    priceData={this.props.priceData}
-                                    volumeData={this.props.volumeData}
-                                    base={base}
-                                    quote={quote}
-                                    baseSymbol={baseSymbol}
-                                    quoteSymbol={quoteSymbol}
-                                    height={height}
-                                    leftOrderBook={leftOrderBook}
-                                    marketReady={marketReady}
-                                    indicators={indicators}
-                                    indicatorSettings={indicatorSettings}
-                                    latest={latestPrice}
-                                    theme={this.props.settings.get("themes")}
-                                    zoom={this.state.currentPeriod}
-                                    tools={tools}
-                                    showVolumeChart={showVolumeChart}
-                                    enableChartClamp={enableChartClamp}
-
-                                    buckets={buckets} bucketSize={bucketSize}
-                                    currentPeriod={this.state.currentPeriod}
-                                    changeBucketSize={this._changeBucketSize.bind(this)}
-                                    changeZoomPeriod={this._changeZoomPeriod.bind(this)}
-                                    onSelectIndicators={this._onSelectIndicators.bind(this)}
-                                    onChangeIndicators={this._changeIndicator.bind(this)}
-                                    onChangeTool={(key) => {
-                                        let tools = cloneDeep(this.state.tools);
-                                        for (let k in tools) {
-                                            if (k === key) {
-                                                tools[k] = !tools[k];
-                                            } else {
-                                                tools[k] = false;
-                                            }
-                                        }
-                                        this.setState({tools}, () => {
-                                            this.setState({tools: {fib: false, trendline: false}});
-                                        });
-                                    }}
-                                    onChangeChartHeight={this.onChangeChartHeight.bind(this)}
-                                    chartHeight={chartHeight}
-                                    onToggleVolume={() => {SettingsActions.changeViewSetting({showVolumeChart: !showVolumeChart});}}
-                                    onToggleChartClamp={() => {SettingsActions.changeViewSetting({enableChartClamp: !enableChartClamp});}}
-                                    onChangeIndicatorSetting={this._changeIndicatorSetting.bind(this)}
-                                />
+                                {tradingViewChart}
                             </div>) : (
                             <div className="grid-block vertical no-padding shrink" >
                                 <DepthHighChart
@@ -1204,7 +1200,8 @@ class Exchange extends React.Component {
                                     theme={this.props.settings.get("themes")}
                                     centerRef={this.refs.center}
                                 />
-                            </div>)}
+                            </div>)
+                        }
 
                             <div className="grid-block no-overflow wrap shrink" >
                                 {hasPrediction ? <div className="small-12 no-overflow" style={{margin: "0 10px", lineHeight: "1.2rem"}}><p>{description}</p></div> : null}

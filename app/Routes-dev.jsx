@@ -13,6 +13,9 @@ import BlocksContainer from "./components/Explorer/BlocksContainer";
 import AssetsContainer from "./components/Explorer/AssetsContainer";
 import AccountsContainer from "./components/Explorer/AccountsContainer";
 import Explorer from "components/Explorer/Explorer";
+import Trade0830 from "components/Explorer/Trade";  //交易首页
+import Recharge from "components/Explorer/Recharge";  //充值页
+import Cash from "components/Explorer/Cash";  //提现页
 import AccountPage from "./components/Account/AccountPage";
 import AccountOverview from "./components/Account/AccountOverview";
 import AccountAssets from "./components/Account/AccountAssets";
@@ -58,10 +61,13 @@ class Auth extends React.Component {
 
 const routes = (
     <Route path="/" component={App} onEnter={willTransitionTo}>
-        <IndexRoute component={DashboardContainer}/>
+        <IndexRoute component={LoginSelector}/>
+        <Route path="trade" component={Trade0830}/>   {/*首页 */}
         <Route path="/auth/:data" component={Auth}/>
         <Route path="/dashboard" component={DashboardContainer}/>
         <Route path="explorer" component={Explorer}/>
+        <Route path="recharge" component={Recharge}/>   {/*充值页 */}
+        <Route path="cash" component={Cash}/>   {/*提现页 */}
         <Route path="/explorer/fees" component={FeesContainer} />
         <Route path="/explorer/blocks" component={BlocksContainer} />
         <Route path="/explorer/assets" component={AssetsContainer} />
@@ -97,6 +103,7 @@ const routes = (
         <Route path="asset/:symbol" component={Asset} />
         <Route path="create-account" component={LoginSelector}>
             <Route path="wallet" component={CreateAccount} />
+            <Route path="password" component={CreateAccountPassword} />
         </Route>
 
         <Route path="existing-account" component={ExistingAccount} >

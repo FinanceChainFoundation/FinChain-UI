@@ -199,7 +199,6 @@ class Price {
             let frac = new Fraction(real);
             let baseSats = base.toSats(), quoteSats = quote.toSats();
             let numRatio = (baseSats / quoteSats), denRatio = quoteSats / baseSats;
-
             if (baseSats >= quoteSats) {
                 denRatio = 1;
             } else {
