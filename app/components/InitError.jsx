@@ -36,6 +36,7 @@ class InitError extends React.Component {
     }
 
     render() {
+        console.log("init error")
         let options = this.props.apis.map(entry => {
             let onlyDescription = entry.url.indexOf("fake.automatic-selection") !== -1;
             let {location} = entry;
