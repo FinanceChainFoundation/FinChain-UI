@@ -261,7 +261,7 @@ class CreateAccountPassword extends React.Component {
                 {this.state.loading ?  <LoadingIndicator type="three-bounce"/> : <button style={{width: "100%"}} className={buttonClass}><Translate content="account.create_account" /></button>}
 
                 {/* Backup restore option */}
-                {/* <div style={{paddingTop: 40}}>
+                 {/*<div style={{paddingTop: 40}}>
                     <label>
                         <Link to="/existing-account">
                             <Translate content="wallet.restore" />
@@ -273,14 +273,14 @@ class CreateAccountPassword extends React.Component {
                             <Translate content="settings.backup_brainkey" />
                         </Link>
                     </label>
-                </div> */}
+                </div>*/ }
 
                 {/* Skip to step 3 */}
-                {/* {(!hasWallet || firstAccount ) ? null :<div style={{paddingTop: 20}}>
+                 {/*(!hasWallet || firstAccount ) ? null :<div style={{paddingTop: 20}}>
                     <label>
                         <a onClick={() => {this.setState({step: 3});}}><Translate content="wallet.go_get_started" /></a>
                     </label>
-                </div>} */}
+                </div>*/} 
             </form>
                 {/* <br />
                 <p>

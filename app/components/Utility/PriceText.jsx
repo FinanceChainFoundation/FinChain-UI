@@ -5,9 +5,7 @@ class PriceText extends React.Component {
 
     render() {
         let {price, preFormattedPrice, quote, base, component} = this.props;
-
         let formattedPrice = preFormattedPrice ? preFormattedPrice : utils.price_to_text(price, quote, base);
-        
         if (formattedPrice.full >= 1) {
             return (
                 <span>

@@ -4,6 +4,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var Clean = require("clean-webpack-plugin");
 var git = require("git-rev-sync");
 require("es6-promise").polyfill();
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 // BASE APP DIR
 var root_dir = path.resolve(__dirname);
@@ -60,7 +61,11 @@ module.exports = function(env) {
             __BASE_URL__: JSON.stringify(env.electron ? "" : "baseUrl" in env ? env.baseUrl : "/"),
             __UI_API__: JSON.stringify(env.apiUrl || "https://ui.bitshares.eu/api"),
             __TESTNET__: !!env.testnet
-        })
+        }),
+        new CopyWebpackPlugin([{
+            from: path.join(root_dir, "charting_library"),
+            to: "charting_library"
+        }])
     ];
 
     if (env.prod) {

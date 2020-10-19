@@ -167,9 +167,9 @@ class MarketHistory extends React.Component {
                         </div>
                     </div>
                     <div className="grid-block shrink left-orderbook-header market-right-padding-only">
-                        <table className="table order-table text-right fixed-table market-right-padding">
+                        <table className="table order-table text-left fixed-table market-right-padding">
                             <thead>
-                                <tr>
+                                <tr style={{}}>
                                     <th><Translate className="header-sub-title" content="exchange.price" /></th>
                                     <th><span className="header-sub-title"><AssetName dataPlace="top" name={quoteSymbol} /></span></th>
                                     <th><span className="header-sub-title"><AssetName dataPlace="top" name={baseSymbol} /></span></th>
@@ -183,7 +183,7 @@ class MarketHistory extends React.Component {
                         ref="history"
                         style={{maxHeight: 210, overflow: "hidden"}}
                     >
-                        <table className="table order-table text-right fixed-table market-right-padding">
+                        <table className="table order-table text-right fixed-table market-right-padding" style={{textAlign: "left"}}>
                             <TransitionWrapper
                                 component="tbody"
                                 transitionName="newrow"

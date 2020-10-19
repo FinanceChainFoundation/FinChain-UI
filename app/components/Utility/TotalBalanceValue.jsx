@@ -49,7 +49,7 @@ class TotalValue extends MarketStatsCheck {
             np.toAsset !== this.props.toAsset ||
             !utils.are_equal_shallow(np.balances, this.props.balances) ||
             !utils.are_equal_shallow(np.openOrders, this.props.openOrders) ||
-            !(np.collateral === this.props.collateral) ||
+            !utils.are_equal_shallow(np.collateral, this.props.collateral) ||
             !utils.are_equal_shallow(np.debt, this.props.debt)
         );
     }

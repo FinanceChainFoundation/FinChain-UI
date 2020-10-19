@@ -108,3 +108,70 @@ div.header-right-menu {
 .lower-case {
   text-transform: lowercase;
 }
+
+
+/*头部修改*/
+.menu-bar1 .warp{
+  width: 1400px;
+  margin: 0 auto;
+}
+.warp .spans {
+  line-height: 50px;
+  font-size: 16px;
+  color: #FFFFFF;
+  font-family: "Microsoft YaHei";
+}
+.warp .spans .sll{
+  float: left;
+  width: 330px;
+}
+.warp .spans .sll2{
+  float: left;
+  margin-left: 20px;
+  width: 330px;
+}
+.warp .spans .a{
+  position: relative;
+  float: right;
+  width: 70px;
+}
+.warp .spans .cc{
+  position: absolute;
+  display: none;
+  left:1142px;
+  top:50px;
+  z-index:999;
+}
+.warp .spans .a:hover{
+  color:red;
+}
+
+.warp .spans .aHover{
+  float: right;
+  color: red;
+  width: 70px;
+}
+
+
+.menu-bar2 .warp{
+  width: 1400px;
+  margin: 0 auto;
+}
+.menu-bars li{
+  width: 150px;
+  color: white !important;
+  font-size: 18px;
+  line-height: 100px;
+  float: left;
+}
+.menu-bars1{
+  width: 150px;
+  float: left;
+  line-height: 100px;
+}
+
+.menu-bars2{
+  width: 50px;
+  float: right;
+  line-height: 100px;
+}

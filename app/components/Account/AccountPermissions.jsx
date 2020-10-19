@@ -241,7 +241,7 @@ class AccountPermissions extends React.Component {
                     <Tabs setting="permissionsTabs" tabsClass="no-padding bordered-header" contentClass="grid-content no-overflow no-padding">
 
                     <Tab title="account.perm.active">
-                        {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountPermActive" />*/}
+                        {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountPermActive" />
                             <form className="threshold">
                                 <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
@@ -251,7 +251,7 @@ class AccountPermissions extends React.Component {
                                         tabIndex={1}/>
                                 </label>
                             </form>
-
+                         */}
                             <AccountPermissionsList
                                 label="account.perm.add_permission_label"
                                 accounts={active_accounts}
@@ -267,31 +267,31 @@ class AccountPermissions extends React.Component {
                             <br/>
                             {error1 ? <div className="content-block has-error">{error1}</div> : null}
 
-
+                        {/*
                         <div>
-                            <label
-                                className="inline-block"
-                                style={{
-                                    position: "relative",
-                                    top: -10,
-                                    margin: 0
-                                }}
-                                data-place="bottom"
-                                data-tip={counterpart.translate("tooltip.sign_owner")}
-                            ><span ><Translate content="account.perm.sign_owner" />:&nbsp;&nbsp;</span>
-                            </label>
-                            <div className="switch" onClick={() => {this.setState({isOwner: !this.state.isOwner});}}>
-                                <input type="checkbox" checked={this.state.isOwner} />
-                                <label />
+                                <label
+                                    className="inline-block"
+                                    style={{
+                                        position: "relative",
+                                        top: -10,
+                                        margin: 0
+                                    }}
+                                    data-place="bottom"
+                                    data-tip={counterpart.translate("tooltip.sign_owner")}
+                                ><span ><Translate content="account.perm.sign_owner" />:&nbsp;&nbsp;</span>
+                                </label>
+                                <div className="switch" onClick={() => {this.setState({isOwner: !this.state.isOwner});}}>
+                                    <input type="checkbox" checked={this.state.isOwner} />
+                                    <label />
+                                </div>
                             </div>
-                        </div>
-
+                            */}
 
                     </Tab>
 
                     <Tab title="account.perm.owner">
                         {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountPermOwner" />*/}
-                        <form className="threshold">
+                        {/*<form className="threshold">
                                 <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
                                            value={this.state.owner_threshold}
@@ -300,7 +300,7 @@ class AccountPermissions extends React.Component {
                                            tabIndex={4}/>
                                 </label>
                             </form>
-
+                            */}
                             <AccountPermissionsList
                                 label="account.perm.add_permission_label"
                                 accounts={owner_accounts}
@@ -334,7 +334,7 @@ class AccountPermissions extends React.Component {
                     </Tab>
                 </Tabs>
 
-                    <div className="divider" />
+                    {/*<div className="divider" />
                     <div style={{paddingTop: 20}}>
                         <button style={{fontSize: "1.2rem"}} className={publish_buttons_class} onClick={this.onPublish} tabIndex={8}>
                             <Translate content="account.perm.publish"/>
@@ -343,7 +343,7 @@ class AccountPermissions extends React.Component {
                             <Translate content="account.perm.reset"/>
                         </button>
                     </div>
-                    
+                    */}
                 </div>
             </div>
         );

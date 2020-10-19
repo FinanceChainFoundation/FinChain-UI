@@ -174,7 +174,7 @@ var Utils = {
         }
         let priceText;
 
-        if (forcePrecision) {
+        if (forcePrecision=8) {
             priceText = this.format_number(price, forcePrecision);
         } else {
             priceText = this.price_text(price, base, quote);

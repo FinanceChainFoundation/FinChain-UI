@@ -10,6 +10,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import { EmitterInstance } from "bitsharesjs/es";
 import BindToChainState from "../Utility/BindToChainState";
 import MarketsActions from "actions/MarketsActions";
+import {DataFeed} from "components/Exchange/tradingViewClasses";
 
 class ExchangeContainer extends React.Component {
 
@@ -77,6 +78,9 @@ class ExchangeContainer extends React.Component {
                         marketDirections: () => {
                             return SettingsStore.getState().marketDirections;
                         },
+                        locale: () => {
+                            return SettingsStore.getState().settings.get('locale');
+                        },
                         marketStats: () => {
                             return MarketsStore.getState().marketStats;
                         },
@@ -91,7 +95,8 @@ class ExchangeContainer extends React.Component {
                         },
                         miniDepthChart: () => {
                             return SettingsStore.getState().viewSettings.get("miniDepthChart", true);
-                        }
+                        },
+                        dataFeed: () => new DataFeed(),
                     }}
                   >
                     <ExchangeSubscriber router={this.props.router} quoteAsset={symbols[0]} baseAsset={symbols[1]} />
@@ -118,7 +123,10 @@ class ExchangeSubscriber extends React.Component {
 
     constructor() {
         super();
-        this.state = {sub: null};
+        this.state = {
+            sub: null,
+            coinMarketId: 0,
+        };
 
         this._subToMarket = this._subToMarket.bind(this);
     }
@@ -141,6 +149,7 @@ class ExchangeSubscriber extends React.Component {
                 MarketsActions.settleOrderUpdate(marketAsset.id);
             }
         });
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -188,7 +197,7 @@ class ExchangeSubscriber extends React.Component {
     render() {
         return <div className="grid-block vertical">
             {!this.props.marketReady ? <LoadingIndicator /> : null}
-            <Exchange {...this.props} sub={this.state.sub} subToMarket={this._subToMarket} />
+            <Exchange {...this.props} sub={this.state.sub} subToMarket={this._subToMarket} coinMarketId={this.state.coinMarketId}/>
         </div>;
     }
 }

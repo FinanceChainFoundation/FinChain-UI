@@ -118,7 +118,6 @@ class BlockTradesGateway extends React.Component {
         let isDeposit = this.state.action === "deposit";
 
         return (
-
             <div style={this.props.style}>
                 <div className="grid-block no-margin vertical medium-horizontal no-padding">
                     <div className="medium-4">

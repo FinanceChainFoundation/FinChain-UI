@@ -30,7 +30,6 @@ export default class ExchangeHeader extends React.Component {
 
         const baseSymbol = baseAsset.get("symbol");
         const quoteSymbol = quoteAsset.get("symbol");
-
         // Favorite star
         const marketID = `${quoteSymbol}_${baseSymbol}`;
         const starClass = starredMarkets.has(marketID) ? "gold-star" : "grey-star";

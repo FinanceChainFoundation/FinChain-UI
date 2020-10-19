@@ -27,8 +27,10 @@
     "sub_text_2" : "Once you've synchronized your clock, please refresh this page.<br/><br/>If your clock is already correct, the API server you're using could be out of sync. In that case, please try a different server from the list below."
   },
   "header": {
-    "title": "FinChain UI",
+    "title": "YIBIT UI",
     "account": "Account",
+    "work_order": "Work Order",
+    "work_orde": "Announcement",
     "dashboard": "Dashboard",
     "explorer": "Explore",
     "exchange": "Exchange",
@@ -92,7 +94,7 @@
     "existing_user": "Existing user",
     "restore": "Restore",
     "advanced": "Advanced",
-    "intro_text_title": "Welcome to FinChain",
+    "intro_text_title": "Welcome to YIBIT",
     "intro_text_1": "Your Decentralized Exchange",
     "intro_text_2": "<b>The DEX</b> is inherently decentralized, enabling you to trade the FinChain core token (BTS) and a range of trustless price-stable, market-pegged assets such as bitUSD, bitCNY, bitBTC, bitGold and more. These assets can all be traded with <b>zero</b> counter-party risk, putting you in total control of your funds.",
     "intro_text_3": "<b>The DEX</b> also enables creation of user-issued assets (UIAs), which can be traded against any other UIAs or trustless assets on the platform.  One well-known issuer on The DEX is <b>OpenLedger</b>, offering a host of assets including BTC, ETH, STEEM, DASH, LTC, DOGE, and many more",
@@ -104,7 +106,7 @@
     "see_open": "See open orders",
     "total_estimate": "This is the estimated value of all your assets, including any hidden assets, open orders, debt and collateral. The estimate is done using only live blockchain data and may not be perfectly accurate.",
     "trade": "Trade",
-    "welcome": "Welcome to FinChain",
+    "welcome": "Welcome to YIBIT",
     "asset": "Asset",
     "market_value": "Market Value",
     "hour_24": "24hr Change",
@@ -398,9 +400,9 @@
     "eq_value_header": "Value ({asset})",
     "qty": "Qty",
     "total": "Total ({asset})",
-    "current_balance":"可用余额",
-    "fix_balance":"锁定余额",
-    "total_balance":"总余额",
+    "current_balance":"Available Balance",
+    "fix_balance":"Lock balance",
+    "total_balance":"Total balance",
     "lock_balance":{
       "lock":"lock",
       "unlock":"unlock",
@@ -409,11 +411,11 @@
       "interest":"interest",
       "interest_rate":"interest rate",
       "lock_details":"lock details",
-      "start":"开始时间",
-      "end":"解锁时间",
-      "deposit_amount":"存入数量",
-      "profit":"收益",
-      "profit_rate":"收益率(%)"
+      "start":"Starting time",
+      "end":"Unlock time",
+      "deposit_amount":"Deposited quantity",
+      "profit":"income",
+      "profit_rate":"rate of return(%)"
     }
   },
   "pagination": {
@@ -453,29 +455,29 @@
     "optional": "Optional"
   },
   "lock":{
-    "header":"存币",
-    "issuer":"锁定账户",
-    "amount":"数量",
-    "period":"期限",
-    "interest":"利息",
-    "lock":"存入",
-    "unlock":"解锁",
-    "ahead_unlock":"提前解锁",
-    "day":"天",
-    "month":"月",
-    "year":"年",
-    "lock_details":"锁定详情",
-    "details":"详情",
-    "start":"开始时间",
-    "end":"解锁时间",
-    "deposit_amount":"存入数量",
-    "profit":"收益",
-    "profit_rate":"收益率",
-    "operation":"操作",
-    "profit_prompt_period":"获得到期收益:",
-    "profit_prompt_unperiod":"锁定未到期，提前解锁将不能获得任何收益",
-    "interest_year":"年化收益",
-    "maturity_profit":"到期收益"
+    "header":"Coinage",
+    "issuer":"Lock account",
+    "amount":"Quantity",
+    "period":"the term",
+    "interest":"interest",
+    "lock":"Deposit",
+    "unlock":"Unlock",
+    "ahead_unlock":"Unlock in advance",
+    "day":"day",
+    "month":"month",
+    "year":"year",
+    "lock_details":"Lock details",
+    "details":"Details",
+    "start":"Starting time",
+    "end":"Unlock time",
+    "deposit_amount":"Deposited quantity",
+    "profit":"income",
+    "profit_rate":"rate of return",
+    "operation":"operating",
+    "profit_prompt_period":"Earned income:",
+    "profit_prompt_unperiod":"The lock has not expired, unlocked in advance will not be able to obtain any benefits",
+    "interest_year":"Annualized income",
+    "maturity_profit":"Maturity income"
   },
   "operation": {
     "pending": "pending %(blocks)s blocks",
@@ -517,9 +519,9 @@
     "committee_member_update_global_parameters": "{account} updated the global committee parameters",
     "worker_create": "{account} created a worker proposal with daily pay of {pay}",
     "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
-    "lock_balance": "{issuer} 锁定 {amount} {period} 天",
-    "unlock_balance": "{issuer} 解锁到期存币",
-    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
+    "lock_balance": "{issuer} locking {amount} {period} day",
+    "unlock_balance": "{issuer} Unlock payment due",
+    "unlock_balance_unexpired": "{issuer} Unlocking unspent dues"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -549,8 +551,7 @@
     "asset_reserve": "Burn (reserve) {amount} using {account}",
     "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
     "feed_producer": "Update the feed producers for the asset {asset} using the account {account}",
-    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
-    "lifetime_upgrade_account": "Upgrade account"
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}"
   },
   "transaction": {
     "confirm": "Please confirm the transaction",
@@ -663,13 +664,8 @@
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
-      "lock_balance":"Lock balance",
-      "unlock_balance":  "Unlock balance",
-      "asset_settle_cancel": "Asset settle cancel",
-      "op44": "Op44",
-      "set_lock_data": "Set lock lata",
-      "donation_balance": "Donation balance",
-      "all": "Show all"
+      "lock_balance":"locking",
+      "unlock_balance":  "Unlock"
     },
     "feeGroups": {
       "general": "General",
@@ -776,7 +772,7 @@
         "stealth_supply": "Stealth supply",
         "market_fee": "Market fee",
         "max_market_fee": "Max market fee",
-        "locked_balance":"锁定余额"
+        "locked_balance":"Lock balance"
       },
       "price_feed": {
         "title": "Price Feed",
@@ -845,7 +841,7 @@
     "workers": {
       "title": "Worker name",
       "period": "Duration",
-      "daily_pay": "Daily pay (BTS)",
+      "daily_pay": "Daily pay (JRC)",
       "website": "Website",
       "vesting_pay": "Salary vesting period (days)",
       "create": "Create a new worker proposal",
@@ -895,7 +891,7 @@
     "walletLockTimeout": "Wallet auto-lock time (seconds, 0 to disable)",
     "themes": "Theme",
     "darkTheme": "Dark theme",
-    "FinChainTheme":"金融链主色",
+    "FinChainTheme":"Financial chain main colors",
     "lightTheme": "Light theme",
     "olDarkTheme": "Openledger dark",
     "reset": "Reset settings",
@@ -946,7 +942,7 @@
     "high_latency": "High latency"
   },
   "footer": {
-    "title": "FinChain",
+    "title": "YIBIT",
     "block": "Head block",
     "loading": "Loading...",
     "backup": "A Backup is Required",
@@ -956,7 +952,15 @@
     "update_available": "UPDATE AVAILABLE",
     "synced": "Synced",
     "unsynced": "Out of sync",
-    "disconnected": "Disconnected"
+    "disconnected": "Disconnected",
+    "abouts_us" :"About",
+    "fuwu":"Terms",
+    "yinsi":"Privacy",
+    "feilv":"Fees",
+    "lianxi":"Contact",
+    "apiss":"API",
+    "shang":"Apply to List",
+    "down":"Download"
   },
   "exchange": {
     "chart_options": {
@@ -980,7 +984,7 @@
     "market": "Market",
     "price_history": "Price Chart",
     "order_depth": "Market Depth",
-    "history": "Market trades",
+    "history": "Latest deal",
     "my_history": "My trades",
     "balance": "Balance",
     "lowest_ask": "Lowest ask",
@@ -1026,7 +1030,7 @@
     "index": "Index",
     "my_bids": "My bids",
     "my_asks": "My asks",
-    "my_orders": "My open orders",
+    "my_orders": "Current commission",
     "settle_orders": "Settle orders",
     "asks": "Sell orders",
     "bids": "Buy orders",
@@ -1095,6 +1099,7 @@
     "create_backup": "Create Backup",
     "backup_brainkey": "Backup Brainkey",
     "create_backup_of": "Create backup now",
+    "create_brainkey_of": "Create brainkeybackup now",
     "import_backup": "Import FinChain 2.0 backup (.bin file)",
     "import_backup_choose": "Please select your backup file in the dialog below. This is completely safe as the file is not uploaded anywhere and never leaves your browser.",
     "restore_backup": "Restore Backup",
@@ -1374,7 +1379,7 @@
     "withdraw_coin": "Withdraw %(coin)s (%(symbol)s)",
 	  "convert_coin": "Convert to %(coin)s (%(symbol)s)",
     "limit": "Limit: %(amount)s %(symbol)s",
-    "bridge_text": "A bridge lets you exchange an asset into another one, for example BTC to BTS.",
+    "bridge_text": "A bridge lets you exchange an asset into another one, for example ZCB to JRC.",
     "gateway_text": "Choose whether you want to make a deposit or withdrawal here",
     "fiat_text": "Fiat deposits and withdrawal are provided by CCEDK. In order to get started you need to complete the registration process. The following conversions are available:",
     "meta": {
@@ -1398,5 +1403,28 @@
   },
     "trx_error": {
         "expire": "Your transaction has expired without being confirmed, please try again later."
+    },
+    "All_increase": {
+    	"login":"Login",
+    	"trade_jg":"Price",
+    	"trade_sl":"Volume",
+    	"trade_zdf":"Quote",
+    	"trade_f1":"FinChain Decentralized Asset Transfer Platform",
+    	"trade_f2":"Decentralization",
+    	"trade_f3":"Blockchain based construction",
+    	"trade_f4":"Distributed decentralized exchange",
+    	"trade_f5":"Profession",   	
+    	"trade_f6":"Industrial business processing capabilities",
+    	"trade_f7":"TPS3300 per second long-term stability",
+    	"trade_f8":"Fair",  	
+    	"trade_f9":"Safe, transparent and reliable",
+    	"trade_f10":"Every transaction is recorded on the blockchain",
+    	"trade_tel1":"Apply for currency on contact (WeChat)",
+    	"trade_tel2":"Customer Service WeChat",
+    	"trade_tel3":"Exchange qq group",
+    	"trade_tel4":"Financial Chain Telegraph Group",
+    	"exchange_sl":"Quantity",
+    	"exchange_je":"Amount",
+    	"exchange_sxf":"Fees"	
     }
 }

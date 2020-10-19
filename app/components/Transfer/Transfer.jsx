@@ -404,7 +404,6 @@ class Transfer extends React.Component {
                                 account={to_name}
                                 size={60}
                                 tabIndex={tabIndex++}
-                                allowUppercase
                             />
                         </div>
                         {/*  A M O U N T   */}
